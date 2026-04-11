@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>충현교회 미디어센터 신청 시스템</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f5f0;
+    --surface: #ffffff;
+    --surface2: #f0ede6;
+    --border: #ddd9d0;
+    --text-primary: #1a1714;
+    --text-secondary: #6b6560;
+    --text-muted: #9c9690;
+    --accent: #7a4f2e;
+    --accent-light: #c4956a;
+    --accent-pale: #f5ece3;
+    --video: #2c5f8a;
+    --video-light: #e8f0f8;
+    --photo: #3a7a4f;
+    --photo-light: #e8f5ed;
+    --ad: #7a2c4f;
+    --ad-light: #f5e8ee;
+    --success: #3a7a4f;
+    --error: #8a2c2c;
+    --shadow: 0 2px 16px rgba(0,0,0,0.08);
+    --shadow-hover: 0 8px 32px rgba(0,0,0,0.14);
+    --radius: 12px;
+    --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ===== HEADER ===== */
+  .app-header {
+    background: var(--text-primary);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .header-logo {
+    width: 36px; height: 36px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .header-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  .header-sub {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 0.5px;
+    margin-top: 1px;
+  }
+  .header-nav {
+    display: flex;
+    gap: 4px;
+  }
+  .nav-btn {
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .nav-btn.active { background: var(--accent); color: white; }
+  .nav-btn:not(.active) { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+  .nav-btn:hover:not(.active) { background: rgba(255,255,255,0.2); }
+
+  /* ===== MAIN CONTAINER ===== */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+
+  /* ===== VIEW SECTIONS ===== */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ===== HOME ===== */
+  .home-hero {
+    text-align: center;
+    padding: 48px 20px 40px;
+  }
+  .home-badge {
+    display: inline-block;
+    background: var(--accent-pale);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .home-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+  }
+  .home-desc {
+    color: var(--text-secondary);
+    font-size: 15px;
+    max-width: 500px;
+    margin: 0 auto 40px;
+    line-height: 1.8;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 20px;
+    margin-top: 8px;
+  }
+  .service-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 32px 28px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 16px 16px 0 0;
+    transition: var(--transition);
+  }
+  .service-card.video::before { background: var(--video); }
+  .service-card.photo::before { background: var(--photo); }
+  .service-card.ad::before { background: var(--ad); }
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+  .service-card.video:hover { border-color: var(--video); }
+  .service-card.photo:hover { border-color: var(--photo); }
+  .service-card.ad:hover { border-color: var(--ad); }
+
+  .card-icon {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+  .service-card.video .card-icon { background: var(--video-light); }
+  .service-card.photo .card-icon { background: var(--photo-light); }
+  .service-card.ad .card-icon { background: var(--ad-light); }
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-family: 'Noto Serif KR', serif;
+  }
+  .service-card.video .card-title { color: var(--video); }
+  .service-card.photo .card-title { color: var(--photo); }
+  .service-card.ad .card-title { color: var(--ad); }
+  .card-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .service-card.video .card-cta { color: var(--video); }
+  .service-card.photo .card-cta { color: var(--photo); }
+  .service-card.ad .card-cta { color: var(--ad); }
+
+  /* ===== FORM VIEW ===== */
+  .form-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .form-back {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: white;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+    flex-shrink: 0;
+  }
+  .form-back:hover { background: var(--surface2); }
+  .form-title-area h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .form-title-area p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 3px;
+  }
+
+  .form-card {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+  }
+  .form-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .form-row.single { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr; }
+  }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .form-label .req {
+    color: var(--error);
+    margin-left: 3px;
+  }
+  .form-input, .form-select, .form-textarea {
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: var(--text-primary);
+    background: var(--surface);
+    transition: var(--transition);
+    width: 100%;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--accent-light);
+    box-shadow: 0 0 0 3px rgba(196, 149, 106, 0.15);
+  }
+  .form-textarea { resize: vertical; min-height: 100px; }
+  .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6560' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; cursor: pointer; }
+
+  .form-divider { height: 1px; background: var(--border); margin: 24px 0; }
+  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+  .checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .checkbox-item:hover { background: var(--surface2); }
+  .checkbox-item input[type=checkbox] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+  .checkbox-label { font-size: 13px; line-height: 1.5; }
+  .checkbox-label strong { display: block; font-size: 14px; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .submit-btn.video { background: var(--video); color: white; }
+  .submit-btn.photo { background: var(--photo); color: white; }
+  .submit-btn.ad { background: var(--ad); color: white; }
+  .submit-btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  /* ===== SUCCESS ===== */
+  .success-box {
+    background: white;
+    border-radius: 20px;
+    padding: 60px 40px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    max-width: 480px;
+    margin: 40px auto;
+  }
+  .success-icon {
+    width: 80px; height: 80px;
+    background: #e8f5ed;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    margin: 0 auto 24px;
+  }
+  .success-box h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .success-box p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .success-ref {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 20px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .success-ref strong {
+    display: block;
+    font-size: 20px;
+    color: var(--accent);
+    font-family: 'Noto Serif KR', serif;
+    margin-top: 4px;
+  }
+  .success-back-btn {
+    margin-top: 24px;
+    padding: 12px 28px;
+    border-radius: 10px;
+    border: 2px solid var(--accent);
+    background: white;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .success-back-btn:hover { background: var(--accent); color: white; }
+
+  /* ===== ADMIN ===== */
+  .admin-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .admin-top h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .admin-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .filter-select {
+    padding: 8px 30px 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: white;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6560' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    color: var(--text-primary);
+  }
+  .refresh-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex; align-items: center; gap: 6px;
+    color: var(--text-primary);
+  }
+  .refresh-btn:hover { background: var(--surface2); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--border);
+  }
+  .stat-card.video { border-left-color: var(--video); }
+  .stat-card.photo { border-left-color: var(--photo); }
+  .stat-card.ad { border-left-color: var(--ad); }
+  .stat-card.total { border-left-color: var(--accent); }
+  .stat-num {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'Noto Serif KR', serif;
+  }
+  .stat-card.video .stat-num { color: var(--video); }
+  .stat-card.photo .stat-num { color: var(--photo); }
+  .stat-card.ad .stat-num { color: var(--ad); }
+  .stat-card.total .stat-num { color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+  .table-wrap {
+    background: white;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .table-search {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .search-input {
+    flex: 1;
+    padding: 9px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: var(--transition);
+  }
+  .search-input:focus { border-color: var(--accent-light); }
+  .table-container { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+  thead th {
+    background: var(--surface2);
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: pointer;
+  }
+  tbody tr:hover { background: var(--accent-pale); }
+  tbody tr:last-child { border-bottom: none; }
+  td {
+    padding: 13px 16px;
+    font-size: 13px;
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+  .type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .type-badge.video { background: var(--video-light); color: var(--video); }
+  .type-badge.photo { background: var(--photo-light); color: var(--photo); }
+  .type-badge.ad { background: var(--ad-light); color: var(--ad); }
+
+  .status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-badge.new { background: #fff3e0; color: #e65100; }
+  .status-badge.reviewing { background: #e3f2fd; color: #1565c0; }
+  .status-badge.done { background: #e8f5e9; color: #2e7d32; }
+  .status-select {
+    padding: 3px 20px 3px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 11px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    background: white;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6560' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+    outline: none;
+  }
+  .empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .empty-state .empty-icon { font-size: 40px; margin-bottom: 14px; }
+  .empty-state p { font-size: 14px; }
+
+  /* ===== DETAIL MODAL ===== */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: white;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: modalIn 0.25s ease;
+  }
+  @keyframes modalIn { from { opacity:0; transform: scale(0.95) translateY(10px); } to { opacity:1; transform: scale(1) translateY(0); } }
+  .modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-header h3 { font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 700; }
+  .modal-close {
+    width: 32px; height: 32px;
+    border: none; background: var(--surface2);
+    border-radius: 8px; cursor: pointer;
+    font-size: 16px;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+  }
+  .modal-close:hover { background: var(--border); }
+  .modal-body { padding: 24px; }
+  .detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .detail-item { display: flex; flex-direction: column; gap: 4px; }
+  .detail-item.full { grid-column: 1 / -1; }
+  .detail-key { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+  .detail-val { font-size: 14px; color: var(--text-primary); }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text-primary);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    z-index: 999;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: #2e7d32; }
+  .toast.error { background: #c62828; }
+
+  /* ===== SETUP GUIDE ===== */
+  .setup-banner {
+    background: linear-gradient(135deg, #fff9f0, #fff3e0);
+    border: 1.5px solid #f5c47a;
+    border-radius: 14px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .setup-icon { font-size: 28px; flex-shrink: 0; }
+  .setup-text h4 { font-weight: 700; color: #8a4800; font-size: 15px; margin-bottom: 6px; }
+  .setup-text p { font-size: 13px; color: #7a5200; line-height: 1.7; }
+  .setup-text a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .setup-text a:hover { text-decoration: underline; }
+
+  /* mobile nav */
+  @media (max-width: 480px) {
+    .header-title { font-size: 14px; }
+    .nav-btn { padding: 6px 10px; font-size: 12px; }
+    .form-card { padding: 20px 16px; }
+    .main { padding: 20px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="header-logo">🎬</div>
+      <div>
+        <div class="header-title">충현교회 미디어센터</div>
+        <div class="header-sub">MEDIA CENTER REQUEST SYSTEM</div>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <button class="nav-btn active" onclick="showView('home')">신청</button>
+      <button class="nav-btn" onclick="showView('admin')">관리자</button>
+    </nav>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- ===== HOME VIEW ===== -->
+  <div id="view-home" class="view active">
+    <div class="home-hero">
+      <div class="home-badge">📋 온라인 신청</div>
+      <h1 class="home-title">미디어 서비스를<br>신청하세요</h1>
+      <p class="home-desc">아래 서비스 중 원하시는 항목을 선택하여 신청서를 작성해 주세요. 담당자 검토 후 연락드립니다.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="service-card video" onclick="showForm('video')">
+        <div class="card-icon">🎥</div>
+        <div class="card-title">영상 제작 의뢰</div>
+        <div class="card-desc">교회 행사, 설교, 특별 영상 등 다양한 목적의 영상 제작을 신청하실 수 있습니다.</div>
+        <div class="card-cta">신청하기 →</div>
+      </div>
+      <div class="service-card photo" onclick="showForm('photo')">
+        <div class="card-icon">📸</div>
+        <div class="card-title">사진 촬영 의뢰</div>
+        <div class="card-desc">예배, 행사, 모임 등 각종 교회 활동의 사진 촬영을 신청하실 수 있습니다.</div>
+        <div class="card-cta">신청하기 →</div>
+      </div>
+      <div class="service-card ad" onclick="showForm('ad')">
+        <div class="card-icon">📺</div>
+        <div class="card-title">영상 광고 상영</div>
+        <div class="card-desc">교회 내 미디어 시설을 통한 안내 영상 또는 광고 상영을 신청하실 수 있습니다.</div>
+        <div class="card-cta">신청하기 →</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FORM VIEWS ===== -->
+  <div id="view-form" class="view">
+    <div class="form-header">
+      <button class="form-back" onclick="showView('home')">←</button>
+      <div class="form-title-area">
+        <h2 id="form-title">신청서</h2>
+        <p id="form-subtitle">아래 항목을 빠짐없이 작성해 주세요.</p>
+      </div>
+    </div>
+    <div class="form-card">
+      <div id="form-body"></div>
+    </div>
+  </div>
+
+  <!-- ===== SUCCESS VIEW ===== -->
+  <div id="view-success" class="view">
+    <div class="success-box">
+      <div class="success-icon">✅</div>
+      <h3>신청이 완료되었습니다!</h3>
+      <p>담당자가 확인 후 연락드리겠습니다.<br>문의: 미디어센터 (내선 ○○○)</p>
+      <div class="success-ref">
+        접수 번호
+        <strong id="success-ref-num">-</strong>
+      </div>
+      <button class="success-back-btn" onclick="showView('home')">← 처음으로 돌아가기</button>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN VIEW ===== -->
+  <div id="view-admin" class="view">
+    <div class="setup-banner">
+      <div class="setup-icon">⚙️</div>
+      <div class="setup-text">
+        <h4>Google 스프레드시트 연동 설정이 필요합니다</h4>
+        <p>아래 <strong>2단계 설정 가이드</strong>를 완료하시면 실제 데이터가 저장됩니다.<br>
+        지금은 테스트 데이터로 확인하실 수 있습니다. 설정 방법이 궁금하시면 물어보세요!</p>
+      </div>
+    </div>
+
+    <div class="admin-top">
+      <h2>📊 신청 현황</h2>
+      <div class="admin-controls">
+        <select class="filter-select" id="filter-type" onchange="renderTable()">
+          <option value="">전체 유형</option>
+          <option value="video">영상 제작</option>
+          <option value="photo">사진 촬영</option>
+          <option value="ad">영상 광고</option>
+        </select>
+        <select class="filter-select" id="filter-status" onchange="renderTable()">
+          <option value="">전체 상태</option>
+          <option value="new">신규접수</option>
+          <option value="reviewing">검토중</option>
+          <option value="done">완료</option>
+        </select>
+        <button class="refresh-btn" onclick="renderAdmin()">🔄 새로고침</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card total">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">전체 신청</div>
+      </div>
+      <div class="stat-card video">
+        <div class="stat-num" id="stat-video">0</div>
+        <div class="stat-label">🎥 영상 제작</div>
+      </div>
+      <div class="stat-card photo">
+        <div class="stat-num" id="stat-photo">0</div>
+        <div class="stat-label">📸 사진 촬영</div>
+      </div>
+      <div class="stat-card ad">
+        <div class="stat-num" id="stat-ad">0</div>
+        <div class="stat-label">📺 영상 광고</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-search">
+        <input class="search-input" type="text" id="search-input" placeholder="🔍  이름, 부서, 연락처로 검색..." oninput="renderTable()">
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>접수번호</th>
+              <th>접수일시</th>
+              <th>유형</th>
+              <th>신청자</th>
+              <th>부서/소속</th>
+              <th>행사일</th>
+              <th>상태</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ===== DETAIL MODAL ===== -->
+<div class="modal-backdrop" id="modal" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="modal-title">신청 상세</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// DATA STORE
+// (실제 운영 시 Google Apps Script URL로 대체)
+// ============================================================
+const APPS_SCRIPT_URL = 'AKfycbwzvRq2MkLcR5XV8vNdIZjcDv7WZj9LtKMNrHJma64jn_El_ofbrnYjF7sJZwIpTpV0oQ'; // ← 여기에 Google Apps Script 웹앱 URL 입력
+
+// 로컬 스토리지로 데이터 임시 관리
+function getData() {
+  try { return JSON.parse(localStorage.getItem('mediaRequests') || '[]'); }
+  catch(e) { return []; }
+}
+function saveData(arr) {
+  localStorage.setItem('mediaRequests', JSON.stringify(arr));
+}
+function genRef() {
+  const now = new Date();
+  const prefix = { video:'V', photo:'P', ad:'A' };
+  return (prefix[currentFormType]||'X') + now.getFullYear().toString().slice(2) +
+    String(now.getMonth()+1).padStart(2,'0') + String(now.getDate()).padStart(2,'0') +
+    '-' + String(Math.floor(Math.random()*9000)+1000);
+}
+function formatDT(iso) {
+  if(!iso) return '-';
+  const d = new Date(iso);
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+
+// ============================================================
+// VIEW ROUTER
+// ============================================================
+let currentFormType = '';
+function showView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach((b,i) => {
+    b.classList.toggle('active', (view==='admin' && i===1) || (view!=='admin' && i===0));
+  });
+  if (view === 'admin') renderAdmin();
+}
+
+// ============================================================
+// FORM DEFINITIONS
+// ============================================================
+const formConfigs = {
+  video: {
+    title: '🎥 영상 제작 의뢰서',
+    subtitle: '영상 제작 신청 정보를 입력해 주세요.',
+    color: 'video',
+    fields: `
+      <div class="form-section-title">신청자 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">신청자 이름 <span class="req">*</span></label>
+          <input class="form-input" name="name" type="text" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">연락처 <span class="req">*</span></label>
+          <input class="form-input" name="phone" type="tel" placeholder="010-0000-0000" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">소속 부서/기관 <span class="req">*</span></label>
+          <input class="form-input" name="dept" type="text" placeholder="예) 청년부, 교육부" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <input class="form-input" name="email" type="email" placeholder="example@church.org">
+        </div>
+      </div>
+      <div class="form-divider"></div>
+      <div class="form-section-title">영상 제작 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">촬영/행사 일자 <span class="req">*</span></label>
+          <input class="form-input" name="eventDate" type="date" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">영상 용도 <span class="req">*</span></label>
+          <select class="form-select" name="purpose">
+            <option value="">선택하세요</option>
+            <option>예배 영상</option>
+            <option>행사 기록</option>
+            <option>홍보 영상</option>
+            <option>교육 영상</option>
+            <option>기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">희망 납품 일자</label>
+          <input class="form-input" name="deliveryDate" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">예상 영상 길이</label>
+          <select class="form-select" name="duration">
+            <option value="">선택하세요</option>
+            <option>3분 이내</option>
+            <option>3~10분</option>
+            <option>10~30분</option>
+            <option>30분 이상</option>
+            <option>미정</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">행사 내용 및 요청사항 <span class="req">*</span></label>
+          <textarea class="form-textarea" name="detail" placeholder="행사명, 장소, 특별 요청 사항 등을 자세히 적어주세요." required></textarea>
+        </div>
+      </div>
+    `
+  },
+  photo: {
+    title: '📸 사진 촬영 의뢰서',
+    subtitle: '사진 촬영 신청 정보를 입력해 주세요.',
+    color: 'photo',
+    fields: `
+      <div class="form-section-title">신청자 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">신청자 이름 <span class="req">*</span></label>
+          <input class="form-input" name="name" type="text" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">연락처 <span class="req">*</span></label>
+          <input class="form-input" name="phone" type="tel" placeholder="010-0000-0000" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">소속 부서/기관 <span class="req">*</span></label>
+          <input class="form-input" name="dept" type="text" placeholder="예) 청년부, 여성부" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <input class="form-input" name="email" type="email" placeholder="example@church.org">
+        </div>
+      </div>
+      <div class="form-divider"></div>
+      <div class="form-section-title">촬영 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">촬영 일자 <span class="req">*</span></label>
+          <input class="form-input" name="eventDate" type="date" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">촬영 장소 <span class="req">*</span></label>
+          <input class="form-input" name="location" type="text" placeholder="예) 본당, 소예배실 등" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">촬영 시작 시간</label>
+          <input class="form-input" name="startTime" type="time">
+        </div>
+        <div class="form-group">
+          <label class="form-label">예상 촬영 시간</label>
+          <select class="form-select" name="duration">
+            <option value="">선택하세요</option>
+            <option>1시간 이내</option>
+            <option>1~2시간</option>
+            <option>2~4시간</option>
+            <option>반나절 이상</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">행사 내용 및 요청사항 <span class="req">*</span></label>
+          <textarea class="form-textarea" name="detail" placeholder="행사명, 촬영 범위, 특별 요청 사항 등을 적어주세요." required></textarea>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">사진 납품 방식</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="delivery" value="email"> 
+              <div class="checkbox-label"><strong>이메일 전송</strong>이메일로 사진 파일 발송</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="delivery" value="drive"> 
+              <div class="checkbox-label"><strong>구글 드라이브 공유</strong>공유 링크로 전달</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="delivery" value="usb"> 
+              <div class="checkbox-label"><strong>USB 전달</strong>직접 USB로 수령</div>
+            </label>
+          </div>
+        </div>
+      </div>
+    `
+  },
+  ad: {
+    title: '📺 영상 광고 상영 의뢰서',
+    subtitle: '영상 광고 상영 신청 정보를 입력해 주세요.',
+    color: 'ad',
+    fields: `
+      <div class="form-section-title">신청자 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">신청자 이름 <span class="req">*</span></label>
+          <input class="form-input" name="name" type="text" placeholder="홍길동" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">연락처 <span class="req">*</span></label>
+          <input class="form-input" name="phone" type="tel" placeholder="010-0000-0000" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">소속 부서/기관 <span class="req">*</span></label>
+          <input class="form-input" name="dept" type="text" placeholder="예) 사무국, 청년부" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">이메일</label>
+          <input class="form-input" name="email" type="email" placeholder="example@church.org">
+        </div>
+      </div>
+      <div class="form-divider"></div>
+      <div class="form-section-title">상영 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">상영 시작일 <span class="req">*</span></label>
+          <input class="form-input" name="eventDate" type="date" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">상영 종료일</label>
+          <input class="form-input" name="endDate" type="date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">영상 길이</label>
+          <select class="form-select" name="duration">
+            <option value="">선택하세요</option>
+            <option>15초</option>
+            <option>30초</option>
+            <option>1분</option>
+            <option>2분</option>
+            <option>기타</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">상영 위치</label>
+          <select class="form-select" name="location">
+            <option value="">선택하세요</option>
+            <option>본당 로비 스크린</option>
+            <option>교육관 로비</option>
+            <option>전체 모니터</option>
+            <option>기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">광고 내용 및 요청사항 <span class="req">*</span></label>
+          <textarea class="form-textarea" name="detail" placeholder="광고 내용, 상영 목적, 파일 보유 여부 등을 적어주세요." required></textarea>
+        </div>
+      </div>
+      <div class="form-row single">
+        <div class="form-group">
+          <label class="form-label">영상 파일 제출 방법</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="fileMethod" value="email"> 
+              <div class="checkbox-label"><strong>이메일 전송</strong>미디어센터 이메일로 파일 발송</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="fileMethod" value="drive"> 
+              <div class="checkbox-label"><strong>구글 드라이브 링크</strong>공유 링크 제출</div>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="fileMethod" value="none"> 
+              <div class="checkbox-label"><strong>파일 없음</strong>제작 의뢰도 함께 요청</div>
+            </label>
+          </div>
+        </div>
+      </div>
+    `
+  }
+};
+
+function showForm(type) {
+  currentFormType = type;
+  const cfg = formConfigs[type];
+  document.getElementById('form-title').textContent = cfg.title;
+  document.getElementById('form-subtitle').textContent = cfg.subtitle;
+  document.getElementById('form-body').innerHTML = cfg.fields + `
+    <button class="submit-btn ${cfg.color}" onclick="submitForm(event)">
+      ✉️ 신청서 제출하기
+    </button>
+  `;
+  showView('form');
+}
+
+// ============================================================
+// FORM SUBMIT
+// ============================================================
+async function submitForm(e) {
+  e.preventDefault();
+  const btn = e.target;
+  const inputs = document.querySelectorAll('#form-body [required]');
+  let valid = true;
+  inputs.forEach(inp => {
+    if (!inp.value.trim()) {
+      inp.style.borderColor = 'var(--error)';
+      valid = false;
+      setTimeout(() => inp.style.borderColor = '', 2000);
+    }
+  });
+  if (!valid) { showToast('필수 항목을 모두 입력해 주세요.', 'error'); return; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 제출 중...';
+
+  const formData = {};
+  document.querySelectorAll('#form-body input, #form-body select, #form-body textarea').forEach(el => {
+    if (!el.name) return;
+    if (el.type === 'checkbox') {
+      if (el.checked) {
+        formData[el.name] = formData[el.name] ? formData[el.name]+', '+el.value : el.value;
+      }
+    } else {
+      formData[el.name] = el.value;
+    }
+  });
+
+  const record = {
+    id: genRef(),
+    type: currentFormType,
+    status: 'new',
+    createdAt: new Date().toISOString(),
+    ...formData
+  };
+
+  // Google Apps Script 연동
+  if (APPS_SCRIPT_URL) {
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(record)
+      });
+    } catch(err) { console.warn('GAS 전송 실패, 로컬 저장:', err); }
+  }
+
+  // 로컬 저장 (항상)
+  const all = getData();
+  all.unshift(record);
+  saveData(all);
+
+  document.getElementById('success-ref-num').textContent = record.id;
+  showView('success');
+  showToast('신청이 완료되었습니다! 🎉', 'success');
+}
+
+// ============================================================
+// ADMIN
+// ============================================================
+function renderAdmin() {
+  const data = getData();
+  const video = data.filter(d=>d.type==='video').length;
+  const photo = data.filter(d=>d.type==='photo').length;
+  const ad = data.filter(d=>d.type==='ad').length;
+  document.getElementById('stat-total').textContent = data.length;
+  document.getElementById('stat-video').textContent = video;
+  document.getElementById('stat-photo').textContent = photo;
+  document.getElementById('stat-ad').textContent = ad;
+  renderTable();
+}
+
+const typeLabel = { video:'🎥 영상 제작', photo:'📸 사진 촬영', ad:'📺 영상 광고' };
+const statusLabel = { new:'신규접수', reviewing:'검토중', done:'완료' };
+
+function renderTable() {
+  const data = getData();
+  const fType = document.getElementById('filter-type').value;
+  const fStatus = document.getElementById('filter-status').value;
+  const fSearch = (document.getElementById('search-input').value || '').toLowerCase();
+
+  let filtered = data.filter(d => {
+    if (fType && d.type !== fType) return false;
+    if (fStatus && d.status !== fStatus) return false;
+    if (fSearch) {
+      const haystack = [d.name, d.phone, d.dept, d.email].join(' ').toLowerCase();
+      if (!haystack.includes(fSearch)) return false;
+    }
+    return true;
+  });
+
+  const tbody = document.getElementById('admin-tbody');
+  if (!filtered.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📭</div><p>신청 내역이 없습니다.</p></div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = filtered.map(d => `
+    <tr onclick="showDetail('${d.id}')">
+      <td><code style="font-size:11px;color:var(--text-muted)">${d.id}</code></td>
+      <td style="white-space:nowrap">${formatDT(d.createdAt)}</td>
+      <td><span class="type-badge ${d.type}">${typeLabel[d.type]||d.type}</span></td>
+      <td><strong>${d.name||'-'}</strong></td>
+      <td>${d.dept||'-'}</td>
+      <td style="white-space:nowrap">${d.eventDate||'-'}</td>
+      <td onclick="event.stopPropagation()">
+        <select class="status-select" onchange="updateStatus('${d.id}', this.value)">
+          <option value="new" ${d.status==='new'?'selected':''}>🟡 신규접수</option>
+          <option value="reviewing" ${d.status==='reviewing'?'selected':''}>🔵 검토중</option>
+          <option value="done" ${d.status==='done'?'selected':''}>🟢 완료</option>
+        </select>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function updateStatus(id, status) {
+  const all = getData();
+  const idx = all.findIndex(d => d.id === id);
+  if (idx > -1) { all[idx].status = status; saveData(all); }
+  showToast('상태가 업데이트되었습니다.', 'success');
+}
+
+// ============================================================
+// DETAIL MODAL
+// ============================================================
+function showDetail(id) {
+  const d = getData().find(r => r.id === id);
+  if (!d) return;
+  const typeNames = { video:'영상 제작', photo:'사진 촬영', ad:'영상 광고' };
+  document.getElementById('modal-title').textContent = `[${typeNames[d.type]}] ${d.name||''} 신청 상세`;
+  const skip = ['id','type','status','createdAt'];
+  const labels = {
+    name:'신청자', phone:'연락처', email:'이메일', dept:'소속 부서',
+    eventDate:'행사/촬영일', endDate:'종료일', startTime:'시작 시간',
+    location:'장소', purpose:'용도', duration:'영상 길이',
+    deliveryDate:'납품 희망일', delivery:'납품 방식',
+    fileMethod:'파일 제출', detail:'요청 내용'
+  };
+  const entries = Object.entries(d).filter(([k]) => !skip.includes(k));
+  document.getElementById('modal-body').innerHTML = `
+    <div class="detail-grid">
+      <div class="detail-item">
+        <div class="detail-key">접수번호</div>
+        <div class="detail-val"><code>${d.id}</code></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">접수일시</div>
+        <div class="detail-val">${formatDT(d.createdAt)}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">유형</div>
+        <div class="detail-val"><span class="type-badge ${d.type}">${typeLabel[d.type]}</span></div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">상태</div>
+        <div class="detail-val">${statusLabel[d.status]||d.status}</div>
+      </div>
+      ${entries.map(([k,v]) => `
+        <div class="detail-item ${k==='detail'?'full':''}">
+          <div class="detail-key">${labels[k]||k}</div>
+          <div class="detail-val" style="${k==='detail'?'white-space:pre-wrap;background:var(--surface2);padding:10px;border-radius:8px;font-size:13px':''}">
+            ${v||'-'}
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal'))
+    document.getElementById('modal').classList.remove('open');
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast ' + type;
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// 테스트 데이터 (처음 방문 시)
+if (!localStorage.getItem('mediaRequests')) {
+  const sample = [
+    { id:'V2604010001', type:'video', name:'김성민', phone:'010-1234-5678', dept:'청년부', email:'', eventDate:'2026-04-20', purpose:'행사 기록', duration:'10~30분', deliveryDate:'2026-04-25', detail:'청년부 봄 수련회 전체 영상 촬영 요청드립니다.', status:'reviewing', createdAt:'2026-04-01T09:30:00' },
+    { id:'P2604050002', type:'photo', name:'이선희', phone:'010-9876-5432', dept:'여성부', email:'lee@church.org', eventDate:'2026-04-15', location:'본당', startTime:'14:00', duration:'2~4시간', detail:'어머니 기도회 행사 사진 촬영 부탁드립니다.', delivery:'email', status:'new', createdAt:'2026-04-05T14:22:00' },
+    { id:'A2604080003', type:'ad', name:'박진우', phone:'010-5555-1234', dept:'사무국', email:'', eventDate:'2026-04-22', endDate:'2026-04-28', duration:'30초', location:'본당 로비 스크린', detail:'부활절 특별 예배 안내 영상 상영 요청', fileMethod:'drive', status:'done', createdAt:'2026-04-08T11:00:00' },
+  ];
+  saveData(sample);
+}
+</script>
+</body>
+</html>
