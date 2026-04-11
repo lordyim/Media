@@ -755,14 +755,7 @@
 
   <!-- ===== ADMIN VIEW ===== -->
   <div id="view-admin" class="view">
-    <div class="setup-banner">
-      <div class="setup-icon">⚙️</div>
-      <div class="setup-text">
-        <h4>Google 스프레드시트 연동 설정이 필요합니다</h4>
-        <p>아래 <strong>2단계 설정 가이드</strong>를 완료하시면 실제 데이터가 저장됩니다.<br>
-        지금은 테스트 데이터로 확인하실 수 있습니다. 설정 방법이 궁금하시면 물어보세요!</p>
-      </div>
-    </div>
+  
 
     <div class="admin-top">
       <h2>📊 신청 현황</h2>
@@ -1180,15 +1173,24 @@ async function submitForm(e) {
     ...formData
   };
 
-  // Google Apps Script 연동
+  // Google Apps Script 연동 (CORS 우회: URL 파라미터 방식)
   if (APPS_SCRIPT_URL) {
     try {
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(record)
+      const params = new URLSearchParams({
+        id: record.id,
+        createdAt: record.createdAt,
+        type: record.type,
+        name: record.name || '',
+        phone: record.phone || '',
+        email: record.email || '',
+        dept: record.dept || '',
+        eventDate: record.eventDate || '',
+        purpose: record.purpose || record.location || '',
+        detail: record.detail || '',
+        status: record.status
       });
+      const img = new Image();
+      img.src = APPS_SCRIPT_URL + '?action=add&' + params.toString();
     } catch(err) { console.warn('GAS 전송 실패, 로컬 저장:', err); }
   }
 
