@@ -836,18 +836,21 @@
 
 <script>
 // ============================================================
-// DATA STORE
-// (실제 운영 시 Google Apps Script URL로 대체)
+// DATA STORE - Google Sheets 연동
 // ============================================================
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzvRq2MkLcR5XV8vNdIZjcDv7WZj9LtKMNrHJma64jn_El_ofbrnYjF7sJZwIpTpV0oQ/exec'; // ← 여기에 Google Apps Script 웹앱 URL 입력
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzvRq2MkLcR5XV8vNdIZjcDv7WZj9LtKMNrHJma64jn_El_ofbrnYjF7sJZwIpTpV0oQ/exec';
 
-// 로컬 스토리지로 데이터 임시 관리
-function getData() {
-  try { return JSON.parse(localStorage.getItem('mediaRequests') || '[]'); }
-  catch(e) { return []; }
-}
-function saveData(arr) {
-  localStorage.setItem('mediaRequests', JSON.stringify(arr));
+// 구글 시트에서 데이터 읽기
+async function getData() {
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + '?action=list');
+    const json = await res.json();
+    if (json.result === 'success') return json.data;
+    return [];
+  } catch(e) {
+    console.warn('시트 읽기 실패:', e);
+    return [];
+  }
 }
 function genRef() {
   const now = new Date();
@@ -1173,31 +1176,24 @@ async function submitForm(e) {
     ...formData
   };
 
-  // Google Apps Script 연동 (CORS 우회: URL 파라미터 방식)
-  if (APPS_SCRIPT_URL) {
-    try {
-      const params = new URLSearchParams({
-        id: record.id,
-        createdAt: record.createdAt,
-        type: record.type,
-        name: record.name || '',
-        phone: record.phone || '',
-        email: record.email || '',
-        dept: record.dept || '',
-        eventDate: record.eventDate || '',
-        purpose: record.purpose || record.location || '',
-        detail: record.detail || '',
-        status: record.status
-      });
-      const img = new Image();
-      img.src = APPS_SCRIPT_URL + '?action=add&' + params.toString();
-    } catch(err) { console.warn('GAS 전송 실패, 로컬 저장:', err); }
-  }
-
-  // 로컬 저장 (항상)
-  const all = getData();
-  all.unshift(record);
-  saveData(all);
+  // Google Apps Script로 데이터 전송
+  try {
+    const params = new URLSearchParams({
+      action: 'add',
+      id: record.id,
+      createdAt: record.createdAt,
+      type: record.type,
+      name: record.name || '',
+      phone: record.phone || '',
+      email: record.email || '',
+      dept: record.dept || '',
+      eventDate: record.eventDate || '',
+      purpose: record.purpose || record.location || '',
+      detail: record.detail || '',
+      status: record.status
+    });
+    await fetch(APPS_SCRIPT_URL + '?' + params.toString());
+  } catch(err) { console.warn('GAS 전송 실패:', err); }
 
   document.getElementById('success-ref-num').textContent = record.id;
   showView('success');
@@ -1207,11 +1203,13 @@ async function submitForm(e) {
 // ============================================================
 // ADMIN
 // ============================================================
-function renderAdmin() {
-  const data = getData();
-  const video = data.filter(d=>d.type==='video').length;
-  const photo = data.filter(d=>d.type==='photo').length;
-  const ad = data.filter(d=>d.type==='ad').length;
+async function renderAdmin() {
+  document.getElementById('admin-tbody').innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">⏳</div><p>데이터를 불러오는 중...</p></div></td></tr>';
+  window._adminData = await getData();
+  const data = window._adminData;
+  const video = data.filter(d=>d['유형']==='영상제작').length;
+  const photo = data.filter(d=>d['유형']==='사진촬영').length;
+  const ad = data.filter(d=>d['유형']==='영상광고').length;
   document.getElementById('stat-total').textContent = data.length;
   document.getElementById('stat-video').textContent = video;
   document.getElementById('stat-photo').textContent = photo;
@@ -1223,16 +1221,21 @@ const typeLabel = { video:'🎥 영상 제작', photo:'📸 사진 촬영', ad:'
 const statusLabel = { new:'신규접수', reviewing:'검토중', done:'완료' };
 
 function renderTable() {
-  const data = getData();
+  const data = window._adminData || [];
   const fType = document.getElementById('filter-type').value;
   const fStatus = document.getElementById('filter-status').value;
   const fSearch = (document.getElementById('search-input').value || '').toLowerCase();
 
+  const typeMap = {'영상제작':'video','사진촬영':'photo','영상광고':'ad'};
+  const statusMap = {'신규접수':'new','검토중':'reviewing','완료':'done'};
+
   let filtered = data.filter(d => {
-    if (fType && d.type !== fType) return false;
-    if (fStatus && d.status !== fStatus) return false;
+    const dType = typeMap[d['유형']] || '';
+    const dStatus = statusMap[d['상태']] || 'new';
+    if (fType && dType !== fType) return false;
+    if (fStatus && dStatus !== fStatus) return false;
     if (fSearch) {
-      const haystack = [d.name, d.phone, d.dept, d.email].join(' ').toLowerCase();
+      const haystack = [d['이름'],d['연락처'],d['부서'],d['이메일']].join(' ').toLowerCase();
       if (!haystack.includes(fSearch)) return false;
     }
     return true;
@@ -1243,75 +1246,100 @@ function renderTable() {
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-icon">📭</div><p>신청 내역이 없습니다.</p></div></td></tr>`;
     return;
   }
-  tbody.innerHTML = filtered.map(d => `
-    <tr onclick="showDetail('${d.id}')">
-      <td><code style="font-size:11px;color:var(--text-muted)">${d.id}</code></td>
-      <td style="white-space:nowrap">${formatDT(d.createdAt)}</td>
-      <td><span class="type-badge ${d.type}">${typeLabel[d.type]||d.type}</span></td>
-      <td><strong>${d.name||'-'}</strong></td>
-      <td>${d.dept||'-'}</td>
-      <td style="white-space:nowrap">${d.eventDate||'-'}</td>
+
+  tbody.innerHTML = filtered.map(d => {
+    const dType = typeMap[d['유형']] || 'video';
+    const dStatus = statusMap[d['상태']] || 'new';
+    const id = d['접수번호'] || '';
+    return `
+    <tr onclick="showDetailSheet('${id}')">
+      <td><code style="font-size:11px;color:var(--text-muted)">${id}</code></td>
+      <td style="white-space:nowrap">${formatDT(d['접수일시'])}</td>
+      <td><span class="type-badge ${dType}">${d['유형']||'-'}</span></td>
+      <td><strong>${d['이름']||'-'}</strong></td>
+      <td>${d['부서']||'-'}</td>
+      <td style="white-space:nowrap">${d['행사일']||'-'}</td>
       <td onclick="event.stopPropagation()">
-        <select class="status-select" onchange="updateStatus('${d.id}', this.value)">
-          <option value="new" ${d.status==='new'?'selected':''}>🟡 신규접수</option>
-          <option value="reviewing" ${d.status==='reviewing'?'selected':''}>🔵 검토중</option>
-          <option value="done" ${d.status==='done'?'selected':''}>🟢 완료</option>
+        <select class="status-select" onchange="updateStatus('${id}', this.value)">
+          <option value="new" ${dStatus==='new'?'selected':''}>🟡 신규접수</option>
+          <option value="reviewing" ${dStatus==='reviewing'?'selected':''}>🔵 검토중</option>
+          <option value="done" ${dStatus==='done'?'selected':''}>🟢 완료</option>
         </select>
       </td>
     </tr>
-  `).join('');
+  `}).join('');
 }
 
-function updateStatus(id, status) {
-  const all = getData();
-  const idx = all.findIndex(d => d.id === id);
-  if (idx > -1) { all[idx].status = status; saveData(all); }
-  showToast('상태가 업데이트되었습니다.', 'success');
+async function updateStatus(id, status) {
+  const statusLabel = {new:'신규접수', reviewing:'검토중', done:'완료'};
+  try {
+    await fetch(APPS_SCRIPT_URL + '?action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(statusLabel[status]||status));
+    showToast('상태가 업데이트되었습니다.', 'success');
+    if (window._adminData) {
+      const typeMap = {'영상제작':'video','사진촬영':'photo','영상광고':'ad'};
+      const item = window._adminData.find(d => d['접수번호'] === id);
+      if (item) item['상태'] = statusLabel[status]||status;
+      renderTable();
+    }
+  } catch(e) { showToast('업데이트 실패', 'error'); }
 }
 
 // ============================================================
 // DETAIL MODAL
 // ============================================================
-function showDetail(id) {
-  const d = getData().find(r => r.id === id);
+function showDetailSheet(id) {
+  const data = window._adminData || [];
+  const d = data.find(r => r['접수번호'] === id);
   if (!d) return;
-  const typeNames = { video:'영상 제작', photo:'사진 촬영', ad:'영상 광고' };
-  document.getElementById('modal-title').textContent = `[${typeNames[d.type]}] ${d.name||''} 신청 상세`;
-  const skip = ['id','type','status','createdAt'];
-  const labels = {
-    name:'신청자', phone:'연락처', email:'이메일', dept:'소속 부서',
-    eventDate:'행사/촬영일', endDate:'종료일', startTime:'시작 시간',
-    location:'장소', purpose:'용도', duration:'영상 길이',
-    deliveryDate:'납품 희망일', delivery:'납품 방식',
-    fileMethod:'파일 제출', detail:'요청 내용'
-  };
-  const entries = Object.entries(d).filter(([k]) => !skip.includes(k));
+  const typeMap = {'영상제작':'video','사진촬영':'photo','영상광고':'ad'};
+  const dType = typeMap[d['유형']] || 'video';
+  document.getElementById('modal-title').textContent = `[${d['유형']}] ${d['이름']||''} 신청 상세`;
   document.getElementById('modal-body').innerHTML = `
     <div class="detail-grid">
       <div class="detail-item">
         <div class="detail-key">접수번호</div>
-        <div class="detail-val"><code>${d.id}</code></div>
+        <div class="detail-val"><code>${d['접수번호']||'-'}</code></div>
       </div>
       <div class="detail-item">
         <div class="detail-key">접수일시</div>
-        <div class="detail-val">${formatDT(d.createdAt)}</div>
+        <div class="detail-val">${formatDT(d['접수일시'])}</div>
       </div>
       <div class="detail-item">
         <div class="detail-key">유형</div>
-        <div class="detail-val"><span class="type-badge ${d.type}">${typeLabel[d.type]}</span></div>
+        <div class="detail-val"><span class="type-badge ${dType}">${d['유형']||'-'}</span></div>
       </div>
       <div class="detail-item">
         <div class="detail-key">상태</div>
-        <div class="detail-val">${statusLabel[d.status]||d.status}</div>
+        <div class="detail-val">${d['상태']||'-'}</div>
       </div>
-      ${entries.map(([k,v]) => `
-        <div class="detail-item ${k==='detail'?'full':''}">
-          <div class="detail-key">${labels[k]||k}</div>
-          <div class="detail-val" style="${k==='detail'?'white-space:pre-wrap;background:var(--surface2);padding:10px;border-radius:8px;font-size:13px':''}">
-            ${v||'-'}
-          </div>
-        </div>
-      `).join('')}
+      <div class="detail-item">
+        <div class="detail-key">신청자</div>
+        <div class="detail-val">${d['이름']||'-'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">연락처</div>
+        <div class="detail-val">${d['연락처']||'-'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">이메일</div>
+        <div class="detail-val">${d['이메일']||'-'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">소속 부서</div>
+        <div class="detail-val">${d['부서']||'-'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">행사일</div>
+        <div class="detail-val">${d['행사일']||'-'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-key">세부내용</div>
+        <div class="detail-val">${d['세부내용']||'-'}</div>
+      </div>
+      <div class="detail-item full">
+        <div class="detail-key">요청사항</div>
+        <div class="detail-val" style="white-space:pre-wrap;background:var(--surface2);padding:10px;border-radius:8px;font-size:13px">${d['요청사항']||'-'}</div>
+      </div>
     </div>
   `;
   document.getElementById('modal').classList.add('open');
@@ -1332,15 +1360,7 @@ function showToast(msg, type='') {
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// 테스트 데이터 (처음 방문 시)
-if (!localStorage.getItem('mediaRequests')) {
-  const sample = [
-    { id:'V2604010001', type:'video', name:'김성민', phone:'010-1234-5678', dept:'청년부', email:'', eventDate:'2026-04-20', purpose:'행사 기록', duration:'10~30분', deliveryDate:'2026-04-25', detail:'청년부 봄 수련회 전체 영상 촬영 요청드립니다.', status:'reviewing', createdAt:'2026-04-01T09:30:00' },
-    { id:'P2604050002', type:'photo', name:'이선희', phone:'010-9876-5432', dept:'여성부', email:'lee@church.org', eventDate:'2026-04-15', location:'본당', startTime:'14:00', duration:'2~4시간', detail:'어머니 기도회 행사 사진 촬영 부탁드립니다.', delivery:'email', status:'new', createdAt:'2026-04-05T14:22:00' },
-    { id:'A2604080003', type:'ad', name:'박진우', phone:'010-5555-1234', dept:'사무국', email:'', eventDate:'2026-04-22', endDate:'2026-04-28', duration:'30초', location:'본당 로비 스크린', detail:'부활절 특별 예배 안내 영상 상영 요청', fileMethod:'drive', status:'done', createdAt:'2026-04-08T11:00:00' },
-  ];
-  saveData(sample);
-}
+// 구글 시트에서 실시간으로 데이터를 불러옵니다.
 </script>
 </body>
 </html>
