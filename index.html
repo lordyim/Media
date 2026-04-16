@@ -695,12 +695,14 @@ function renderHomeTbl() {
     var st = d['상태'] || '신규접수';
     var sc = st === '신규접수' ? 'new' : st === '검토중' ? 'reviewing' : 'done';
     var si = st === '신규접수' ? '🟡' : st === '검토중' ? '🔵' : '🟢';
-    html += '<div class="home-tbl-row">' +
-      '<span style="font-size:13px;color:var(--tx);font-weight:700;font-family:monospace">' + (d['접수번호']||'-') + '</span>' +
-      '<span><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></span>' +
-      '<span style="color:var(--tx2)">' + fmtDate(d['eventDate']) + '</span>' +
-      '<span><span class="st-pill ' + sc + '">' + si + ' ' + st + '</span></span>' +
-      '</div>';
+        html += '<div class="home-tbl-row">' +
+        '<span style="font-size:12px;color:var(--tx);font-weight:700;font-family:monospace">' + (d['접수번호']||'-') + '</span>' +
+        '<span style="font-size:11px;color:var(--tx2)">' + fmtDT(d['접수일시']) + '</span>' +
+        '<span><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></span>' +
+        '<span style="font-size:12px;color:var(--tx2)">' + (d.dept||'-') + '</span>' +
+        '<span style="font-size:12px;color:var(--tx2)">' + fmtDate(d['eventDate']) + '</span>' +
+        '<span><span class="st-pill ' + sc + '">' + si + ' ' + st + '</span></span>' +
+        '</div>';
   });
   // 페이지 네이션
   if (totalPages > 1) {
