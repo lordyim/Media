@@ -420,7 +420,13 @@ function FG(lbl, req, hint, inp) {
     '</label>' + inp + '</div>';
 }
 function FI(nm, ph, req) { return '<input class="fi" name="' + nm + '" placeholder="' + (ph||'') + '"' + (req ? ' required' : '') + ' autocomplete="off">'; }
-function FD(nm, req) { return '<input class="fi" name="' + nm + '" type="date"' + (req ? ' required' : '') + '>'; }
+function FD(nm, req) {
+  var today = new Date();
+  var min = today.getFullYear() + '-' +
+    String(today.getMonth()+1).padStart(2,'0') + '-' +
+    String(today.getDate()).padStart(2,'0');
+  return '<input class="fi" name="' + nm + '" type="date" min="' + min + '"' + (req ? ' required' : '') + '>';
+}
 function FT(nm, req) { return '<input class="fi" name="' + nm + '" type="time"' + (req ? ' required' : '') + '>'; }
 function FTA(nm, ph, req) { return '<textarea class="fta" name="' + nm + '" placeholder="' + (ph||'') + '"' + (req ? ' required' : '') + '></textarea>'; }
 function RDO(nm, opts) {
