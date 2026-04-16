@@ -20,12 +20,12 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .nb.on{background:var(--ac);color:#fff;}
 .nb:not(.on){background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
 .nb:not(.on):hover{background:rgba(255,255,255,.2);}
-.main{max-width:960px;margin:0 auto;padding:30px 18px;}
+.main{max-width:960px;margin:0 auto;padding:16px 18px;}
 .view{display:none;}.view.on{display:block;}
-.hero{text-align:center;padding:16px 16px 14px;}
-.hbadge{display:inline-block;background:var(--acp);color:var(--ac);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1px;margin-bottom:18px;}
-.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(22px,4vw,36px);font-weight:700;line-height:1.3;margin-bottom:12px;}
-.hero p{color:var(--tx2);font-size:14px;max-width:480px;margin:0 auto 36px;line-height:1.85;}
+.hero{text-align:center;padding:10px 16px 10px;}
+
+.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(18px,3vw,26px);font-weight:700;line-height:1.3;margin-bottom:8px;}
+.hero p{color:var(--tx2);font-size:13px;max-width:600px;margin:0 auto 14px;line-height:1.7;}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
 .sc{background:var(--sur);border-radius:14px;padding:20px 20px 18px;cursor:pointer;border:2px solid transparent;box-shadow:var(--sh);transition:.22s;text-align:left;position:relative;overflow:hidden;}
 .sc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:14px 14px 0 0;}
@@ -44,8 +44,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .home-status{margin-top:18px;}
 .home-status-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 .home-tbl-wrap{background:#fff;border-radius:13px;box-shadow:var(--sh);overflow:hidden;}
-.home-tbl-head{background:var(--sur2);display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);}
-.home-tbl-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:12px 16px;border-top:1px solid var(--bdr);align-items:center;font-size:13px;}
+.home-tbl-head{background:var(--sur2);display:grid;grid-template-columns:1.4fr 1.2fr 0.9fr 1fr 0.9fr 1fr;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);}
+.home-tbl-row{display:grid;grid-template-columns:1.4fr 1.2fr 0.9fr 1fr 0.9fr 1fr;padding:10px 16px;border-top:1px solid var(--bdr);align-items:center;font-size:12px;}
 .home-tbl-row:hover{background:var(--acp);}
 .home-empty{padding:32px 20px;text-align:center;color:var(--tx3);font-size:13px;}
 .st-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;}
@@ -162,7 +162,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
 .dg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 .di{display:flex;flex-direction:column;gap:4px;}
 .di.full{grid-column:1/-1;}
-.dk{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);}
+.dk{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);} code{font-size:13px;font-weight:700;color:var(--tx);}
 .dv{font-size:13px;color:var(--tx);line-height:1.6;}
 .dv.long{background:var(--sur2);padding:10px 12px;border-radius:8px;white-space:pre-wrap;font-size:12px;}
 .toast{position:fixed;bottom:22px;right:22px;background:var(--tx);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:999;transform:translateY(70px);opacity:0;transition:all .3s;}
@@ -208,9 +208,8 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
 
 <div id="v-home" class="view on">
   <div class="hero">
-    <div class="hbadge">📋 온라인 신청</div>
-    <h1>미디어 서비스를<br>신청하세요</h1>
-    <p>아래 서비스 중 원하시는 항목을 선택하여 신청서를 작성해 주세요.<br>담당자 검토 후 연락드립니다.</p>
+    <h1>미디어 서비스를 신청하세요</h1>
+    <p>아래 서비스 중 원하시는 항목을 선택하여 신청서를 작성해 주세요. 담당자 검토 후 연락드립니다.</p>
   </div>
   <div class="cgrid">
     <div class="sc v" id="card-v">
@@ -236,7 +235,9 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
     <div class="home-tbl-wrap">
       <div class="home-tbl-head">
         <span>접수번호</span>
+        <span>접수일시</span>
         <span>유형</span>
+        <span>부서</span>
         <span>행사일</span>
         <span>상태</span>
       </div>
@@ -513,7 +514,7 @@ function goF(t) {
 
   var printBtn = document.createElement('button');
   printBtn.className = 'sbtn-print';
-  printBtn.textContent = '🖨️ 내 신청내용 인쇄(제출 전 인쇄하여 보관하세요)';
+  printBtn.textContent = '🖨️ 내 신청 내용 인쇄';
   printBtn.onclick = printMyForm;
 
   btnWrap.appendChild(btn);
@@ -682,7 +683,7 @@ function renderHomeTbl() {
     tbody.innerHTML = '<div class="home-empty">📭 신청 내역이 없습니다.</div>';
     return;
   }
-  var perPage = 10;
+  var perPage = 5;
   var total = data.length;
   var totalPages = Math.ceil(total / perPage);
   var start = (HOME_PAGE - 1) * perPage;
@@ -695,7 +696,7 @@ function renderHomeTbl() {
     var sc = st === '신규접수' ? 'new' : st === '검토중' ? 'reviewing' : 'done';
     var si = st === '신규접수' ? '🟡' : st === '검토중' ? '🔵' : '🟢';
     html += '<div class="home-tbl-row">' +
-      '<span style="font-size:11px;color:var(--tx3);font-family:monospace">' + (d['접수번호']||'-') + '</span>' +
+      '<span style="font-size:13px;color:var(--tx);font-weight:700;font-family:monospace">' + (d['접수번호']||'-') + '</span>' +
       '<span><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></span>' +
       '<span style="color:var(--tx2)">' + fmtDate(d['eventDate']) + '</span>' +
       '<span><span class="st-pill ' + sc + '">' + si + ' ' + st + '</span></span>' +
@@ -767,7 +768,7 @@ function renderTbl() {
     var sc = st === '신규접수' ? 'new' : st === '검토중' ? 'reviewing' : 'done';
     var si = st === '신규접수' ? '🟡' : st === '검토중' ? '🔵' : '🟢';
     html += '<tr data-id="' + id + '" class="trow">' +
-      '<td><code style="font-size:11px;color:#9c9388">' + id + '</code></td>' +
+      '<td><code style="font-size:13px;color:var(--tx);font-weight:700">' + id + '</code></td>' +
       '<td style="white-space:nowrap;font-size:12px">' + fmtDT(d['접수일시']) + '</td>' +
       '<td><span class="bdg ' + tc + '">' + (d['유형'] || '-') + '</span></td>' +
       '<td><strong>' + (d.dept || '-') + '</strong></td>' +
@@ -855,7 +856,7 @@ function showDet(id) {
   document.getElementById('mtitle').textContent = '[' + type + '] ' + (d.dept || '') + ' 신청 상세';
 
   var html = DS('기본 정보') +
-    DI('접수번호', '<code>' + (d['접수번호'] || '-') + '</code>') +
+    DI('접수번호', '<span style="font-size:14px;font-weight:700;color:var(--tx)">' + (d['접수번호'] || '-') + '</span>') +
     DI('접수일시', fmtDT(d['접수일시'])) +
     DI('유형', '<span class="bdg ' + tc + '">' + type + '</span>') +
     DI('상태', d['상태'] || '-') +
