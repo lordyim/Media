@@ -40,10 +40,11 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .scl{font-size:12px;font-weight:700;}
 .sc.v .scl{color:var(--vc)}.sc.p .scl{color:var(--pc)}.sc.a .scl{color:var(--dc)}
 .fhdr{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-.bbtn{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--bdr);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:.22s;}
-.bbtn:hover{background:var(--sur2);}
+.bbtn{display:flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;border:2px solid var(--ac);background:#fff;cursor:pointer;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;color:var(--ac);transition:.22s;white-space:nowrap;flex-shrink:0;}
+.bbtn:hover{background:var(--ac);color:#fff;}
 .fhdr-tx h2{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:700;}
 .fhdr-tx p{font-size:12px;color:var(--tx2);margin-top:2px;}
+.fhdr{flex-wrap:wrap;}
 .fcard{background:var(--sur);border-radius:16px;padding:28px 24px;box-shadow:var(--sh);border:1.5px solid var(--bdr);}
 @media(max-width:600px){.fcard{padding:18px 14px;}}
 .stitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--bdr);margin-top:22px;}
@@ -204,7 +205,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 
 <div id="v-form" class="view">
   <div class="fhdr">
-    <button class="bbtn" id="back-btn">←</button>
+    <button class="bbtn" id="back-btn">← 목록으로</button>
     <div class="fhdr-tx"><h2 id="ftitle">신청서</h2><p id="fsub"></p></div>
   </div>
   <div class="fcard" id="fbody"></div>
@@ -448,12 +449,12 @@ function buildVideo() {
     R(FG('7. 원하는 최종 영상 길이', true, '',
       RDO('videoDuration', ['1분 이내 (숏폼)', '1분 ~ 3분', '3분 ~ 5분', '5분 이상 (상담 필요)']))) +
     R(FG('8. 영상 시청 희망 마감일', true, '최종 납품일', FD('videoDeadline', true)),
-      FG('11. 사역 또는 행사 일시', false, '촬영이 필요한 경우', FD('eventDate', false))) +
-    R(FG('9. 영상 제작에 필요한 예산이 있습니까?', true, '',
+      FG('9. 영상 제작에 필요한 예산이 있습니까?', true, '',
       CHK('videoBudget', ['위원회/부서/행사 예산이 있습니다.', '예산이 없습니다.']))) +
     R(FG('10. 영상에 포함되어야 할 주요 내용', true, '핵심 메시지, 중요 장면, 인터뷰 대상 등',
       FTA('videoContent', '영상에 꼭 들어가야 할 내용을 적어주세요.', true))) +
-    R(FG('12. 사용 가능한 기존 자료', true, '사진, 영상, 음악 등이 있습니까?',
+    R(FG('11. 사역 또는 행사 일시', false, '촬영이 필요한 경우', FD('eventDate', false)),
+      FG('12. 사용 가능한 기존 자료', true, '사진, 영상, 음악 등이 있습니까?',
       RDO('videoAssets', ['예, 충분한 준비가 되어 있습니다.', '일부 자료가 있습니다.', '아니오, 없습니다.', '자료를 업로드할 필요가 없습니다.']))) +
     R(FG('13. 필요한 영상의 제작 방식', true, '',
       RDO('videoStyle', ['기존 자료 편집 (컷편집, 자막, 배경음악)', '새로운 현장 촬영 (인터뷰, 행사 스케치 등)', '모션 그래픽/애니메이션', '제작 방식 미정 (상담 필요)']))) +
@@ -474,9 +475,9 @@ function buildPhoto() {
     R(FG('5. 촬영 요청 유형', true, '',
       RDO('photoType', ['행사 현장 스케치 (자연스러운 기록)', '공식 기념 촬영 (참석자 단체 사진 등)', '특정 대상 집중 촬영 (강사, 주요 봉사자 등)', '기타 (아래 요청 상세 내용에 기재)']))) +
     R(FG('6. 촬영 일자', true, '', FD('eventDate', true)),
-      FG('촬영 시작 시간', true, '', FT('eventTime', true))) +
-    R(FG('7. 촬영 예상 소요 시간 (최대)', true, '', FI('duration', '예) 2시간 30분', true)),
-      FG('8. 촬영 장소', true, '구체적으로', FI('location', '예) 본당, 제1교육관 401호', true))) +
+      FG('7. 촬영 시작 시간', true, '', FT('eventTime', true))) +
+    R(FG('8. 촬영 예상 소요 시간 (최대)', true, '', FI('duration', '예) 2시간 30분', true)),
+      FG('9. 촬영 장소', true, '구체적으로', FI('location', '예) 본당, 제1교육관 401호', true))) +
     R(FG('10. 촬영 요청 상세 내용', true, '필수 촬영 컷, 특별히 강조하고 싶은 장면 등',
       FTA('photoDetail', '촬영 요청 내용을 상세히 작성해 주세요.', true))) +
     R(FG('11. 촬영 결과물 필요 마감일', true, '', FD('deadline', true))) +
@@ -508,13 +509,13 @@ function buildAd() {
       FG('7. 희망 상영 종료일', true, '', FD('endDate', true))) +
     R(FG('8. 총 상영 길이', true, '광고 영상의 전체 길이', FI('adDuration', '예) 30초, 1분 30초', true))) +
     R(FG('9. 상영 횟수 및 시간대 선호도', true, '', mx)) +
-    R(FG('11. 영상 해상도 및 파일 형식은 미디어 센터 기준에 부합합니까?', true, '정보 기입 필요',
+    R(FG('10. 영상 해상도 및 파일 형식은 미디어 센터 기준에 부합합니까?', true, '정보 기입 필요',
       CHK('adFileOk', ['네 그렇습니다.']))) +
-    R(FG('12. 본 광고에 대한 승인 여부', true, '위원장 및 부서장/책임자 확인',
+    R(FG('11. 본 광고에 대한 승인 여부', true, '위원장 및 부서장/책임자 확인',
       RDO('adApproval', ['승인 완료', '승인 예정']))) +
-    R(FG('13. 기타 전달 사항 또는 요청 사항', true, '',
+    R(FG('12. 기타 전달 사항 또는 요청 사항', true, '',
       FTA('adNote', '기타 전달하실 사항을 적어주세요.', true))) +
-    R(FG('14. 동의 여부', true, '',
+    R(FG('13. 동의 여부', true, '',
       '<p style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.7;">본 신청서의 내용이 사실임을 확인하고, 교회 영상 광고 지침을 준수할 것에 동의하십니까?</p>' +
       RDO('adConsent', ['예, 동의합니다.'])));
 }
