@@ -112,6 +112,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .sinp{width:100%;padding:9px 13px;border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none;}
 .sinp:focus{border-color:var(--ac2);}
 .tcon{overflow-x:auto;}
+.tbl-bottom{height:80px;}
 table{width:100%;border-collapse:collapse;min-width:700px;}
 thead th{background:var(--sur2);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);white-space:nowrap;}
 tbody tr.trow{border-bottom:1px solid var(--bdr);cursor:pointer;transition:.15s;}
@@ -127,6 +128,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 .stb.done{background:#e8f5e9;color:#2e7d32;}.stb.done:hover{background:#2e7d32;color:#fff;}
 .stm{display:none;position:absolute;right:0;top:110%;background:#fff;border:1.5px solid var(--bdr);border-radius:10px;box-shadow:var(--sh2);z-index:50;min-width:110px;overflow:hidden;}
 .stm.on{display:block;}
+.stm.up{top:auto;bottom:110%;}
 .stmi{padding:9px 16px;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.15s;}
 .stmi:hover{background:var(--sur2);}
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
@@ -266,6 +268,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
         <tbody id="tbody"></tbody>
       </table>
     </div>
+    <div class="tbl-bottom"></div>
   </div>
 </div>
 </main>
@@ -373,6 +376,15 @@ function fmtDT(iso) {
   return d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' +
     String(d.getDate()).padStart(2,'0') + ' ' +
     String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+}
+function fmtDate(val) {
+  if (!val) return '-';
+  var s = String(val);
+  // ISO 형식이면 날짜만 추출
+  if (s.indexOf('T') > -1) return s.slice(0, 10);
+  // YYYY-MM-DD 형식이면 그대로
+  if (s.match(/^\d{4}-\d{2}-\d{2}/)) return s.slice(0, 10);
+  return s;
 }
 function showToast(msg, tp) {
   var t = document.getElementById('toast');
@@ -612,7 +624,7 @@ function renderTbl() {
       '<td><span class="bdg ' + tc + '">' + (d['유형'] || '-') + '</span></td>' +
       '<td><strong>' + (d.dept || '-') + '</strong></td>' +
       '<td style="white-space:nowrap">' + (d.phone || '-') + '</td>' +
-      '<td style="white-space:nowrap">' + (d.eventDate || '-') + '</td>' +
+      '<td style="white-space:nowrap">' + fmtDate(d.eventDate) + '</td>' +
       '<td><div class="std">' +
         '<button class="stb ' + sc + '" data-id="' + id + '">' + si + ' ' + st + ' ▾</button>' +
         '<div class="stm">' +
@@ -634,8 +646,18 @@ function renderTbl() {
   document.querySelectorAll('.stb').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); });
-      this.nextElementSibling.classList.toggle('on');
+      document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); m.classList.remove('up'); });
+      var menu = this.nextElementSibling;
+      menu.classList.toggle('on');
+      // 화면 아래 잘리면 위로 펼치기
+      if (menu.classList.contains('on')) {
+        var rect = menu.getBoundingClientRect();
+        if (rect.bottom > window.innerHeight) {
+          menu.classList.add('up');
+        } else {
+          menu.classList.remove('up');
+        }
+      }
     });
   });
   document.querySelectorAll('.stmi').forEach(function(item) {
