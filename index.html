@@ -311,6 +311,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
     </div>
     <div class="tbl-bottom"></div>
   </div>
+  <div id="admin-paging"></div>
 </div>
 </main>
 
@@ -737,8 +738,12 @@ async function loadAdmin() {
   document.getElementById('s1').textContent = AD.filter(function(d) { return d['유형'] === '영상제작'; }).length;
   document.getElementById('s2').textContent = AD.filter(function(d) { return d['유형'] === '사진촬영'; }).length;
   document.getElementById('s3').textContent = AD.filter(function(d) { return d['유형'] === '영상광고'; }).length;
+  ADMIN_PAGE = 1;
   renderTbl();
 }
+
+var ADMIN_PAGE = 1;
+var ADMIN_FILTERED = [];
 
 function renderTbl() {
   var ft = document.getElementById('flt-t').value;
@@ -746,7 +751,7 @@ function renderTbl() {
   var fq = (document.getElementById('srch').value || '').toLowerCase();
   var TC = {'영상제작': 'v', '사진촬영': 'p', '영상광고': 'a'};
 
-  var rows = AD.filter(function(d) {
+  ADMIN_FILTERED = AD.filter(function(d) {
     if (ft && d['유형'] !== ft) return false;
     if (fs && d['상태'] !== fs) return false;
     if (fq) {
@@ -756,14 +761,27 @@ function renderTbl() {
     return true;
   });
 
+  ADMIN_PAGE = 1;
+  renderAdminPage();
+}
+
+function renderAdminPage() {
+  var rows = ADMIN_FILTERED;
   var tb = document.getElementById('tbody');
   if (!rows.length) {
     tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#9c9388;">📭 신청 내역이 없습니다.</td></tr>';
+    document.getElementById('admin-paging').innerHTML = '';
     return;
   }
 
+  var perPage = 5;
+  var totalPages = Math.ceil(rows.length / perPage);
+  var start = (ADMIN_PAGE - 1) * perPage;
+  var pageRows = rows.slice(start, start + perPage);
+  var TC = {'영상제작': 'v', '사진촬영': 'p', '영상광고': 'a'};
+
   var html = '';
-  rows.forEach(function(d) {
+  pageRows.forEach(function(d) {
     var tc = TC[d['유형']] || 'v';
     var id = String(d['접수번호'] || '').replace(/'/g, '');
     var st = d['상태'] || '신규접수';
@@ -794,6 +812,26 @@ function renderTbl() {
       showDet(this.dataset.id);
     });
   });
+
+  // 페이지 네이션 렌더
+  var paging = document.getElementById('admin-paging');
+  if (totalPages > 1) {
+    var btnStyle = 'padding:6px 14px;border-radius:8px;border:1.5px solid #d8d3c8;background:#fff;cursor:pointer;font-size:13px;font-family:Noto Sans KR,sans-serif;';
+    paging.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 0;">' +
+      '<button class="adm-pg-btn" data-dir="-1" style="' + btnStyle + '"' + (ADMIN_PAGE<=1?' disabled':'') + '>◀ 이전</button>' +
+      '<span style="font-size:13px;color:#6b6257">' + ADMIN_PAGE + ' / ' + totalPages + ' 페이지 (전체 ' + rows.length + '건)</span>' +
+      '<button class="adm-pg-btn" data-dir="1" style="' + btnStyle + '"' + (ADMIN_PAGE>=totalPages?' disabled':'') + '>다음 ▶</button>' +
+      '</div>';
+    document.querySelectorAll('.adm-pg-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        ADMIN_PAGE += parseInt(this.dataset.dir);
+        renderAdminPage();
+      });
+    });
+  } else {
+    paging.innerHTML = rows.length ? '<div style="text-align:center;padding:10px 0;font-size:12px;color:#9c9388;">전체 ' + rows.length + '건</div>' : '';
+  }
+
   document.querySelectorAll('.stb').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -833,7 +871,7 @@ async function updSt(id, st) {
     catch(e) {}
   }
   var item = AD.find(function(d) { return String(d['접수번호']) === id; });
-  if (item) { item['상태'] = st; renderTbl(); }
+  if (item) { item['상태'] = st; renderAdminPage(); }
   showToast('상태가 업데이트되었습니다.', 'ok');
 }
 
