@@ -15,9 +15,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:15px;line-height:1.6;}
-/* HEADER */
 .hdr{background:var(--tx);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.25);}
-.hdr-in{max-width:900px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.hdr-in{max-width:960px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .hdr-brand{display:flex;align-items:center;gap:11px;}
 .hdr-logo{width:34px;height:34px;background:var(--ac2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
 .hdr-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;}
@@ -27,8 +26,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .nb.on{background:var(--ac);color:#fff;}
 .nb:not(.on){background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
 .nb:not(.on):hover{background:rgba(255,255,255,.2);}
-/* MAIN */
-.main{max-width:900px;margin:0 auto;padding:30px 18px;}
+.main{max-width:960px;margin:0 auto;padding:30px 18px;}
 .view{display:none;}.view.on{display:block;}
 /* HOME */
 .hero{text-align:center;padding:44px 16px 36px;}
@@ -56,7 +54,8 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .fhdr-tx p{font-size:12px;color:var(--tx2);margin-top:2px;}
 .fcard{background:var(--sur);border-radius:16px;padding:28px 24px;box-shadow:var(--sh);border:1.5px solid var(--bdr);}
 @media(max-width:600px){.fcard{padding:18px 14px;}}
-.stitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--bdr);}
+.stitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--bdr);margin-top:22px;}
+.stitle:first-child{margin-top:0;}
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
 .fr.full{grid-template-columns:1fr;}
 @media(max-width:560px){.fr{grid-template-columns:1fr;}}
@@ -69,7 +68,6 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .fi.err{border-color:var(--er);animation:shake .3s;}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .fta{resize:vertical;min-height:90px;}
-.fdiv{height:1px;background:var(--bdr);margin:22px 0;}
 .opts{display:flex;flex-direction:column;gap:8px;}
 .opt{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-radius:9px;border:1.5px solid var(--bdr);cursor:pointer;transition:.22s;}
 .opt:hover{background:var(--sur2);}
@@ -108,9 +106,9 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .atop h2{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;}
 .actrl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .fsel{padding:7px 28px 7px 11px;border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:#fff;cursor:pointer;outline:none;appearance:none;color:var(--tx);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%236b6257' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
-.rbtn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--bdr);background:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--tx);}
+.rbtn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--bdr);background:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;display:flex;align-items:center;gap:5px;color:var(--tx);transition:.22s;}
 .rbtn:hover{background:var(--sur2);}
-.logout-btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--er);background:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;color:var(--er);}
+.logout-btn{padding:7px 14px;border-radius:8px;border:1.5px solid var(--er);background:#fff;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;color:var(--er);transition:.22s;}
 .logout-btn:hover{background:var(--er);color:#fff;}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
 .stat{background:#fff;border-radius:11px;padding:16px 18px;box-shadow:var(--sh);border-left:4px solid var(--bdr);}
@@ -123,7 +121,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .sinp{width:100%;padding:9px 13px;border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none;}
 .sinp:focus{border-color:var(--ac2);}
 .tcon{overflow-x:auto;}
-table{width:100%;border-collapse:collapse;min-width:680px;}
+table{width:100%;border-collapse:collapse;min-width:700px;}
 thead th{background:var(--sur2);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);white-space:nowrap;}
 tbody tr{border-bottom:1px solid var(--bdr);cursor:pointer;transition:.15s;}
 tbody tr:hover{background:var(--acp);}
@@ -131,24 +129,38 @@ tbody tr:last-child{border-bottom:none;}
 td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 .bdg{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;}
 .bdg.v{background:var(--vb);color:var(--vc)}.bdg.p{background:var(--pb);color:var(--pc)}.bdg.a{background:var(--db);color:var(--dc)}
-.stsel{padding:4px 20px 4px 8px;border-radius:6px;border:1px solid var(--bdr);font-size:11px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;background:#fff;appearance:none;outline:none;}
+/* 상태 버튼 */
+.st-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;border:none;cursor:pointer;transition:.22s;white-space:nowrap;}
+.st-btn.new{background:#fff3e0;color:#e65100;}.st-btn.new:hover{background:#e65100;color:#fff;}
+.st-btn.reviewing{background:#e3f2fd;color:#1565c0;}.st-btn.reviewing:hover{background:#1565c0;color:#fff;}
+.st-btn.done{background:#e8f5e9;color:#2e7d32;}.st-btn.done:hover{background:#2e7d32;color:#fff;}
+/* 상태 드롭다운 */
+.st-dropdown{position:relative;display:inline-block;}
+.st-menu{display:none;position:absolute;right:0;top:110%;background:#fff;border:1.5px solid var(--bdr);border-radius:10px;box-shadow:var(--sh2);z-index:50;min-width:110px;overflow:hidden;}
+.st-menu.on{display:block;}
+.st-menu-item{padding:9px 16px;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;transition:.15s;}
+.st-menu-item:hover{background:var(--sur2);}
 .empty{padding:56px 20px;text-align:center;color:var(--tx3);}
 .eico{font-size:38px;margin-bottom:12px;}
 /* MODAL */
 .bdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:18px;}
 .bdrop.on{display:flex;}
-.modal{background:#fff;border-radius:16px;max-width:580px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:mIn .22s ease;}
+.modal{background:#fff;border-radius:16px;max-width:640px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:mIn .22s ease;}
 @keyframes mIn{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.mhdr{padding:18px 22px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;}
+.mhdr{padding:18px 22px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:10;}
 .mhdr h3{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;}
 .mcls{width:30px;height:30px;border:none;background:var(--sur2);border-radius:7px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
 .mcls:hover{background:var(--bdr);}
 .mbdy{padding:22px;}
-.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.di{display:flex;flex-direction:column;gap:3px;}
-.di.full{grid-column:1/-1;}
-.dk{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);}
-.dv{font-size:13px;color:var(--tx);}
+/* 상세 그리드 */
+.det-section{margin-bottom:20px;}
+.det-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bdr);}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.det-item{display:flex;flex-direction:column;gap:4px;}
+.det-item.full{grid-column:1/-1;}
+.det-key{font-size:11px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;}
+.det-val{font-size:13px;color:var(--tx);line-height:1.6;}
+.det-val.long{background:var(--sur2);padding:10px 12px;border-radius:8px;font-size:13px;white-space:pre-wrap;}
 /* TOAST */
 .toast{position:fixed;bottom:22px;right:22px;background:var(--tx);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:999;transform:translateY(70px);opacity:0;transition:all .3s;}
 .toast.on{transform:translateY(0);opacity:1;}
@@ -167,8 +179,8 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
       </div>
     </div>
     <nav class="hdr-nav">
-      <button class="nb on" id="nav-apply" >신청</button>
-      <button class="nb" id="nav-admin" >관리자</button>
+      <button class="nb on" id="nav-apply">신청</button>
+      <button class="nb" id="nav-admin">관리자</button>
     </nav>
   </div>
 </header>
@@ -245,15 +257,15 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
     <div class="actrl">
       <select class="fsel" id="flt-t">
         <option value="">전체 유형</option>
-        <option value="영상제작">영상 제작</option>
-        <option value="사진촬영">사진 촬영</option>
-        <option value="영상광고">영상 광고</option>
+        <option value="영상제작">&#127909; 영상 제작</option>
+        <option value="사진촬영">&#128247; 사진 촬영</option>
+        <option value="영상광고">&#128250; 영상 광고</option>
       </select>
       <select class="fsel" id="flt-s">
         <option value="">전체 상태</option>
-        <option value="신규접수">신규접수</option>
-        <option value="검토중">검토중</option>
-        <option value="완료">완료</option>
+        <option value="신규접수">🟡 신규접수</option>
+        <option value="검토중">🔵 검토중</option>
+        <option value="완료">🟢 완료</option>
       </select>
       <button class="rbtn" id="refresh-btn">&#128260; 새로고침</button>
       <button class="logout-btn" id="logout-btn">로그아웃</button>
@@ -282,7 +294,6 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
     </div>
   </div>
 </div>
-
 </main>
 
 <!-- 상세 모달 -->
@@ -295,475 +306,411 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
     <div class="mbdy" id="mbody"></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// ★ 설정 ★
-var GAS = 'https://script.google.com/macros/s/AKfycbwwHRbZAJOFhekQ-ytRW03iHYcpSruauDznAJnik2UQB4ABBXJkB3tSMUjjkCP-7PZwTg/exec'; // Google Apps Script URL 입력
-var ADMIN_PW = 'media2024'; // 관리자 비밀번호 (원하시면 변경하세요)
+var GAS = 'https://script.google.com/macros/s/AKfycbwwHRbZAJOFhekQ-ytRW03iHYcpSruauDznAJnik2UQB4ABBXJkB3tSMUjjkCP-7PZwTg/exec';
+var ADMIN_PW = 'media2024';
+var CT = '', AD = [], isLoggedIn = false;
 
-var CT = '';
-var AD = [];
-var isLoggedIn = false;
-
-// ===== 초기화 =====
+// 초기화
 (function init() {
-  // 카드 클릭
   document.getElementById('card-v').addEventListener('click', function() { goF('v'); });
   document.getElementById('card-p').addEventListener('click', function() { goF('p'); });
   document.getElementById('card-a').addEventListener('click', function() { goF('a'); });
-  // 뒤로가기
   document.getElementById('back-btn').addEventListener('click', function() { goV('home'); });
-  // 완료 화면 뒤로가기
   document.getElementById('success-back').addEventListener('click', function() { goV('home'); });
-  // 관리자 로그인
+  document.getElementById('nav-apply').addEventListener('click', function() { goV('home'); });
+  document.getElementById('nav-admin').addEventListener('click', clickAdmin);
   document.getElementById('login-btn').addEventListener('click', doLogin);
-  document.getElementById('pw-input').addEventListener('keydown', function(e) { if(e.key === 'Enter') doLogin(); });
-  // 관리자 새로고침
+  document.getElementById('pw-input').addEventListener('keydown', function(e) { if(e.key==='Enter') doLogin(); });
   document.getElementById('refresh-btn').addEventListener('click', loadAdmin);
-  // 로그아웃
   document.getElementById('logout-btn').addEventListener('click', function() {
-    isLoggedIn = false;
-    goV('home');
-    showToast('로그아웃되었습니다.', '');
+    isLoggedIn = false; goV('home'); showToast('로그아웃되었습니다.', '');
   });
-  // 필터
   document.getElementById('flt-t').addEventListener('change', renderTbl);
   document.getElementById('flt-s').addEventListener('change', renderTbl);
   document.getElementById('srch').addEventListener('input', renderTbl);
-  // 모달 닫기
   document.getElementById('modal-close').addEventListener('click', closeModal);
-  document.getElementById('modal').addEventListener('click', function(e) {
-    if (e.target === this) closeModal();
+  document.getElementById('modal').addEventListener('click', function(e) { if(e.target===this) closeModal(); });
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.st-dropdown')) {
+      document.querySelectorAll('.st-menu').forEach(function(m) { m.classList.remove('on'); });
+    }
   });
-  // 헤더 버튼
-  document.getElementById('nav-apply').addEventListener('click', function() { goV('home'); });
-  document.getElementById('nav-admin').addEventListener('click', clickAdmin);
 })();
 
-// ===== 뷰 전환 =====
 function goV(v) {
   document.querySelectorAll('.view').forEach(function(x) { x.classList.remove('on'); });
-  document.getElementById('v-' + v).classList.add('on');
-  document.getElementById('nav-apply').classList.toggle('on', v !== 'admin' && v !== 'login');
-  document.getElementById('nav-admin').classList.toggle('on', v === 'admin' || v === 'login');
+  document.getElementById('v-'+v).classList.add('on');
+  document.getElementById('nav-apply').classList.toggle('on', v!=='admin'&&v!=='login');
+  document.getElementById('nav-admin').classList.toggle('on', v==='admin'||v==='login');
 }
-
 function clickAdmin() {
-  if (isLoggedIn) {
-    goV('admin');
-    loadAdmin();
-  } else {
+  if (isLoggedIn) { goV('admin'); loadAdmin(); }
+  else {
     goV('login');
-    document.getElementById('pw-input').value = '';
-    document.getElementById('login-err').style.display = 'none';
+    document.getElementById('pw-input').value='';
+    document.getElementById('login-err').style.display='none';
     setTimeout(function() { document.getElementById('pw-input').focus(); }, 100);
   }
 }
-
-// ===== 로그인 =====
 function doLogin() {
-  var pw = document.getElementById('pw-input').value;
-  if (pw === ADMIN_PW) {
+  if (document.getElementById('pw-input').value === ADMIN_PW) {
     isLoggedIn = true;
-    document.getElementById('login-err').style.display = 'none';
-    goV('admin');
-    loadAdmin();
+    document.getElementById('login-err').style.display='none';
+    goV('admin'); loadAdmin();
   } else {
-    document.getElementById('login-err').style.display = 'block';
-    document.getElementById('pw-input').value = '';
-    document.getElementById('pw-input').focus();
+    document.getElementById('login-err').style.display='block';
+    document.getElementById('pw-input').value='';
   }
 }
 
-// ===== 유틸 =====
+// 유틸
 function fmtPhone(v) {
-  var n = v.replace(/\D/g, '');
-  if (n.length <= 3) return n;
-  if (n.length <= 7) return n.slice(0,3) + '-' + n.slice(3);
-  if (n.length <= 11) return n.slice(0,3) + '-' + n.slice(3,7) + '-' + n.slice(7);
-  return n.slice(0,3) + '-' + n.slice(3,7) + '-' + n.slice(7,11);
+  var n=v.replace(/\D/g,'');
+  if(n.length<=3) return n;
+  if(n.length<=7) return n.slice(0,3)+'-'+n.slice(3);
+  if(n.length<=11) return n.slice(0,3)+'-'+n.slice(3,7)+'-'+n.slice(7);
+  return n.slice(0,3)+'-'+n.slice(3,7)+'-'+n.slice(7,11);
 }
 function onPhone(el) {
-  var c = el.selectionStart, p = el.value.length;
-  el.value = fmtPhone(el.value);
-  var d = el.value.length - p;
-  el.setSelectionRange(c + d, c + d);
+  var c=el.selectionStart, p=el.value.length;
+  el.value=fmtPhone(el.value);
+  el.setSelectionRange(c+(el.value.length-p), c+(el.value.length-p));
 }
 function genId(t) {
-  var p = {v:'V', p:'P', a:'A'};
-  var d = new Date();
-  return (p[t]||'X') + String(d.getFullYear()).slice(2) +
-    String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') +
-    '-' + String(Math.floor(Math.random()*9000)+1000);
+  var p={v:'V',p:'P',a:'A'};
+  var d=new Date();
+  return (p[t]||'X')+String(d.getFullYear()).slice(2)+
+    String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+
+    '-'+String(Math.floor(Math.random()*9000)+1000);
 }
 function fmtDT(iso) {
-  if (!iso) return '-';
-  var d = new Date(iso);
-  return d.getFullYear() + '.' +
-    String(d.getMonth()+1).padStart(2,'0') + '.' +
-    String(d.getDate()).padStart(2,'0') + ' ' +
-    String(d.getHours()).padStart(2,'0') + ':' +
-    String(d.getMinutes()).padStart(2,'0');
+  if(!iso) return '-';
+  var d=new Date(iso);
+  if(isNaN(d)) return String(iso);
+  return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+
+    String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
 }
 function showToast(msg, tp) {
-  var t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = 'toast ' + (tp||'');
-  setTimeout(function() { t.classList.add('on'); }, 10);
-  setTimeout(function() { t.classList.remove('on'); }, 3200);
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.className='toast '+(tp||'');
+  setTimeout(function(){t.classList.add('on');},10);
+  setTimeout(function(){t.classList.remove('on');},3200);
 }
 
-// ===== 폼 =====
+// 폼 빌더
 function goF(t) {
-  CT = t;
-  var titles = {
-    v: '🎥 사역 영상 제작 의뢰(신청)서',
-    p: '📸 사역(행사) 사진 촬영 지원 요청 의뢰(신청)서',
-    a: '📺 충현교회 영상광고 상영 의뢰(신청)서'
-  };
-  var subs = {
-    v: '충현교회 미디어 센터에 영상 제작을 의뢰하는 신청서입니다.',
-    p: '충현교회 미디어 센터에 사진 촬영을 의뢰하는 신청서입니다.',
-    a: '충현교회 미디어 센터에 영상 광고 상영을 신청하는 서류입니다.'
-  };
-  document.getElementById('ftitle').textContent = titles[t];
-  document.getElementById('fsub').innerHTML = subs[t] + ' <span style="color:var(--er)">* 필수항목</span>';
-  
-  var body = document.getElementById('fbody');
-  if (t === 'v') body.innerHTML = buildVideoForm();
-  else if (t === 'p') body.innerHTML = buildPhotoForm();
-  else body.innerHTML = buildAdForm();
-  
-  // 제출 버튼 추가
-  var btn = document.createElement('button');
-  btn.className = 'sbtn ' + t;
-  btn.textContent = '✉️ 신청서 제출하기';
+  CT=t;
+  var titles={v:'🎥 사역 영상 제작 의뢰(신청)서',p:'📸 사역(행사) 사진 촬영 지원 요청 의뢰(신청)서',a:'📺 충현교회 영상광고 상영 의뢰(신청)서'};
+  var subs={v:'충현교회 미디어 센터에 영상 제작을 의뢰하는 신청서입니다.',p:'충현교회 미디어 센터에 사진 촬영을 의뢰하는 신청서입니다.',a:'충현교회 미디어 센터에 영상 광고 상영을 신청하는 서류입니다.'};
+  document.getElementById('ftitle').textContent=titles[t];
+  document.getElementById('fsub').innerHTML=subs[t]+' <span style="color:var(--er)">* 필수항목</span>';
+  var body=document.getElementById('fbody');
+  body.innerHTML = t==='v'?buildV() : t==='p'?buildP() : buildA();
+  var btn=document.createElement('button');
+  btn.className='sbtn '+t; btn.textContent='✉️ 신청서 제출하기';
   btn.addEventListener('click', subForm);
   body.appendChild(btn);
-  
-  // 전화번호 이벤트
-  var phones = body.querySelectorAll('[data-phone]');
-  phones.forEach(function(el) {
-    el.addEventListener('input', function() { onPhone(this); });
+  body.querySelectorAll('[data-phone]').forEach(function(el){
+    el.addEventListener('input', function(){ onPhone(this); });
   });
-  
-  goV('form');
-  window.scrollTo(0, 0);
+  goV('form'); window.scrollTo(0,0);
 }
 
-function mkRdo(nm, opts) {
-  var html = '<div class="opts">';
-  opts.forEach(function(o) {
-    html += '<label class="opt"><input type="radio" name="' + nm + '" value="' + o + '"><span>' + o + '</span></label>';
-  });
-  return html + '</div>';
+function R(a,b) { return b===undefined?'<div class="fr full">'+a+'</div>':'<div class="fr">'+a+b+'</div>'; }
+function FG(lbl,req,hint,inp) {
+  return '<div class="fg"><label class="fl">'+lbl+(req?'<span class="rq">*</span>':'')+(hint?'<span class="ht">'+hint+'</span>':'')+
+    '</label>'+inp+'</div>';
 }
-function mkChk(nm, opts) {
-  var html = '<div class="opts">';
-  opts.forEach(function(o) {
-    html += '<label class="opt"><input type="checkbox" name="' + nm + '" value="' + o + '"><span>' + o + '</span></label>';
-  });
-  return html + '</div>';
+function FI(nm,ph,req,extra) { return '<input class="fi" name="'+nm+'" placeholder="'+(ph||'')+'"'+(req?' required':'')+(extra?' '+extra:'')+'>'; }
+function FD(nm,req) { return '<input class="fi" name="'+nm+'" type="date"'+(req?' required':'')+'>'; }
+function FT(nm,req) { return '<input class="fi" name="'+nm+'" type="time"'+(req?' required':'')+'>'; }
+function FTA(nm,ph,req) { return '<textarea class="fta" name="'+nm+'" placeholder="'+(ph||'')+'"'+(req?' required':'')+'></textarea>'; }
+function RDO(nm,opts) {
+  return '<div class="opts">'+opts.map(function(o){
+    return '<label class="opt"><input type="radio" name="'+nm+'" value="'+o+'"><span>'+o+'</span></label>';
+  }).join('')+'</div>';
 }
-function row(a, b) {
-  if (b === undefined) return '<div class="fr full">' + a + '</div>';
-  return '<div class="fr">' + a + b + '</div>';
-}
-function fg(label, req, hint, input) {
-  var lbl = '<label class="fl">' + label;
-  if (req) lbl += '<span class="rq">*</span>';
-  if (hint) lbl += '<span class="ht">' + hint + '</span>';
-  lbl += '</label>';
-  return '<div class="fg">' + lbl + input + '</div>';
-}
-function fi(name, ph, req, extra) {
-  return '<input class="fi" name="' + name + '" placeholder="' + (ph||'') + '"' + (req?' required':'') + (extra?' '+extra:'') + '>';
-}
-function fdate(name, req) {
-  return '<input class="fi" name="' + name + '" type="date"' + (req?' required':'') + '>';
-}
-function ftime(name, req) {
-  return '<input class="fi" name="' + name + '" type="time"' + (req?' required':'') + '>';
-}
-function fta(name, ph, req) {
-  return '<textarea class="fta" name="' + name + '" placeholder="' + (ph||'') + '"' + (req?' required':'') + '></textarea>';
+function CHK(nm,opts) {
+  return '<div class="opts">'+opts.map(function(o){
+    return '<label class="opt"><input type="checkbox" name="'+nm+'" value="'+o+'"><span>'+o+'</span></label>';
+  }).join('')+'</div>';
 }
 
-function buildVideoForm() {
-  return '<div class="stitle">신청자 정보</div>' +
-    row(
-      fg('1. 의뢰자(위원회/부서) 정보', true, '', fi('dept', '예) 청년부, 교육위원회', true)),
-      fg('2. 연락처', true, '담당자 이름 및 휴대폰 번호', '<input class="fi" name="phone" placeholder="010-0000-0000" data-phone="1" maxlength="13" required>')
-    ) +
-    '<div class="fdiv"></div><div class="stitle">영상 정보</div>' +
-    row(fg('3. 영상의 종류', true, '해당 항목 모두 선택', mkChk('videoType', ['사역 보고 영상','행사 홍보 영상','교육 자료 영상','간증 영상','기타 (직접 입력)','제작 방식 미정 (상담 필요)']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('4. 영상의 주요 주제/제목', true, '', fi('videoTitle', '영상의 주제나 제목을 입력해 주세요', true))) +
-    row(fg('5. 영상의 목적', true, '제작하려는 이유', fta('videoPurpose', '이 영상을 왜 만들려고 하시는지 설명해 주세요.', true))) +
-    row(fg('6. 영상의 타겟 시청자', true, '', mkRdo('videoTarget', ['전교인','특정 위원회로 보는 부서','래신자','지역 사회 주민 (비신자 포함)','온라인/SNS 구독자','기타']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('7. 원하는 최종 영상 길이', true, '', mkRdo('videoDuration', ['1분 이내 (숏폼)','1분 ~ 3분','3분 ~ 5분','5분 이상 (상담 필요)']))) +
-    '<div style="height:14px"></div>' +
-    row(
-      fg('8. 영상 시청 희망 마감일', true, '최종 납품일', fdate('videoDeadline', true)),
-      fg('11. 사역 또는 행사 일시', false, '촬영이 필요한 경우', fdate('eventDate', false))
-    ) +
-    row(fg('9. 영상 제작에 필요한 예산이 있습니까?', true, '', mkChk('videoBudget', ['위원회/부서/행사 예산이 있습니다.','예산이 없습니다.']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('10. 영상에 포함되어야 할 주요 내용', true, '핵심 메시지, 중요 장면, 인터뷰 대상 등', fta('videoContent', '영상에 꼭 들어가야 할 내용을 적어주세요.', true))) +
-    row(fg('12. 사용 가능한 기존 자료', true, '사진, 영상, 음악 등이 있습니까?', mkRdo('videoAssets', ['예, 충분한 준비가 되어 있습니다.','일부 자료가 있습니다.','아니오, 없습니다.','자료를 업로드할 형편이 됩니다.']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('13. 필요한 영상의 제작 방식', true, '', mkRdo('videoStyle', ['기존 자료 편집 (컷편집, 자막, 배경음악)','새로운 현장 촬영 (인터뷰, 행사 스케치 등)','모션 그래픽/애니메이션','제작 방식 미정 (상담 필요)']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('14. 영상에 사용하고 싶은 분위기/톤', true, '', mkChk('videoMood', ['평온하고 차분한 분위기','밝고 활기찬 분위기','진실하고 신뢰감 있는 분위기','다이나믹하고 재미있는 분위기']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('15. 영상 제작 관련 참고 사항 또는 추가 요청 사항', true, '', fta('videoNote', '기타 참고하거나 추가로 요청하실 사항을 적어주세요.', true)));
+function buildV() {
+  return '<div class="stitle">신청자 정보</div>'+
+    R(FG('1. 의뢰자(위원회/부서) 정보',true,'',FI('dept','예) 청년부, 교육위원회',true)),
+      FG('2. 연락처',true,'담당자 이름 및 휴대폰 번호','<input class="fi" name="phone" placeholder="010-0000-0000" data-phone="1" maxlength="13" required>'))+
+    '<div class="stitle">영상 정보</div>'+
+    R(FG('3. 영상의 종류',true,'해당 항목 모두 선택',CHK('videoType',['사역 보고 영상','행사 홍보 영상','교육 자료 영상','간증 영상','기타 (직접 입력)','제작 방식 미정 (상담 필요)'])))+
+    R(FG('4. 영상의 주요 주제/제목',true,'',FI('videoTitle','영상의 주제나 제목을 입력해 주세요',true)))+
+    R(FG('5. 영상의 목적',true,'제작하려는 이유',FTA('videoPurpose','이 영상을 왜 만들려고 하시는지 설명해 주세요.',true)))+
+    R(FG('6. 영상의 타겟 시청자',true,'',RDO('videoTarget',['전교인','특정 위원회로 보는 부서','래신자','지역 사회 주민 (비신자 포함)','온라인/SNS 구독자','기타'])))+
+    R(FG('7. 원하는 최종 영상 길이',true,'',RDO('videoDuration',['1분 이내 (숏폼)','1분 ~ 3분','3분 ~ 5분','5분 이상 (상담 필요)'])))+
+    R(FG('8. 영상 시청 희망 마감일',true,'최종 납품일',FD('videoDeadline',true)),
+      FG('11. 사역 또는 행사 일시',false,'촬영이 필요한 경우',FD('eventDate',false)))+
+    R(FG('9. 영상 제작에 필요한 예산이 있습니까?',true,'',CHK('videoBudget',['위원회/부서/행사 예산이 있습니다.','예산이 없습니다.'])))+
+    R(FG('10. 영상에 포함되어야 할 주요 내용',true,'핵심 메시지, 중요 장면, 인터뷰 대상 등',FTA('videoContent','영상에 꼭 들어가야 할 내용을 적어주세요.',true)))+
+    R(FG('12. 사용 가능한 기존 자료',true,'사진, 영상, 음악 등이 있습니까?',RDO('videoAssets',['예, 충분한 준비가 되어 있습니다.','일부 자료가 있습니다.','아니오, 없습니다.','자료를 업로드할 형편이 됩니다.'])))+
+    R(FG('13. 필요한 영상의 제작 방식',true,'',RDO('videoStyle',['기존 자료 편집 (컷편집, 자막, 배경음악)','새로운 현장 촬영 (인터뷰, 행사 스케치 등)','모션 그래픽/애니메이션','제작 방식 미정 (상담 필요)'])))+
+    R(FG('14. 영상에 사용하고 싶은 분위기/톤',true,'',CHK('videoMood',['평온하고 차분한 분위기','밝고 활기찬 분위기','진실하고 신뢰감 있는 분위기','다이나믹하고 재미있는 분위기'])))+
+    R(FG('15. 영상 제작 관련 참고 사항 또는 추가 요청 사항',true,'',FTA('videoNote','기타 참고하거나 추가로 요청하실 사항을 적어주세요.',true)));
 }
 
-function buildPhotoForm() {
-  return '<div class="stitle">신청자 정보</div>' +
-    row(
-      fg('1. 요청자(위원회/부서) 정보', true, '', fi('dept', '예) 청년부, 여성위원회', true)),
-      fg('2. 담당자 연락처', true, '휴대전화', '<input class="fi" name="phone" placeholder="010-0000-0000" data-phone="1" maxlength="13" required>')
-    ) +
-    row(fg('3. 요청자 이메일 주소', true, '', '<input class="fi" name="email" type="email" placeholder="example@church.org" required>')) +
-    '<div class="fdiv"></div><div class="stitle">촬영 정보</div>' +
-    row(fg('4. 촬영이 필요한 사역 또는 행사명', true, '', fi('eventName', '행사명을 입력해 주세요', true))) +
-    row(fg('5. 촬영 요청 유형', true, '', mkRdo('photoType', ['행사 현장 스케치 (자연스러운 기록)','공식 기념 촬영 (참석자 단체 사진 등)','특정 대상 집중 촬영 (강사, 주요 봉사자 등)','기타 (아래 요청 상세 내용에 기재)']))) +
-    '<div style="height:14px"></div>' +
-    row(
-      fg('6. 촬영 일자', true, '', fdate('eventDate', true)),
-      fg('촬영 시작 시간', true, '', ftime('eventTime', true))
-    ) +
-    row(
-      fg('7. 촬영 예상 소요 시간 (최대)', true, '', fi('duration', '예) 2시간 30분', true)),
-      fg('8. 촬영 장소', true, '구체적으로', fi('location', '예) 본당, 제1교육관 401호', true))
-    ) +
-    row(fg('10. 촬영 요청 상세 내용', true, '필수 촬영 컷, 특별히 강조하고 싶은 장면 등', fta('photoDetail', '촬영 요청 내용을 상세히 작성해 주세요.', true))) +
-    row(fg('11. 촬영 결과물 필요 마감일', true, '', fdate('deadline', true))) +
-    row(fg('12. 촬영 결과물 전달 방식 선호도', true, '', mkRdo('delivery', ['이메일 첨부/링크 (교회일 원본 파일)','교회 내부 서버/클라우드 공유','USB 메모리 등 오프라인 전달']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('13. 기타 특별 요청 사항이 있으면 말씀해주세요.', false, '', fta('photoNote', '기타 요청 사항을 적어주세요.', false)));
+function buildP() {
+  return '<div class="stitle">신청자 정보</div>'+
+    R(FG('1. 요청자(위원회/부서) 정보',true,'',FI('dept','예) 청년부, 여성위원회',true)),
+      FG('2. 담당자 연락처',true,'휴대전화','<input class="fi" name="phone" placeholder="010-0000-0000" data-phone="1" maxlength="13" required>'))+
+    R(FG('3. 요청자 이메일 주소',true,'','<input class="fi" name="email" type="email" placeholder="example@church.org" required>'))+
+    '<div class="stitle">촬영 정보</div>'+
+    R(FG('4. 촬영이 필요한 사역 또는 행사명',true,'',FI('eventName','행사명을 입력해 주세요',true)))+
+    R(FG('5. 촬영 요청 유형',true,'',RDO('photoType',['행사 현장 스케치 (자연스러운 기록)','공식 기념 촬영 (참석자 단체 사진 등)','특정 대상 집중 촬영 (강사, 주요 봉사자 등)','기타 (아래 요청 상세 내용에 기재)'])))+
+    R(FG('6. 촬영 일자',true,'',FD('eventDate',true)), FG('촬영 시작 시간',true,'',FT('eventTime',true)))+
+    R(FG('7. 촬영 예상 소요 시간 (최대)',true,'',FI('duration','예) 2시간 30분',true)),
+      FG('8. 촬영 장소',true,'구체적으로',FI('location','예) 본당, 제1교육관 401호',true)))+
+    R(FG('10. 촬영 요청 상세 내용',true,'필수 촬영 컷, 특별히 강조하고 싶은 장면 등',FTA('photoDetail','촬영 요청 내용을 상세히 작성해 주세요.',true)))+
+    R(FG('11. 촬영 결과물 필요 마감일',true,'',FD('deadline',true)))+
+    R(FG('12. 촬영 결과물 전달 방식 선호도',true,'',RDO('delivery',['이메일 첨부/링크 (교회일 원본 파일)','교회 내부 서버/클라우드 공유','USB 메모리 등 오프라인 전달'])))+
+    R(FG('13. 기타 특별 요청 사항이 있으면 말씀해주세요.',false,'',FTA('photoNote','기타 요청 사항을 적어주세요.',false)));
 }
 
-function buildAdForm() {
-  var matrix = '<div class="mwrap"><table class="mtbl">' +
-    '<thead><tr><th>시간대</th><th>가장 선호</th><th>선호</th><th>보통</th><th>비선호</th></tr></thead><tbody>' +
-    '<tr><td>주일 오전(1,3부) 예배 전</td><td><input type="radio" name="t_sun_am" value="가장선호"></td><td><input type="radio" name="t_sun_am" value="선호"></td><td><input type="radio" name="t_sun_am" value="보통"></td><td><input type="radio" name="t_sun_am" value="비선호"></td></tr>' +
-    '<tr><td>주일 오후 전앙 예배 전</td><td><input type="radio" name="t_sun_pm" value="가장선호"></td><td><input type="radio" name="t_sun_pm" value="선호"></td><td><input type="radio" name="t_sun_pm" value="보통"></td><td><input type="radio" name="t_sun_pm" value="비선호"></td></tr>' +
-    '<tr><td>수요(1,2부) 예배 전후</td><td><input type="radio" name="t_wed" value="가장선호"></td><td><input type="radio" name="t_wed" value="선호"></td><td><input type="radio" name="t_wed" value="보통"></td><td><input type="radio" name="t_wed" value="비선호"></td></tr>' +
-    '<tr><td>금요집회 전후</td><td><input type="radio" name="t_fri" value="가장선호"></td><td><input type="radio" name="t_fri" value="선호"></td><td><input type="radio" name="t_fri" value="보통"></td><td><input type="radio" name="t_fri" value="비선호"></td></tr>' +
+function buildA() {
+  var matrix='<div class="mwrap"><table class="mtbl"><thead><tr><th>시간대</th><th>가장 선호</th><th>선호</th><th>보통</th><th>비선호</th></tr></thead><tbody>'+
+    '<tr><td>주일 오전(1,3부) 예배 전</td><td><input type="radio" name="t_sun_am" value="가장선호"></td><td><input type="radio" name="t_sun_am" value="선호"></td><td><input type="radio" name="t_sun_am" value="보통"></td><td><input type="radio" name="t_sun_am" value="비선호"></td></tr>'+
+    '<tr><td>주일 오후 전앙 예배 전</td><td><input type="radio" name="t_sun_pm" value="가장선호"></td><td><input type="radio" name="t_sun_pm" value="선호"></td><td><input type="radio" name="t_sun_pm" value="보통"></td><td><input type="radio" name="t_sun_pm" value="비선호"></td></tr>'+
+    '<tr><td>수요(1,2부) 예배 전후</td><td><input type="radio" name="t_wed" value="가장선호"></td><td><input type="radio" name="t_wed" value="선호"></td><td><input type="radio" name="t_wed" value="보통"></td><td><input type="radio" name="t_wed" value="비선호"></td></tr>'+
+    '<tr><td>금요집회 전후</td><td><input type="radio" name="t_fri" value="가장선호"></td><td><input type="radio" name="t_fri" value="선호"></td><td><input type="radio" name="t_fri" value="보통"></td><td><input type="radio" name="t_fri" value="비선호"></td></tr>'+
     '</tbody></table></div>';
-
-  return '<div class="stitle">신청자 정보</div>' +
-    row(
-      fg('1. 신청자(위원회/부서) 정보', true, '', fi('dept', '예) 사무국, 청년부', true)),
-      fg('2. 연락처', true, '담당자 성함 및 전화번호', '<input class="fi" name="phone" placeholder="010-0000-0000" data-phone="1" maxlength="13" required>')
-    ) +
-    '<div class="fdiv"></div><div class="stitle">광고 정보</div>' +
-    row(fg('3. 광고 제목/행사명', true, '영상 콘텐츠의 주된 내용', fi('adTitle', '광고 제목 또는 행사명을 입력해 주세요', true))) +
-    row(fg('4. 광고 내용 요약', true, '30자 이내', '<input class="fi" name="adSummary" placeholder="광고 내용을 30자 이내로 요약해 주세요" maxlength="30" required>')) +
-    row(fg('5. 광고 목적', true, '', mkRdo('adPurpose', ['교회 주요 행사 홍보 (전교인 대상의 사역)','위원회 사역 (한정적 대상이지만 행사 전 교회 알림 광고 필요)','위원회 사역 (행사 후 사역 보고 공유)','기타 (직접 기재)']))) +
-    '<div style="height:14px"></div>' +
-    row(
-      fg('6. 희망 상영 시작일', true, '', fdate('startDate', true)),
-      fg('7. 희망 상영 종료일', true, '', fdate('endDate', true))
-    ) +
-    row(fg('8. 총 상영 길이', true, '광고 영상의 전체 길이', fi('adDuration', '예) 30초, 1분 30초', true))) +
-    row(fg('9. 상영 횟수 및 시간대 선호도', true, '', matrix)) +
-    '<div style="height:14px"></div>' +
-    row(fg('11. 영상 해상도 및 파일 형식은 미디어 센터 기준에 부합합니까?', true, '정보 기입 필요', mkChk('adFileOk', ['네 그렇습니다.']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('12. 본 광고에 대한 승인 여부', true, '위원장 및 부서장/책임자 확인', mkRdo('adApproval', ['승인 완료','승인 예정']))) +
-    '<div style="height:14px"></div>' +
-    row(fg('13. 기타 전달 사항 또는 요청 사항', true, '', fta('adNote', '기타 전달하실 사항을 적어주세요.', true))) +
-    row(fg('14. 동의 여부', true, '',
-      '<p style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.7;">본 신청서의 내용이 사실임을 확인하고, 교회 영상 광고 지침을 준수할 것에 동의하십니까?</p>' +
-      mkRdo('adConsent', ['예, 동의합니다.'])
-    ));
+  return '<div class="stitle">신청자 정보</div>'+
+    R(FG('1. 신청자(위원회/부서) 정보',true,'',FI('dept','예) 사무국, 청년부',true)),
+      FG('2. 연락처',true,'담당자 성함 및 전화번호','<input class="fi" name="phone" placeholder="010-0000-0000" data-phone="1" maxlength="13" required>'))+
+    '<div class="stitle">광고 정보</div>'+
+    R(FG('3. 광고 제목/행사명',true,'영상 콘텐츠의 주된 내용',FI('adTitle','광고 제목 또는 행사명을 입력해 주세요',true)))+
+    R(FG('4. 광고 내용 요약',true,'30자 이내','<input class="fi" name="adSummary" placeholder="광고 내용을 30자 이내로 요약해 주세요" maxlength="30" required>'))+
+    R(FG('5. 광고 목적',true,'',RDO('adPurpose',['교회 주요 행사 홍보 (전교인 대상의 사역)','위원회 사역 (한정적 대상이지만 행사 전 교회 알림 광고 필요)','위원회 사역 (행사 후 사역 보고 공유)','기타 (직접 기재)'])))+
+    R(FG('6. 희망 상영 시작일',true,'',FD('startDate',true)), FG('7. 희망 상영 종료일',true,'',FD('endDate',true)))+
+    R(FG('8. 총 상영 길이',true,'광고 영상의 전체 길이',FI('adDuration','예) 30초, 1분 30초',true)))+
+    R(FG('9. 상영 횟수 및 시간대 선호도',true,'',matrix))+
+    R(FG('11. 영상 해상도 및 파일 형식은 미디어 센터 기준에 부합합니까?',true,'정보 기입 필요',CHK('adFileOk',['네 그렇습니다.'])))+
+    R(FG('12. 본 광고에 대한 승인 여부',true,'위원장 및 부서장/책임자 확인',RDO('adApproval',['승인 완료','승인 예정'])))+
+    R(FG('13. 기타 전달 사항 또는 요청 사항',true,'',FTA('adNote','기타 전달하실 사항을 적어주세요.',true)))+
+    R(FG('14. 동의 여부',true,'',
+      '<p style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.7;">본 신청서의 내용이 사실임을 확인하고, 교회 영상 광고 지침을 준수할 것에 동의하십니까?</p>'+
+      RDO('adConsent',['예, 동의합니다.'])));
 }
 
-// ===== 제출 =====
+// 제출
 async function subForm(e) {
   e.preventDefault();
-  var btn = e.target;
-  var valid = true;
-  document.querySelectorAll('#fbody [required]').forEach(function(el) {
-    if (!el.value.trim()) {
-      el.classList.add('err');
-      valid = false;
-      setTimeout(function() { el.classList.remove('err'); }, 2500);
-    }
+  var btn=e.target;
+  var valid=true;
+  document.querySelectorAll('#fbody [required]').forEach(function(el){
+    if(!el.value.trim()){ el.classList.add('err'); valid=false; setTimeout(function(){el.classList.remove('err');},2500); }
   });
-  if (!valid) { showToast('필수 항목을 모두 입력해 주세요.', 'er'); return; }
+  if(!valid){ showToast('필수 항목을 모두 입력해 주세요.','er'); return; }
+  btn.disabled=true; btn.textContent='⏳ 제출 중...';
 
-  btn.disabled = true;
-  btn.textContent = '⏳ 제출 중...';
-
-  var fd = {};
-  document.querySelectorAll('#fbody input, #fbody textarea').forEach(function(el) {
-    if (!el.name) return;
-    if (el.type === 'radio') { if (el.checked) fd[el.name] = el.value; }
-    else if (el.type === 'checkbox') {
-      if (el.checked) fd[el.name] = fd[el.name] ? fd[el.name] + ', ' + el.value : el.value;
-    } else { fd[el.name] = el.value; }
+  var fd={};
+  document.querySelectorAll('#fbody input, #fbody textarea').forEach(function(el){
+    if(!el.name) return;
+    if(el.type==='radio'){ if(el.checked) fd[el.name]=el.value; }
+    else if(el.type==='checkbox'){ if(el.checked) fd[el.name]=fd[el.name]?fd[el.name]+', '+el.value:el.value; }
+    else fd[el.name]=el.value;
   });
 
-  var typeMap = {v:'영상제작', p:'사진촬영', a:'영상광고'};
-  var rec = Object.assign({id: genId(CT), createdAt: new Date().toISOString(), type: typeMap[CT]}, fd);
+  var typeMap={v:'영상제작',p:'사진촬영',a:'영상광고'};
+  var rec=Object.assign({id:genId(CT), createdAt:new Date().toISOString(), type:typeMap[CT]}, fd);
 
-  // GAS 전송
-  if (GAS) {
-    try {
-      var params = new URLSearchParams(Object.assign({action:'add'}, rec));
-      var res = await fetch(GAS + '?' + params.toString());
-      var json = await res.json();
-      if (json.result !== 'success') {
-        console.warn('GAS 오류:', json);
-      }
-    } catch(e) {
-      console.warn('전송 실패:', e);
-    }
+  if(GAS){
+    try{
+      var params=new URLSearchParams(Object.assign({action:'add'}, rec));
+      var res=await fetch(GAS+'?'+params.toString());
+      var json=await res.json();
+      if(json.result!=='success') console.warn('GAS 오류:', json);
+    }catch(e){ console.warn('전송 실패:',e); }
   }
-
-  document.getElementById('refnum').textContent = rec.id;
+  document.getElementById('refnum').textContent=rec.id;
   goV('success');
-  showToast('신청이 완료되었습니다! 🎉', 'ok');
+  showToast('신청이 완료되었습니다! 🎉','ok');
 }
 
-// ===== 관리자 =====
+// 관리자 데이터 로드
 async function loadAdmin() {
-  document.getElementById('tbody').innerHTML = '<tr><td colspan="7"><div class="empty"><div class="eico">&#9203;</div><p>불러오는 중...</p></div></td></tr>';
-  if (GAS) {
-    try {
-      var res = await fetch(GAS + '?action=list');
-      var json = await res.json();
-      if (json.result === 'success') AD = json.data || [];
-    } catch(e) { AD = []; }
+  document.getElementById('tbody').innerHTML='<tr><td colspan="7"><div class="empty"><div class="eico">&#9203;</div><p>불러오는 중...</p></div></td></tr>';
+  if(GAS){
+    try{
+      var res=await fetch(GAS+'?action=list');
+      var json=await res.json();
+      if(json.result==='success') AD=json.data||[];
+    }catch(e){ AD=[]; }
   }
-  document.getElementById('s0').textContent = AD.length;
-  document.getElementById('s1').textContent = AD.filter(function(d) { return d['유형']==='영상제작'; }).length;
-  document.getElementById('s2').textContent = AD.filter(function(d) { return d['유형']==='사진촬영'; }).length;
-  document.getElementById('s3').textContent = AD.filter(function(d) { return d['유형']==='영상광고'; }).length;
+  document.getElementById('s0').textContent=AD.length;
+  document.getElementById('s1').textContent=AD.filter(function(d){return d['유형']==='영상제작';}).length;
+  document.getElementById('s2').textContent=AD.filter(function(d){return d['유형']==='사진촬영';}).length;
+  document.getElementById('s3').textContent=AD.filter(function(d){return d['유형']==='영상광고';}).length;
   renderTbl();
 }
 
+// 테이블 렌더
 function renderTbl() {
-  var ft = document.getElementById('flt-t').value;
-  var fs = document.getElementById('flt-s').value;
-  var fq = (document.getElementById('srch').value || '').toLowerCase();
-  var typeClass = {'영상제작':'v','사진촬영':'p','영상광고':'a'};
-
-  var rows = AD.filter(function(d) {
-    if (ft && d['유형'] !== ft) return false;
-    if (fs && d['상태'] !== fs) return false;
-    if (fq) {
-      var h = [d['dept']||'', d['phone']||''].join(' ').toLowerCase();
-      if (!h.includes(fq)) return false;
-    }
+  var ft=document.getElementById('flt-t').value;
+  var fs=document.getElementById('flt-s').value;
+  var fq=(document.getElementById('srch').value||'').toLowerCase();
+  var TC={'영상제작':'v','사진촬영':'p','영상광고':'a'};
+  var rows=AD.filter(function(d){
+    if(ft&&d['유형']!==ft) return false;
+    if(fs&&d['상태']!==fs) return false;
+    if(fq&&![d['dept']||'',d['phone']||''].join(' ').toLowerCase().includes(fq)) return false;
     return true;
   });
-
-  var tb = document.getElementById('tbody');
-  if (!rows.length) {
-    tb.innerHTML = '<tr><td colspan="7"><div class="empty"><div class="eico">&#128219;</div><p>신청 내역이 없습니다.</p></div></td></tr>';
+  var tb=document.getElementById('tbody');
+  if(!rows.length){
+    tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="eico">&#128219;</div><p>신청 내역이 없습니다.</p></div></td></tr>';
     return;
   }
-
-  var html = '';
-  rows.forEach(function(d) {
-    var tc = typeClass[d['유형']] || 'v';
-    var id = (d['접수번호'] || '').replace(/'/g, '');
-    var st = d['상태'] || '신규접수';
-    html += '<tr data-id="' + id + '">' +
-      '<td><code style="font-size:11px;color:var(--tx3)">' + id + '</code></td>' +
-      '<td style="white-space:nowrap;font-size:12px">' + fmtDT(d['접수일시']) + '</td>' +
-      '<td><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></td>' +
-      '<td><strong>' + (d['dept']||'-') + '</strong></td>' +
-      '<td>' + (d['phone']||'-') + '</td>' +
-      '<td>' + (d['eventDate']||d['startDate']||'-') + '</td>' +
-      '<td><select class="stsel" data-id="' + id + '">' +
-        '<option' + (st==='신규접수'?' selected':'') + '>신규접수</option>' +
-        '<option' + (st==='검토중'?' selected':'') + '>검토중</option>' +
-        '<option' + (st==='완료'?' selected':'') + '>완료</option>' +
-      '</select></td>' +
+  var html='';
+  rows.forEach(function(d){
+    var tc=TC[d['유형']]||'v';
+    var id=(d['접수번호']||'').replace(/'/g,'');
+    var st=d['상태']||'신규접수';
+    var stClass=st==='신규접수'?'new':st==='검토중'?'reviewing':'done';
+    var stIcon=st==='신규접수'?'🟡':st==='검토중'?'🔵':'🟢';
+    html+='<tr data-id="'+id+'">'+
+      '<td><code style="font-size:11px;color:var(--tx3)">'+id+'</code></td>'+
+      '<td style="white-space:nowrap;font-size:12px">'+fmtDT(d['접수일시'])+'</td>'+
+      '<td><span class="bdg '+tc+'">'+(d['유형']||'-')+'</span></td>'+
+      '<td><strong>'+(d['dept']||'-')+'</strong></td>'+
+      '<td>'+(d['phone']||'-')+'</td>'+
+      '<td>'+(d['eventDate']||d['startDate']||'-')+'</td>'+
+      '<td><div class="st-dropdown">'+
+        '<button class="st-btn '+stClass+'" data-id="'+id+'">'+stIcon+' '+st+' ▾</button>'+
+        '<div class="st-menu">'+
+          '<div class="st-menu-item" data-id="'+id+'" data-st="신규접수">🟡 신규접수</div>'+
+          '<div class="st-menu-item" data-id="'+id+'" data-st="검토중">🔵 검토중</div>'+
+          '<div class="st-menu-item" data-id="'+id+'" data-st="완료">🟢 완료</div>'+
+        '</div>'+
+      '</div></td>'+
     '</tr>';
   });
-  tb.innerHTML = html;
+  tb.innerHTML=html;
 
-  // 행 클릭 이벤트
-  tb.querySelectorAll('tr').forEach(function(tr) {
-    tr.addEventListener('click', function(e) {
-      if (e.target.tagName === 'SELECT' || e.target.tagName === 'OPTION') return;
+  tb.querySelectorAll('tr').forEach(function(tr){
+    tr.addEventListener('click', function(e){
+      if(e.target.closest('.st-dropdown')) return;
       showDet(this.dataset.id);
     });
   });
-  // 상태 변경 이벤트
-  tb.querySelectorAll('.stsel').forEach(function(sel) {
-    sel.addEventListener('change', function(e) {
+  tb.querySelectorAll('.st-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
       e.stopPropagation();
-      updSt(this.dataset.id, this.value);
+      document.querySelectorAll('.st-menu').forEach(function(m){ m.classList.remove('on'); });
+      this.nextElementSibling.classList.toggle('on');
+    });
+  });
+  tb.querySelectorAll('.st-menu-item').forEach(function(item){
+    item.addEventListener('click', function(e){
+      e.stopPropagation();
+      updSt(this.dataset.id, this.dataset.st);
+      document.querySelectorAll('.st-menu').forEach(function(m){ m.classList.remove('on'); });
     });
   });
 }
 
-function updSt(id, st) {
-  if (GAS) {
-    fetch(GAS + '?action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(st)).catch(function(){});
+async function updSt(id, st) {
+  if(GAS){
+    try{ await fetch(GAS+'?action=updateStatus&id='+encodeURIComponent(id)+'&status='+encodeURIComponent(st)); }catch(e){}
   }
-  var item = AD.find(function(d) { return d['접수번호'] === id; });
-  if (item) { item['상태'] = st; renderTbl(); }
-  showToast('상태가 업데이트되었습니다.', 'ok');
+  var item=AD.find(function(d){ return d['접수번호']===id; });
+  if(item){ item['상태']=st; renderTbl(); }
+  showToast('상태가 업데이트되었습니다.','ok');
 }
 
-// ===== 상세 모달 =====
-var LBL = {
-  dept:'부서/위원회', phone:'연락처', email:'이메일',
-  eventName:'행사명', eventDate:'행사/촬영일', eventTime:'시작시간',
-  startDate:'상영시작일', endDate:'상영종료일',
-  videoTitle:'영상제목', videoPurpose:'제작목적', videoTarget:'타겟시청자',
-  videoDuration:'영상길이', videoDeadline:'납품마감일', videoBudget:'예산여부',
-  videoContent:'포함내용', videoAssets:'기존자료', videoStyle:'제작방식',
-  videoMood:'분위기/톤', videoNote:'추가요청사항', videoType:'영상종류',
-  photoType:'촬영유형', duration:'소요시간', location:'촬영장소',
-  photoDetail:'촬영요청내용', deadline:'마감일', delivery:'전달방식', photoNote:'기타요청',
-  adTitle:'광고제목', adSummary:'광고요약', adPurpose:'광고목적',
-  adDuration:'상영길이', adFileOk:'파일기준적합', adApproval:'승인여부',
-  adNote:'기타전달사항', adConsent:'동의여부',
-  t_sun_am:'주일오전예배전', t_sun_pm:'주일오후예배전', t_wed:'수요예배전후', t_fri:'금요집회전후'
-};
-var BIG = ['videoPurpose','videoContent','videoNote','photoDetail','photoNote','adNote'];
-var typeClass = {'영상제작':'v','사진촬영':'p','영상광고':'a'};
-
+// 상세 팝업
 function showDet(id) {
-  var d = AD.find(function(r) { return r['접수번호'] === id; });
-  if (!d) return;
-  var tc = typeClass[d['유형']] || 'v';
-  var skip = ['접수번호','접수일시','유형','상태'];
-  document.getElementById('mtitle').textContent = '[' + d['유형'] + '] ' + (d['dept']||'') + ' 신청 상세';
-  var html = '<div class="dgrid">' +
-    '<div class="di"><div class="dk">접수번호</div><div class="dv"><code>' + (d['접수번호']||'-') + '</code></div></div>' +
-    '<div class="di"><div class="dk">접수일시</div><div class="dv">' + fmtDT(d['접수일시']) + '</div></div>' +
-    '<div class="di"><div class="dk">유형</div><div class="dv"><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></div></div>' +
-    '<div class="di"><div class="dk">상태</div><div class="dv">' + (d['상태']||'-') + '</div></div>';
-  Object.entries(d).forEach(function(entry) {
-    var k = entry[0], v = entry[1];
-    if (skip.includes(k) || !v) return;
-    var isBig = BIG.includes(k);
-    html += '<div class="di' + (isBig?' full':'') + '">' +
-      '<div class="dk">' + (LBL[k]||k) + '</div>' +
-      '<div class="dv"' + (isBig?' style="white-space:pre-wrap;background:var(--sur2);padding:9px;border-radius:7px;font-size:12px"':'') + '>' + v + '</div>' +
-      '</div>';
-  });
-  html += '</div>';
-  document.getElementById('mbody').innerHTML = html;
+  var d=AD.find(function(r){ return r['접수번호']===id; });
+  if(!d) return;
+  var TC={'영상제작':'v','사진촬영':'p','영상광고':'a'};
+  var tc=TC[d['유형']]||'v';
+  var det=d['_detail']||{};
+
+  document.getElementById('mtitle').textContent='['+d['유형']+'] '+(d['dept']||'')+' 신청 상세';
+
+  var html='';
+
+  // 공통 기본 정보
+  html+='<div class="det-section"><div class="det-section-title">기본 정보</div><div class="det-grid">'+
+    di('접수번호','<code>'+(d['접수번호']||'-')+'</code>',false)+
+    di('접수일시',fmtDT(d['접수일시']),false)+
+    di('유형','<span class="bdg '+tc+'">'+(d['유형']||'-')+'</span>',false)+
+    di('상태',d['상태']||'-',false)+
+    di('부서/위원회',det.dept||d['dept']||'-',false)+
+    di('연락처',det.phone||d['phone']||'-',false)+
+    '</div></div>';
+
+  if(d['유형']==='영상제작') {
+    html+='<div class="det-section"><div class="det-section-title">영상 정보</div><div class="det-grid">'+
+      di('영상 종류',det.videoType||'-',false)+
+      di('주제/제목',det.videoTitle||'-',false)+
+      di('타겟 시청자',det.videoTarget||'-',false)+
+      di('영상 길이',det.videoDuration||'-',false)+
+      di('납품 마감일',det.videoDeadline||'-',false)+
+      di('행사 일시',det.eventDate||'-',false)+
+      di('예산 여부',det.videoBudget||'-',false)+
+      di('기존 자료',det.videoAssets||'-',false)+
+      di('제작 방식',det.videoStyle||'-',false)+
+      di('분위기/톤',det.videoMood||'-',false)+
+      di('제작 목적',det.videoPurpose||'-',true)+
+      di('포함 내용',det.videoContent||'-',true)+
+      di('추가 요청사항',det.videoNote||'-',true)+
+      '</div></div>';
+  } else if(d['유형']==='사진촬영') {
+    html+='<div class="det-section"><div class="det-section-title">촬영 정보</div><div class="det-grid">'+
+      di('이메일',det.email||'-',false)+
+      di('행사명',det.eventName||'-',false)+
+      di('촬영 유형',det.photoType||'-',false)+
+      di('촬영 일자',det.eventDate||'-',false)+
+      di('시작 시간',det.eventTime||'-',false)+
+      di('소요 시간',det.duration||'-',false)+
+      di('촬영 장소',det.location||'-',false)+
+      di('마감일',det.deadline||'-',false)+
+      di('전달 방식',det.delivery||'-',false)+
+      di('촬영 요청 내용',det.photoDetail||'-',true)+
+      di('기타 요청사항',det.photoNote||'-',true)+
+      '</div></div>';
+  } else if(d['유형']==='영상광고') {
+    html+='<div class="det-section"><div class="det-section-title">광고 정보</div><div class="det-grid">'+
+      di('광고 제목',det.adTitle||'-',false)+
+      di('광고 요약',det.adSummary||'-',false)+
+      di('광고 목적',det.adPurpose||'-',false)+
+      di('상영 시작일',det.startDate||'-',false)+
+      di('상영 종료일',det.endDate||'-',false)+
+      di('상영 길이',det.adDuration||'-',false)+
+      di('파일 기준 적합',det.adFileOk||'-',false)+
+      di('승인 여부',det.adApproval||'-',false)+
+      di('동의 여부',det.adConsent||'-',false)+
+      '</div></div>';
+    html+='<div class="det-section"><div class="det-section-title">시간대 선호도</div><div class="det-grid">'+
+      di('주일 오전(1,3부) 예배 전',det.t_sun_am||'-',false)+
+      di('주일 오후 전앙 예배 전',det.t_sun_pm||'-',false)+
+      di('수요(1,2부) 예배 전후',det.t_wed||'-',false)+
+      di('금요집회 전후',det.t_fri||'-',false)+
+      di('기타 전달사항',det.adNote||'-',true)+
+      '</div></div>';
+  }
+
+  document.getElementById('mbody').innerHTML=html;
   document.getElementById('modal').classList.add('on');
 }
-function closeModal() {
-  document.getElementById('modal').classList.remove('on');
+
+function di(key, val, isLong) {
+  return '<div class="det-item'+(isLong?' full':'')+'">'+
+    '<div class="det-key">'+key+'</div>'+
+    '<div class="det-val'+(isLong?' long':'')+'">'+val+'</div>'+
+    '</div>';
 }
+function closeModal() { document.getElementById('modal').classList.remove('on'); }
 </script>
 </body>
 </html>
