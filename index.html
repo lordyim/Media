@@ -22,7 +22,7 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .nb:not(.on):hover{background:rgba(255,255,255,.2);}
 .main{max-width:960px;margin:0 auto;padding:30px 18px;}
 .view{display:none;}.view.on{display:block;}
-.hero{text-align:center;padding:44px 16px 36px;}
+.hero{text-align:center;padding:24px 16px 20px;}
 .hbadge{display:inline-block;background:var(--acp);color:var(--ac);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;letter-spacing:1px;margin-bottom:18px;}
 .hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(22px,4vw,36px);font-weight:700;line-height:1.3;margin-bottom:12px;}
 .hero p{color:var(--tx2);font-size:14px;max-width:480px;margin:0 auto 36px;line-height:1.85;}
@@ -39,6 +39,17 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .scd{font-size:12px;color:var(--tx2);line-height:1.7;margin-bottom:18px;}
 .scl{font-size:12px;font-weight:700;}
 .sc.v .scl{color:var(--vc)}.sc.p .scl{color:var(--pc)}.sc.a .scl{color:var(--dc)}
+.home-status{margin-top:28px;}
+.home-status-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.home-tbl-wrap{background:#fff;border-radius:13px;box-shadow:var(--sh);overflow:hidden;}
+.home-tbl-head{background:var(--sur2);display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);}
+.home-tbl-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:12px 16px;border-top:1px solid var(--bdr);align-items:center;font-size:13px;}
+.home-tbl-row:hover{background:var(--acp);}
+.home-empty{padding:32px 20px;text-align:center;color:var(--tx3);font-size:13px;}
+.st-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;}
+.st-pill.new{background:#fff3e0;color:#e65100;}
+.st-pill.reviewing{background:#e3f2fd;color:#1565c0;}
+.st-pill.done{background:#e8f5e9;color:#2e7d32;}
 .fhdr{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
 .bbtn{display:flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;border:2px solid var(--ac);background:#fff;cursor:pointer;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;color:var(--ac);transition:.22s;white-space:nowrap;flex-shrink:0;}
 .bbtn:hover{background:var(--ac);color:#fff;}
@@ -202,6 +213,20 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
     <div class="sc p" id="card-p"><div class="sci">📸</div><div class="sct">사진 촬영 의뢰</div><div class="scd">사역 및 행사의 현장 스케치, 공식 기념 촬영 등을 신청하세요.</div><div class="scl">신청하기 →</div></div>
     <div class="sc a" id="card-a"><div class="sci">📺</div><div class="sct">영상광고 상영 의뢰</div><div class="scd">교회 미디어 시설을 통한 행사 안내 및 광고 영상 상영을 신청하세요.</div><div class="scl">신청하기 →</div></div>
   </div>
+
+  <!-- 신청 현황 -->
+  <div class="home-status">
+    <div class="home-status-title">📋 신청 현황 <span style="font-size:12px;font-weight:400;color:var(--tx3);font-family:'Noto Sans KR',sans-serif;">접수번호로 내 신청 진행상황을 확인하세요</span></div>
+    <div class="home-tbl-wrap">
+      <div class="home-tbl-head">
+        <span>접수번호</span>
+        <span>유형</span>
+        <span>행사일</span>
+        <span>상태</span>
+      </div>
+      <div id="home-tbody"></div>
+    </div>
+  </div>
 </div>
 
 <div id="v-form" class="view">
@@ -321,6 +346,8 @@ var CT = '', AD = [], LGD = false;
   document.addEventListener('scroll', function() {
     document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); });
   }, true);
+  // 초기 홈 현황 로드
+  loadHome();
 })();
 
 function goV(v) {
@@ -329,6 +356,7 @@ function goV(v) {
   document.getElementById('nav-s').classList.toggle('on', v !== 'admin' && v !== 'login');
   document.getElementById('nav-a').classList.toggle('on', v === 'admin' || v === 'login');
   if (v === 'admin') loadAdmin();
+  if (v === 'home') loadHome();
 }
 
 function clickAdmin() {
@@ -594,10 +622,44 @@ async function subForm(e) {
   }
   document.getElementById('refnum').textContent = rec.id;
   goV('success');
+  loadHome(); // 홈 현황 갱신
   showToast('신청이 완료되었습니다! 🎉', 'ok');
 }
 
 // ===== 관리자 데이터 =====
+async function loadHome() {
+  var tbody = document.getElementById('home-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '<div class="home-empty">⏳ 불러오는 중...</div>';
+  if (!GAS) { tbody.innerHTML = '<div class="home-empty">연동 설정이 필요합니다.</div>'; return; }
+  try {
+    var res = await fetch(GAS + '?action=list');
+    var j = await res.json();
+    var data = (j.result === 'success') ? j.data || [] : [];
+    if (!data.length) {
+      tbody.innerHTML = '<div class="home-empty">📭 신청 내역이 없습니다.</div>';
+      return;
+    }
+    var TC = {'영상제작':'v','사진촬영':'p','영상광고':'a'};
+    var html = '';
+    data.forEach(function(d) {
+      var tc = TC[d['유형']] || 'v';
+      var st = d['상태'] || '신규접수';
+      var sc = st === '신규접수' ? 'new' : st === '검토중' ? 'reviewing' : 'done';
+      var si = st === '신규접수' ? '🟡' : st === '검토중' ? '🔵' : '🟢';
+      html += '<div class="home-tbl-row">' +
+        '<span style="font-size:11px;color:var(--tx3);font-family:monospace">' + (d['접수번호']||'-') + '</span>' +
+        '<span><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></span>' +
+        '<span style="color:var(--tx2)">' + fmtDate(d['eventDate']) + '</span>' +
+        '<span><span class="st-pill ' + sc + '">' + si + ' ' + st + '</span></span>' +
+        '</div>';
+    });
+    tbody.innerHTML = html;
+  } catch(e) {
+    tbody.innerHTML = '<div class="home-empty">데이터를 불러올 수 없습니다.</div>';
+  }
+}
+
 async function loadAdmin() {
   document.getElementById('tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#9c9388;">⏳ 불러오는 중...</td></tr>';
   if (GAS) {
