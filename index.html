@@ -586,7 +586,7 @@ function buildAdForm() {
 }
 
 // ===== 제출 =====
-function subForm(e) {
+async function subForm(e) {
   e.preventDefault();
   var btn = e.target;
   var valid = true;
@@ -616,8 +616,16 @@ function subForm(e) {
 
   // GAS 전송
   if (GAS) {
-    var params = new URLSearchParams(Object.assign({action:'add'}, rec));
-    fetch(GAS + '?' + params.toString()).catch(function(e) { console.warn(e); });
+    try {
+      var params = new URLSearchParams(Object.assign({action:'add'}, rec));
+      var res = await fetch(GAS + '?' + params.toString());
+      var json = await res.json();
+      if (json.result !== 'success') {
+        console.warn('GAS 오류:', json);
+      }
+    } catch(e) {
+      console.warn('전송 실패:', e);
+    }
   }
 
   document.getElementById('refnum').textContent = rec.id;
