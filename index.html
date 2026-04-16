@@ -107,18 +107,18 @@ body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);
 .stn{font-size:30px;font-weight:700;font-family:'Noto Serif KR',serif;}
 .stat.t .stn{color:var(--ac)}.stat.v .stn{color:var(--vc)}.stat.p .stn{color:var(--pc)}.stat.a .stn{color:var(--dc)}
 .stl{font-size:11px;color:var(--tx3);margin-top:3px;}
-.tw{background:#fff;border-radius:13px;box-shadow:var(--sh);overflow:hidden;}
+.tw{background:#fff;border-radius:13px;box-shadow:var(--sh);}
 .tsch{padding:14px 18px;border-bottom:1px solid var(--bdr);}
 .sinp{width:100%;padding:9px 13px;border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none;}
 .sinp:focus{border-color:var(--ac2);}
 .tcon{overflow-x:auto;}
-.tbl-bottom{height:80px;}
+.tbl-bottom{height:100px;}
 table{width:100%;border-collapse:collapse;min-width:700px;}
 thead th{background:var(--sur2);padding:11px 14px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--tx3);white-space:nowrap;}
 tbody tr.trow{border-bottom:1px solid var(--bdr);cursor:pointer;transition:.15s;}
 tbody tr.trow:hover{background:var(--acp);}
 tbody tr.trow:last-child{border-bottom:none;}
-td{padding:12px 14px;font-size:13px;vertical-align:middle;}
+td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
 .bdg{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;}
 .bdg.v{background:var(--vb);color:var(--vc)}.bdg.p{background:var(--pb);color:var(--pc)}.bdg.a{background:var(--db);color:var(--dc)}
 .std{position:relative;display:inline-block;}
@@ -365,9 +365,14 @@ function onPhone(el) {
 function genId(t) {
   var p = {v:'V', p:'P', a:'A'};
   var d = new Date();
-  return (p[t]||'X') + String(d.getFullYear()).slice(2) +
-    String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') +
-    '-' + String(Math.floor(Math.random()*9000)+1000);
+  var dateStr = String(d.getFullYear()).slice(2) +
+    String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  var prefix = (p[t]||'X') + dateStr + '-';
+  // 오늘 날짜 기준 순번 (로컬스토리지)
+  var key = 'seq_' + dateStr;
+  var seq = parseInt(localStorage.getItem(key) || '0') + 1;
+  localStorage.setItem(key, String(seq));
+  return prefix + String(seq).padStart(3,'0');
 }
 function fmtDT(iso) {
   if (!iso) return '-';
@@ -563,8 +568,9 @@ async function subForm(e) {
   if (GAS) {
     try {
       var params = new URLSearchParams(Object.assign({action: 'add'}, rec));
-      var res = await fetch(GAS + '?' + params.toString());
-      await res.json();
+      // redirect:follow 시 2번 호출되는 문제 방지
+      var res = await fetch(GAS + '?' + params.toString(), {redirect: 'follow'});
+      try { await res.json(); } catch(e) {}
     } catch(err) { console.warn('전송 오류:', err); }
   }
   document.getElementById('refnum').textContent = rec.id;
