@@ -168,16 +168,12 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
 @media(max-width:480px){.hdr-title{font-size:13px;}.nb{padding:6px 9px;font-size:12px;}.main{padding:18px 12px;}.login-wrap{margin:30px auto;padding:32px 20px;}}
 
 @media print {
-  .hdr, .fhdr, .back-btn, .hdr-nav, .actrl, .tsch, .stats, .atop,
-  .bdrop > .modal > .mhdr .mcls, #print-close-area { display: none !important; }
-  .bdrop { position: static !important; background: none !important; display: block !important; padding: 0 !important; }
-  .modal { box-shadow: none !important; max-height: none !important; border-radius: 0 !important; width: 100% !important; max-width: 100% !important; animation: none !important; }
-  .mhdr { border-bottom: 2px solid #333 !important; padding: 12px 0 !important; }
-  .mbdy { padding: 16px 0 !important; }
-  body { background: #fff !important; font-size: 12px !important; }
-  .det-val.long { background: #f5f5f5 !important; }
-  @page { size: A4; margin: 15mm; }
+  /* 인쇄 시 모달 외 모든 것 숨기기 */
+  body > *:not(#print-area) { display: none !important; }
+  #print-area { display: block !important; }
+  @page { size: A4 portrait; margin: 15mm; }
 }
+#print-area { display: none; }
 </style>
 </head>
 <body>
@@ -322,6 +318,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;}
   </div>
 </div>
 <div class="toast" id="toast"></div>
+<div id="print-area"></div>
 
 <script>
 var GAS = 'https://script.google.com/macros/s/AKfycbwwHRbZAJOFhekQ-ytRW03iHYcpSruauDznAJnik2UQB4ABBXJkB3tSMUjjkCP-7PZwTg/exec';
@@ -718,6 +715,32 @@ function showDet(id) {
 
   document.getElementById('mbody').innerHTML=html;
   document.getElementById('modal').classList.add('on');
+
+  // 인쇄용 영역 채우기
+  var printHtml = '<style>'+
+    '@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap");'+
+    'body{font-family:Noto Sans KR,sans-serif;font-size:11.5px;color:#1c1a17;}'+
+    '.det-section{margin-bottom:16px;}'+
+    '.det-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#9c9388;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #d8d3c8;}'+
+    '.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}'+
+    '.det-item{display:flex;flex-direction:column;gap:3px;}'+
+    '.det-item.full{grid-column:1/-1;}'+
+    '.det-key{font-size:9px;font-weight:700;color:#9c9388;text-transform:uppercase;letter-spacing:.5px;}'+
+    '.det-val{font-size:11.5px;color:#1c1a17;line-height:1.5;}'+
+    '.det-val.long{background:#f5f5f5;padding:8px 10px;border-radius:6px;white-space:pre-wrap;}'+
+    '.bdg{display:inline-flex;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;}'+
+    '.bdg.v{background:#e8f0f8;color:#1e4d7b}.bdg.p{background:#e8f5ed;color:#2d6b45}.bdg.a{background:#f5e8ee;color:#6b1e45}'+
+    '</style>'+
+    '<div style="border-bottom:2px solid #1c1a17;padding-bottom:10px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-start;">'+
+    '<div>'+
+    '<div style="font-size:10px;color:#9c9388;letter-spacing:1px;margin-bottom:4px;">충현교회 미디어센터 MEDIA CENTER REQUEST SYSTEM</div>'+
+    '<div style="font-size:18px;font-weight:700;font-family:Noto Serif KR,serif;">['+（d['유형']||'')+'] 신청서</div>'+
+    '</div>'+
+    '<div style="font-size:10px;color:#9c9388;text-align:right;">'+
+    '접수번호: '+(d['접수번호']||'-')+'<br>접수일시: '+fmtDT(d['접수일시'])+
+    '</div></div>'+
+    html;
+  document.getElementById('print-area').innerHTML = printHtml;
 }
 
 function di(key, val, isLong) {
