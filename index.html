@@ -4,170 +4,238 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>충현교회 미디어센터 신청 시스템</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f4f1eb;--sur:#fff;--sur2:#ede9e0;--bdr:#d8d3c8;--tx:#1c1a17;--tx2:#6b6257;--tx3:#9c9388;--ac:#6b4c2a;--ac2:#c4956a;--acp:#f5ece0;--vc:#1e4d7b;--vb:#e8f0f8;--pc:#2d6b45;--pb:#e8f5ed;--dc:#6b1e45;--db:#f5e8ee;--er:#8b2020;--sh:0 2px 20px rgba(0,0,0,.07);--sh2:0 8px 40px rgba(0,0,0,.13);}
+/* 충현교회 미디어센터 신청 시스템 — 스타일 (v2.0.1) */
+:root{
+  --bg:#f5f2ec;--sur:#fff;--sur2:#f0ebe1;--sur3:#e7e0d2;--bdr:#ddd6c8;--bdr2:#cfc6b4;
+  --tx:#241f18;--tx2:#544b3d;--tx3:#7d7263;
+  --ac:#7a5230;--ac2:#a97b48;--acs:#5f3f22;--acp:#f4ecdf;
+  --vc:#1d4e7c;--vb:#e9f1f9;--pc:#25693f;--pb:#e7f4ec;--dc:#7a2350;--db:#f7e9f0;
+  --ok:#25693f;--er:#a52a2a;--warn:#b45309;
+  --sh:0 1px 3px rgba(60,50,30,.06),0 6px 24px rgba(60,50,30,.06);
+  --sh2:0 12px 44px rgba(60,50,30,.16);
+  --rad:14px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:15px;line-height:1.6;}
-.hdr{background:var(--tx);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.25);}
-.hdr-in{max-width:960px;margin:0 auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
-.hdr-brand{display:flex;align-items:center;gap:11px;}
-.hdr-logo{width:34px;height:34px;background:var(--ac2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;}
-.hdr-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;}
-.hdr-sub{font-size:11px;color:#aaa;letter-spacing:.5px;}
-.hdr-nav{display:flex;gap:4px;}
-.nb{padding:7px 15px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;font-family:'Noto Sans KR',sans-serif;transition:.22s;}
-.nb.on{background:var(--ac);color:#fff;}
-.nb:not(.on){background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);}
-.nb:not(.on):hover{background:rgba(255,255,255,.2);}
-.main{max-width:960px;margin:0 auto;padding:16px 18px;}
-.view{display:none;}.view.on{display:block;}
-.hero{text-align:center;padding:10px 16px 10px;}
+html{-webkit-text-size-adjust:100%;}
+body{font-family:'Noto Sans KR',system-ui,sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-family:'Noto Serif KR',serif;letter-spacing:-.01em;}
 
-.hero h1{font-family:'Noto Serif KR',serif;font-size:clamp(18px,3vw,26px);font-weight:700;line-height:1.3;margin-bottom:8px;}
-.hero p{color:var(--tx2);font-size:13px;max-width:600px;margin:0 auto 14px;line-height:1.7;}
-.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-.sc{background:var(--sur);border-radius:14px;padding:20px 20px 18px;cursor:pointer;border:2px solid transparent;box-shadow:var(--sh);transition:.22s;text-align:left;position:relative;overflow:hidden;}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:14px 14px 0 0;}
+/* 헤더 */
+.hdr{background:linear-gradient(180deg,#2b241c,#211b14);color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 2px 24px rgba(0,0,0,.28);}
+.hdr-in{max-width:1000px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;}
+.hdr-brand{display:flex;align-items:center;gap:13px;}
+.hdr-logo{width:40px;height:40px;background:linear-gradient(135deg,var(--ac2),var(--ac));border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(0,0,0,.25);}
+.hdr-title{font-size:17px;font-weight:700;line-height:1.2;}
+.hdr-sub{font-size:10.5px;color:#b7ad9c;letter-spacing:1px;margin-top:2px;}
+.hdr-sub .ver{color:var(--ac2);font-weight:700;}
+.hdr-nav{display:flex;gap:6px;}
+.nb{padding:9px 17px;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:.2s;}
+.nb.on{background:var(--ac2);color:#241f18;}
+.nb:not(.on){background:rgba(255,255,255,.08);color:rgba(255,255,255,.82);}
+.nb:not(.on):hover{background:rgba(255,255,255,.18);}
+
+.main{max-width:1000px;margin:0 auto;padding:22px 20px 80px;}
+.view{display:none;animation:fade .3s ease;}
+.view.on{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* 홈 히어로 */
+.hero{text-align:center;padding:22px 16px 26px;}
+.hero h1{font-size:clamp(21px,3.4vw,30px);font-weight:700;line-height:1.34;margin-bottom:12px;}
+.hero p{color:var(--tx2);font-size:15px;max-width:600px;margin:0 auto;line-height:1.75;}
+
+/* 서비스 카드 */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.sc{background:var(--sur);border-radius:var(--rad);padding:24px 22px;cursor:pointer;border:1.5px solid var(--bdr);box-shadow:var(--sh);transition:.22s;text-align:left;position:relative;overflow:hidden;}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;}
 .sc.v::before{background:var(--vc)}.sc.p::before{background:var(--pc)}.sc.a::before{background:var(--dc)}
-.sc:hover{transform:translateY(-3px);box-shadow:var(--sh2);}
+.sc:hover{transform:translateY(-4px);box-shadow:var(--sh2);}
 .sc.v:hover{border-color:var(--vc)}.sc.p:hover{border-color:var(--pc)}.sc.a:hover{border-color:var(--dc)}
-.sc-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.sci{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.sc-top{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+.sci{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
 .sc.v .sci{background:var(--vb)}.sc.p .sci{background:var(--pb)}.sc.a .sci{background:var(--db)}
-.sct{font-size:16px;font-weight:700;font-family:'Noto Serif KR',serif;line-height:1.3;}
+.sct{font-size:18px;font-weight:700;line-height:1.3;}
 .sc.v .sct{color:var(--vc)}.sc.p .sct{color:var(--pc)}.sc.a .sct{color:var(--dc)}
-.scd{font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:14px;}
-.scl{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:9px 0;border-radius:9px;font-size:13px;font-weight:700;transition:.22s;}
+.scd{font-size:13.5px;color:var(--tx2);line-height:1.65;margin-bottom:18px;}
+.scl{display:inline-flex;align-items:center;justify-content:center;width:100%;padding:11px 0;border-radius:10px;font-size:14px;font-weight:700;transition:.22s;}
 .sc.v .scl{background:var(--vb);color:var(--vc)}.sc.p .scl{background:var(--pb);color:var(--pc)}.sc.a .scl{background:var(--db);color:var(--dc)}
 .sc.v:hover .scl{background:var(--vc);color:#fff}.sc.p:hover .scl{background:var(--pc);color:#fff}.sc.a:hover .scl{background:var(--dc);color:#fff}
-.home-status{margin-top:24px;padding-top:20px;border-top:1px solid var(--bdr);}
-.home-status-title{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.home-tbl-wrap{background:#fff;border-radius:13px;box-shadow:var(--sh);overflow:hidden;}
-.home-tbl-head{background:#b8a898;display:grid;grid-template-columns:1.4fr 1.2fr 0.9fr 1fr 0.9fr 1fr;padding:11px 16px;font-size:13px;font-weight:700;letter-spacing:.3px;color:#fff;}
-.home-tbl-row{display:grid;grid-template-columns:1.4fr 1.2fr 0.9fr 1fr 0.9fr 1fr;padding:10px 16px;border-top:1px solid var(--bdr);align-items:center;font-size:12px;}
+
+/* 홈 신청 현황 */
+.home-status{margin-top:34px;padding-top:26px;border-top:1px solid var(--bdr);}
+.home-status-title{font-size:18px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.home-status-sub{font-size:13px;font-weight:400;color:var(--tx3);font-family:'Noto Sans KR',sans-serif;}
+.home-tbl-wrap{background:#fff;border-radius:var(--rad);box-shadow:var(--sh);overflow:hidden;margin-top:14px;border:1px solid var(--bdr);}
+.home-tbl-head,.home-tbl-row{display:grid;grid-template-columns:1.4fr 1.3fr .9fr 1.1fr .9fr 1fr;gap:8px;align-items:center;}
+.home-tbl-head{background:var(--sur3);padding:13px 18px;font-size:13px;font-weight:700;color:var(--tx2);}
+.home-tbl-row{padding:13px 18px;border-top:1px solid var(--bdr);font-size:13px;}
 .home-tbl-row:hover{background:var(--acp);}
-.home-empty{padding:32px 20px;text-align:center;color:var(--tx3);font-size:13px;}
-.st-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:700;}
-.st-pill.new{background:#fff3e0;color:#e65100;}
-.st-pill.reviewing{background:#e3f2fd;color:#1565c0;}
-.st-pill.done{background:#e8f5e9;color:#2e7d32;}
-.fhdr{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
-.bbtn{display:flex;align-items:center;gap:8px;padding:9px 18px;border-radius:10px;border:2px solid var(--ac);background:#fff;cursor:pointer;font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;color:var(--ac);transition:.22s;white-space:nowrap;flex-shrink:0;}
+.home-empty{padding:40px 20px;text-align:center;color:var(--tx3);font-size:14px;}
+.mono{font-family:'Courier New',monospace;font-weight:700;}
+.st-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap;}
+.st-pill.new{background:#fde9d6;color:#b45309;}
+.st-pill.reviewing{background:#e0edfb;color:#1d4e7c;}
+.st-pill.done{background:#e2f2e7;color:#25693f;}
+
+/* 폼 헤더 */
+.fhdr{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap;}
+.bbtn{display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;border:1.5px solid var(--ac);background:#fff;cursor:pointer;font-size:14px;font-weight:700;font-family:inherit;color:var(--ac);transition:.2s;white-space:nowrap;flex-shrink:0;}
 .bbtn:hover{background:var(--ac);color:#fff;}
-.fhdr-tx h2{font-family:'Noto Serif KR',serif;font-size:19px;font-weight:700;}
-.fhdr-tx p{font-size:12px;color:var(--tx2);margin-top:2px;}
-.fhdr{flex-wrap:wrap;}
-.fcard{background:var(--sur);border-radius:16px;padding:28px 24px;box-shadow:var(--sh);border:1.5px solid var(--bdr);}
-@media(max-width:600px){.fcard{padding:18px 14px;}}
-.stitle{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--tx3);margin-bottom:16px;padding-bottom:9px;border-bottom:1px solid var(--bdr);margin-top:22px;}
+.fhdr-tx h2{font-size:21px;font-weight:700;}
+.fhdr-tx p{font-size:13px;color:var(--tx2);margin-top:3px;}
+
+/* 폼 카드 */
+.fcard{background:var(--sur);border-radius:16px;padding:32px 28px;box-shadow:var(--sh);border:1px solid var(--bdr);}
+@media(max-width:600px){.fcard{padding:20px 15px;}}
+.stitle{font-size:12px;font-weight:700;letter-spacing:1.5px;color:var(--ac);margin:30px 0 18px;padding-bottom:10px;border-bottom:2px solid var(--sur3);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .stitle:first-child{margin-top:0;}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
 .fr.full{grid-template-columns:1fr;}
 @media(max-width:560px){.fr{grid-template-columns:1fr;}}
-.fg{display:flex;flex-direction:column;gap:5px;}
-.fl{font-size:13px;font-weight:600;color:var(--tx);}
-.rq{color:var(--er);margin-left:2px;}
-.ht{font-size:11px;font-weight:400;color:var(--tx3);margin-left:6px;}
-.fi,.fta{padding:10px 13px;border:1.5px solid var(--bdr);border-radius:9px;font-size:14px;font-family:'Noto Sans KR',sans-serif;color:var(--tx);background:#fff;transition:.22s;width:100%;outline:none;}
-.fi:focus,.fta:focus{border-color:var(--ac2);box-shadow:0 0 0 3px rgba(196,149,106,.15);}
-.fi.err{border-color:var(--er);animation:shake .3s;}
+.fg{display:flex;flex-direction:column;gap:7px;}
+.fl{font-size:14px;font-weight:600;color:var(--tx);line-height:1.5;}
+.rq{color:var(--er);margin-left:3px;font-weight:700;}
+.ht{font-size:12px;font-weight:400;color:var(--tx3);margin-left:6px;}
+.fi,.fta{padding:12px 14px;border:1.5px solid var(--bdr2);border-radius:10px;font-size:15px;font-family:inherit;color:var(--tx);background:#fff;transition:.18s;width:100%;outline:none;}
+.fi::placeholder,.fta::placeholder{color:#a89e8d;}
+.fi:focus,.fta:focus{border-color:var(--ac2);box-shadow:0 0 0 3px rgba(169,123,72,.16);}
+.fi.err,.fta.err{border-color:var(--er);animation:shake .3s;}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.fta{resize:vertical;min-height:90px;}
-.opts{display:flex;flex-direction:column;gap:8px;}
-.opt{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;border-radius:9px;border:1.5px solid var(--bdr);cursor:pointer;transition:.22s;}
-.opt:hover{background:var(--sur2);}
-.opt input{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--ac);cursor:pointer;}
-.opt span{font-size:13px;line-height:1.5;}
-.mwrap{overflow-x:auto;margin-top:8px;}
-.mtbl{width:100%;border-collapse:collapse;min-width:400px;}
-.mtbl th,.mtbl td{padding:9px 12px;border:1px solid var(--bdr);font-size:12px;text-align:center;}
+.fta{resize:vertical;min-height:96px;line-height:1.6;}
+.opts{display:flex;flex-direction:column;gap:9px;}
+.opts.grp-err{outline:2px solid var(--er);outline-offset:6px;border-radius:8px;}
+.opt{display:flex;align-items:flex-start;gap:11px;padding:12px 14px;border-radius:10px;border:1.5px solid var(--bdr);cursor:pointer;transition:.18s;background:#fff;}
+.opt:hover{background:var(--sur2);border-color:var(--bdr2);}
+.opt input{width:17px;height:17px;flex-shrink:0;margin-top:2px;accent-color:var(--ac);cursor:pointer;}
+.opt span{font-size:14px;line-height:1.55;}
+.mwrap{overflow-x:auto;margin-top:6px;border-radius:10px;}
+.mwrap.grp-err{outline:2px solid var(--er);outline-offset:3px;}
+.mtbl{width:100%;border-collapse:collapse;min-width:420px;}
+.mtbl th,.mtbl td{padding:11px 12px;border:1px solid var(--bdr);font-size:13px;text-align:center;}
 .mtbl th{background:var(--sur2);font-weight:700;color:var(--tx2);}
-.mtbl td:first-child{text-align:left;font-size:13px;}
-.mtbl input[type=radio]{accent-color:var(--ac);width:15px;height:15px;cursor:pointer;}
-.sbtn{width:100%;padding:14px;border-radius:11px;border:none;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.22s;margin-top:22px;display:flex;align-items:center;justify-content:center;gap:8px;}
-.sbtn.v{background:var(--vc);color:#fff;}.sbtn.p{background:var(--pc);color:#fff;}.sbtn.a{background:var(--dc);color:#fff;}
-.sbtn:hover{filter:brightness(1.1);transform:translateY(-1px);}.sbtn:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-.sbtn-print{width:100%;padding:14px;border-radius:11px;border:2px solid var(--ac);background:#fff;color:var(--ac);font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.22s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.mtbl td:first-child{text-align:left;font-size:13.5px;font-weight:500;}
+.mtbl input[type=radio]{accent-color:var(--ac);width:17px;height:17px;cursor:pointer;}
+
+/* 파일 첨부 */
+.filezone{display:flex;align-items:center;justify-content:center;gap:10px;padding:22px;border:2px dashed var(--bdr2);border-radius:12px;background:var(--sur2);cursor:pointer;transition:.18s;text-align:center;color:var(--tx2);font-size:14px;font-weight:500;}
+.filezone:hover,.filezone.drag{border-color:var(--ac2);background:var(--acp);color:var(--ac);}
+.filelist{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.fileitem{display:flex;align-items:center;gap:10px;padding:10px 14px;background:#fff;border:1.5px solid var(--bdr);border-radius:10px;font-size:13.5px;}
+.fileitem .fi-ic{font-size:18px;flex-shrink:0;}
+.fileitem .fi-nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;}
+.fileitem .fi-sz{color:var(--tx3);font-size:12px;flex-shrink:0;}
+.fileitem .fi-rm{border:none;background:var(--sur3);color:var(--tx2);width:26px;height:26px;border-radius:7px;cursor:pointer;font-size:14px;flex-shrink:0;transition:.15s;}
+.fileitem .fi-rm:hover{background:var(--er);color:#fff;}
+
+/* 제출/인쇄 버튼 */
+.btnrow{display:grid;grid-template-columns:1.4fr 1fr;gap:12px;margin-top:28px;}
+@media(max-width:560px){.btnrow{grid-template-columns:1fr;}}
+.sbtn{padding:15px;border-radius:12px;border:none;font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff;}
+.sbtn.v{background:var(--vc)}.sbtn.p{background:var(--pc)}.sbtn.a{background:var(--dc)}
+.sbtn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.sbtn:disabled{opacity:.6;cursor:not-allowed;transform:none;filter:none;}
+.sbtn-print{padding:15px;border-radius:12px;border:1.5px solid var(--ac);background:#fff;color:var(--ac);font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px;}
 .sbtn-print:hover{background:var(--ac);color:#fff;}
-.sbox{background:#fff;border-radius:20px;padding:56px 36px;text-align:center;box-shadow:var(--sh);max-width:460px;margin:36px auto;}
-.sico{width:76px;height:76px;background:#e8f5ed;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:38px;margin:0 auto 22px;}
-.sbox h3{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;margin-bottom:10px;}
-.sbox p{color:var(--tx2);font-size:14px;line-height:1.8;}
-.sref{background:var(--sur2);border-radius:10px;padding:13px 18px;margin:18px 0;font-size:13px;color:var(--tx2);}
-.sref strong{display:block;font-size:19px;color:var(--ac);font-family:'Noto Serif KR',serif;margin-top:3px;}
-.sbk{margin-top:22px;padding:11px 26px;border-radius:9px;border:2px solid var(--ac);background:#fff;color:var(--ac);font-size:14px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.22s;}
+
+/* 완료 화면 */
+.sbox{background:#fff;border-radius:20px;padding:56px 36px;text-align:center;box-shadow:var(--sh);max-width:480px;margin:40px auto;border:1px solid var(--bdr);}
+.sico{width:82px;height:82px;background:var(--pb);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 24px;}
+.sbox h3{font-size:23px;font-weight:700;margin-bottom:12px;}
+.sbox p{color:var(--tx2);font-size:14.5px;line-height:1.85;}
+.sref{background:var(--sur2);border-radius:12px;padding:16px 20px;margin:22px 0;font-size:13px;color:var(--tx2);}
+.sref strong{display:block;font-size:22px;color:var(--ac);font-family:'Noto Serif KR',serif;margin-top:5px;letter-spacing:.5px;}
+.sbk{margin-top:8px;padding:12px 28px;border-radius:10px;border:1.5px solid var(--ac);background:#fff;color:var(--ac);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
 .sbk:hover{background:var(--ac);color:#fff;}
-.login-wrap{max-width:380px;margin:60px auto;background:#fff;border-radius:20px;padding:44px 36px;box-shadow:var(--sh2);text-align:center;}
-.login-ico{font-size:40px;margin-bottom:16px;}
-.login-wrap h2{font-family:'Noto Serif KR',serif;font-size:22px;font-weight:700;margin-bottom:8px;}
-.login-wrap p{font-size:13px;color:var(--tx2);margin-bottom:24px;}
-.login-input{width:100%;padding:12px 16px;border:1.5px solid var(--bdr);border-radius:10px;font-size:15px;font-family:'Noto Sans KR',sans-serif;outline:none;transition:.22s;margin-bottom:14px;text-align:center;letter-spacing:3px;}
-.login-input:focus{border-color:var(--ac2);box-shadow:0 0 0 3px rgba(196,149,106,.15);}
-.login-btn{width:100%;padding:13px;border-radius:10px;border:none;background:var(--ac);color:#fff;font-size:15px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.22s;}
-.login-btn:hover{background:#5a3d22;}
-.lgerr{font-size:13px;color:var(--er);margin-top:10px;display:none;}
-.atop{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;}
-.atop h2{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;}
-.actrl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.fsel{padding:7px 28px 7px 11px;border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;background:#fff;cursor:pointer;outline:none;appearance:none;color:var(--tx);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%236b6257' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
-.rbtn,.logout-btn{padding:7px 14px;border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.22s;display:flex;align-items:center;gap:5px;}
-.rbtn{border:1.5px solid var(--bdr);background:#fff;color:var(--tx);}
+
+/* 로그인 */
+.login-wrap{max-width:400px;margin:60px auto;background:#fff;border-radius:20px;padding:48px 38px;box-shadow:var(--sh2);text-align:center;border:1px solid var(--bdr);}
+.login-ico{font-size:44px;margin-bottom:18px;}
+.login-wrap h2{font-size:23px;font-weight:700;margin-bottom:10px;}
+.login-wrap p{font-size:14px;color:var(--tx2);margin-bottom:26px;line-height:1.7;}
+.login-input{width:100%;padding:14px 16px;border:1.5px solid var(--bdr2);border-radius:11px;font-size:16px;font-family:inherit;outline:none;transition:.18s;margin-bottom:14px;text-align:center;letter-spacing:3px;}
+.login-input:focus{border-color:var(--ac2);box-shadow:0 0 0 3px rgba(169,123,72,.16);}
+.login-btn{width:100%;padding:14px;border-radius:11px;border:none;background:var(--ac);color:#fff;font-size:15.5px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
+.login-btn:hover{background:var(--acs);}
+.login-btn:disabled{opacity:.6;cursor:not-allowed;}
+.lgerr{font-size:13.5px;color:var(--er);margin-top:12px;display:none;}
+
+/* 관리자 */
+.atop{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:22px;}
+.atop h2{font-size:22px;font-weight:700;}
+.actrl{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.fsel{padding:9px 30px 9px 13px;border:1.5px solid var(--bdr2);border-radius:9px;font-size:13.5px;font-family:inherit;background:#fff;cursor:pointer;outline:none;appearance:none;color:var(--tx);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%237d7263' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;}
+.rbtn,.logout-btn{padding:9px 15px;border-radius:9px;font-size:13.5px;font-family:inherit;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px;}
+.rbtn{border:1.5px solid var(--bdr2);background:#fff;color:var(--tx);}
 .rbtn:hover{background:var(--sur2);}
 .logout-btn{border:1.5px solid var(--er);background:#fff;color:var(--er);}
 .logout-btn:hover{background:var(--er);color:#fff;}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;}
-.stat{background:#fff;border-radius:11px;padding:16px 18px;box-shadow:var(--sh);border-left:4px solid var(--bdr);}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:22px;}
+.stat{background:#fff;border-radius:13px;padding:18px 20px;box-shadow:var(--sh);border:1px solid var(--bdr);border-left:5px solid var(--bdr);}
 .stat.t{border-left-color:var(--ac)}.stat.v{border-left-color:var(--vc)}.stat.p{border-left-color:var(--pc)}.stat.a{border-left-color:var(--dc)}
-.stn{font-size:30px;font-weight:700;font-family:'Noto Serif KR',serif;}
+.stn{font-size:32px;font-weight:700;font-family:'Noto Serif KR',serif;line-height:1;}
 .stat.t .stn{color:var(--ac)}.stat.v .stn{color:var(--vc)}.stat.p .stn{color:var(--pc)}.stat.a .stn{color:var(--dc)}
-.stl{font-size:11px;color:var(--tx3);margin-top:3px;}
-.tw{background:#fff;border-radius:13px;box-shadow:var(--sh);}
-.tsch{padding:14px 18px;border-bottom:1px solid var(--bdr);}
-.sinp{width:100%;padding:9px 13px;border:1.5px solid var(--bdr);border-radius:8px;font-size:13px;font-family:'Noto Sans KR',sans-serif;outline:none;}
-.sinp:focus{border-color:var(--ac2);}
+.stl{font-size:12px;color:var(--tx3);margin-top:6px;font-weight:500;}
+.tw{background:#fff;border-radius:13px;box-shadow:var(--sh);border:1px solid var(--bdr);overflow:hidden;}
+.tsch{padding:16px 18px;border-bottom:1px solid var(--bdr);}
+.sinp{width:100%;padding:11px 14px;border:1.5px solid var(--bdr2);border-radius:9px;font-size:14px;font-family:inherit;outline:none;}
+.sinp:focus{border-color:var(--ac2);box-shadow:0 0 0 3px rgba(169,123,72,.14);}
 .tcon{overflow-x:auto;}
-.tbl-bottom{height:100px;}
-table{width:100%;border-collapse:collapse;min-width:700px;}
-thead th{background:#b8a898;padding:11px 14px;text-align:left;font-size:13px;font-weight:700;letter-spacing:.3px;color:#fff;white-space:nowrap;}
-tbody tr.trow{border-bottom:1px solid var(--bdr);cursor:pointer;transition:.15s;}
+table{width:100%;border-collapse:collapse;min-width:740px;}
+thead th{background:var(--sur3);padding:13px 15px;text-align:left;font-size:13px;font-weight:700;color:var(--tx2);white-space:nowrap;}
+tbody tr.trow{border-top:1px solid var(--bdr);cursor:pointer;transition:.15s;}
 tbody tr.trow:hover{background:var(--acp);}
-tbody tr.trow:last-child{border-bottom:none;}
-td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
-.bdg{display:inline-flex;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;white-space:nowrap;}
+td{padding:13px 15px;font-size:13.5px;vertical-align:middle;}
+.bdg{display:inline-flex;padding:4px 10px;border-radius:7px;font-size:11.5px;font-weight:700;white-space:nowrap;}
 .bdg.v{background:var(--vb);color:var(--vc)}.bdg.p{background:var(--pb);color:var(--pc)}.bdg.a{background:var(--db);color:var(--dc)}
+.att-ic{margin-left:6px;font-size:13px;}
 .std{position:relative;display:inline-block;}
-.stb{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700;font-family:'Noto Sans KR',sans-serif;border:none;cursor:pointer;transition:.22s;white-space:nowrap;}
-.stb.new{background:#fff3e0;color:#e65100;}.stb.new:hover{background:#e65100;color:#fff;}
-.stb.reviewing{background:#e3f2fd;color:#1565c0;}.stb.reviewing:hover{background:#1565c0;color:#fff;}
-.stb.done{background:#e8f5e9;color:#2e7d32;}.stb.done:hover{background:#2e7d32;color:#fff;}
-.stm{display:none;position:fixed;background:#fff;border:1.5px solid var(--bdr);border-radius:10px;box-shadow:var(--sh2);z-index:500;min-width:120px;overflow:hidden;}
+.stb{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:20px;font-size:12.5px;font-weight:700;font-family:inherit;border:none;cursor:pointer;transition:.2s;white-space:nowrap;}
+.stb.new{background:#fde9d6;color:#b45309;}.stb.new:hover{background:#b45309;color:#fff;}
+.stb.reviewing{background:#e0edfb;color:#1d4e7c;}.stb.reviewing:hover{background:#1d4e7c;color:#fff;}
+.stb.done{background:#e2f2e7;color:#25693f;}.stb.done:hover{background:#25693f;color:#fff;}
+.stm{display:none;position:fixed;background:#fff;border:1.5px solid var(--bdr);border-radius:11px;box-shadow:var(--sh2);z-index:500;min-width:130px;overflow:hidden;}
 .stm.on{display:block;}
-.stmi{padding:9px 16px;font-size:13px;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.15s;}
+.stmi{padding:11px 16px;font-size:13.5px;font-family:inherit;cursor:pointer;transition:.15s;}
 .stmi:hover{background:var(--sur2);}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+.admin-note{font-size:12px;color:var(--tx3);text-align:center;padding:14px;}
+
+/* 모달 */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(30,24,16,.55);z-index:200;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;backdrop-filter:blur(2px);}
 .modal-bg.on{display:flex;}
-.modal{background:#fff;border-radius:16px;max-width:640px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:mIn .22s ease;margin:auto;}
-@keyframes mIn{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.mhdr{padding:16px 22px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;border-radius:16px 16px 0 0;background:#fff;}
-.mhdr h3{font-family:'Noto Serif KR',serif;font-size:17px;font-weight:700;}
-.mhdr-btns{display:flex;gap:8px;align-items:center;}
-.print-btn{padding:6px 14px;border-radius:8px;border:1.5px solid var(--ac);background:#fff;color:var(--ac);font-size:13px;font-weight:700;font-family:'Noto Sans KR',sans-serif;cursor:pointer;transition:.22s;}
+.modal{background:#fff;border-radius:18px;max-width:660px;width:100%;box-shadow:var(--sh2);animation:mIn .22s ease;margin:auto;}
+@keyframes mIn{from{opacity:0;transform:scale(.96) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mhdr{padding:18px 24px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;background:#fff;border-radius:18px 18px 0 0;}
+.mhdr h3{font-size:18px;font-weight:700;}
+.mhdr-btns{display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.print-btn{padding:8px 15px;border-radius:9px;border:1.5px solid var(--ac);background:#fff;color:var(--ac);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
 .print-btn:hover{background:var(--ac);color:#fff;}
-.mcls{width:30px;height:30px;border:none;background:var(--sur2);border-radius:7px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
+.mcls{width:34px;height:34px;border:none;background:var(--sur2);border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .mcls:hover{background:var(--bdr);}
-.mbdy{padding:22px;}
-.ds{margin-bottom:20px;}
-.dst{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--tx3);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bdr);}
-.dg{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.di{display:flex;flex-direction:column;gap:4px;}
+.mbdy{padding:24px;}
+.ds{margin-bottom:22px;}
+.dst{font-size:12px;font-weight:700;letter-spacing:1.2px;color:var(--ac);margin-bottom:14px;padding-bottom:9px;border-bottom:2px solid var(--sur3);}
+.dg{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.di{display:flex;flex-direction:column;gap:5px;}
 .di.full{grid-column:1/-1;}
-.dk{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3);} code{font-size:13px;font-weight:700;color:var(--tx);}
-.dv{font-size:13px;color:var(--tx);line-height:1.6;}
-.dv.long{background:var(--sur2);padding:10px 12px;border-radius:8px;white-space:pre-wrap;font-size:12px;}
-.toast{position:fixed;bottom:22px;right:22px;background:var(--tx);color:#fff;padding:11px 18px;border-radius:9px;font-size:13px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:999;transform:translateY(70px);opacity:0;transition:all .3s;}
-.toast.on{transform:translateY(0);opacity:1;}
-.toast.ok{background:#2d6b45;}.toast.er{background:#8b2020;}
+.dk{font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--tx3);}
+.dv{font-size:14px;color:var(--tx);line-height:1.65;}
+.dv.long{background:var(--sur2);padding:12px 14px;border-radius:9px;white-space:pre-wrap;font-size:13.5px;}
+.dv a{color:var(--vc);font-weight:600;word-break:break-all;}
+
+/* 토스트 */
+.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--tx);color:#fff;padding:13px 22px;border-radius:11px;font-size:14px;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:999;opacity:0;transition:all .3s;max-width:90vw;text-align:center;}
+.toast.on{transform:translate(-50%,0);opacity:1;}
+.toast.ok{background:var(--ok);}.toast.er{background:var(--er);}
+
+/* 푸터 */
+.ftr{text-align:center;padding:26px 20px;color:var(--tx3);font-size:12px;line-height:1.7;}
+.ftr .ver{color:var(--ac);font-weight:700;}
+
+/* 인쇄 */
 #print-area{display:none;}
 @media print{
   body>*{display:none!important;}
@@ -188,7 +256,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
   .bdg.v{background:#e8f0f8;color:#1e4d7b}.bdg.p{background:#e8f5ed;color:#2d6b45}.bdg.a{background:#f5e8ee;color:#6b1e45}
   @page{size:A4 portrait;margin:15mm;}
 }
-@media(max-width:480px){.hdr-title{font-size:13px;}.nb{padding:6px 9px;font-size:12px;}.main{padding:18px 12px;}}
+@media(max-width:480px){.hdr-title{font-size:15px;}.nb{padding:8px 12px;font-size:13px;}.main{padding:18px 13px 70px;}}
 </style>
 </head>
 <body>
@@ -196,7 +264,10 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
   <div class="hdr-in">
     <div class="hdr-brand">
       <div class="hdr-logo">🎬</div>
-      <div><div class="hdr-title">충현교회 미디어센터</div><div class="hdr-sub">MEDIA CENTER REQUEST SYSTEM</div></div>
+      <div>
+        <div class="hdr-title">충현교회 미디어센터</div>
+        <div class="hdr-sub">MEDIA CENTER REQUEST SYSTEM <span class="ver">v2.0.1</span></div>
+      </div>
     </div>
     <nav class="hdr-nav">
       <button class="nb on" id="nav-s">신청</button>
@@ -229,17 +300,11 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
     </div>
   </div>
 
-  <!-- 신청 현황 -->
   <div class="home-status">
-    <div class="home-status-title">📋 신청 현황 <span style="font-size:12px;font-weight:400;color:var(--tx3);font-family:'Noto Sans KR',sans-serif;">접수번호로 내 신청 진행상황을 확인하세요</span></div>
+    <div class="home-status-title">📋 신청 현황 <span class="home-status-sub">접수번호로 내 신청 진행상황을 확인하세요.</span></div>
     <div class="home-tbl-wrap">
       <div class="home-tbl-head">
-        <span>접수번호</span>
-        <span>접수일시</span>
-        <span>유형</span>
-        <span>부서</span>
-        <span>행사일</span>
-        <span>상태</span>
+        <span>접수번호</span><span>접수일시</span><span>유형</span><span>부서</span><span>행사일</span><span>상태</span>
       </div>
       <div id="home-tbody"></div>
     </div>
@@ -269,7 +334,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
     <div class="login-ico">🔒</div>
     <h2>관리자 로그인</h2>
     <p>미디어센터 관리자 전용 페이지입니다.<br>비밀번호를 입력해 주세요.</p>
-    <input class="login-input" type="password" id="pw" placeholder="비밀번호">
+    <input class="login-input" type="password" id="pw" placeholder="비밀번호" autocomplete="current-password">
     <button class="login-btn" id="login-btn">로그인</button>
     <div class="lgerr" id="lgerr">비밀번호가 올바르지 않습니다.</div>
   </div>
@@ -277,7 +342,7 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
 
 <div id="v-admin" class="view">
   <div class="atop">
-    <h2>📊 신청 현황</h2>
+    <h2>📊 신청 현황 관리</h2>
     <div class="actrl">
       <select class="fsel" id="flt-t">
         <option value="">전체 유형</option>
@@ -309,11 +374,15 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
         <tbody id="tbody"></tbody>
       </table>
     </div>
-    <div class="tbl-bottom"></div>
   </div>
   <div id="admin-paging"></div>
 </div>
 </main>
+
+<footer class="ftr">
+  충현교회 미디어센터 신청 시스템 <span class="ver">v2.0.1</span><br>
+  ⓒ 충현교회 미디어센터
+</footer>
 
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
@@ -332,9 +401,25 @@ td{padding:12px 14px;font-size:13px;vertical-align:middle;overflow:visible;}
 <div class="toast" id="toast"></div>
 
 <script>
+/* 충현교회 미디어센터 신청 시스템 — 클라이언트 로직 (v2.0.1) */
+var APP_VERSION = '2.0.1';
 var GAS = 'https://script.google.com/macros/s/AKfycbwwHRbZAJOFhekQ-ytRW03iHYcpSruauDznAJnik2UQB4ABBXJkB3tSMUjjkCP-7PZwTg/exec';
-var PW = 'media2024';
-var CT = '', AD = [], LGD = false;
+var MAX_FILES = 3, MAX_SIZE = 10 * 1024 * 1024; // 파일당 10MB
+var ALLOWED = ['pdf','hwp','hwpx','doc','docx'];
+
+var CT = '';        // 현재 폼 유형 v/p/a
+var AD = [];        // 관리자 전체 데이터
+var LGD = false;    // 관리자 로그인 여부
+var ADMIN_KEY = ''; // 로그인 시 입력한 비밀번호(서버 검증용). 소스에 하드코딩하지 않음
+var ATTACH = [];    // 현재 폼에 첨부된 파일 목록
+
+// HTML 이스케이프 (XSS 방어)
+function esc(v) {
+  if (v === null || v === undefined) return '';
+  return String(v).replace(/[&<>"']/g, function(c) {
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
 
 // 초기화
 (function init() {
@@ -348,7 +433,7 @@ var CT = '', AD = [], LGD = false;
   document.getElementById('login-btn').onclick = doLogin;
   document.getElementById('pw').onkeydown = function(e) { if (e.key === 'Enter') doLogin(); };
   document.getElementById('ref-btn').onclick = loadAdmin;
-  document.getElementById('logout-btn').onclick = function() { LGD = false; goV('home'); showToast('로그아웃되었습니다.', ''); };
+  document.getElementById('logout-btn').onclick = function() { LGD = false; ADMIN_KEY = ''; goV('home'); showToast('로그아웃되었습니다.', ''); };
   document.getElementById('flt-t').onchange = renderTbl;
   document.getElementById('flt-s').onchange = renderTbl;
   document.getElementById('srch').oninput = renderTbl;
@@ -360,11 +445,9 @@ var CT = '', AD = [], LGD = false;
       document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); });
     }
   });
-  // 스크롤 시 드롭다운 닫기
   document.addEventListener('scroll', function() {
     document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); });
   }, true);
-  // 초기 홈 현황 로드
   loadHome();
 })();
 
@@ -387,15 +470,32 @@ function clickAdmin() {
   }
 }
 
-function doLogin() {
-  if (document.getElementById('pw').value === PW) {
-    LGD = true;
-    document.getElementById('lgerr').style.display = 'none';
-    goV('admin');
-  } else {
-    document.getElementById('lgerr').style.display = 'block';
-    document.getElementById('pw').value = '';
+// 로그인 — 서버(GAS)에 비밀번호를 보내 검증. 비번은 클라이언트 소스에 없음
+async function doLogin() {
+  var pw = document.getElementById('pw').value;
+  var err = document.getElementById('lgerr');
+  var btn = document.getElementById('login-btn');
+  if (!pw) { err.textContent = '비밀번호를 입력해 주세요.'; err.style.display = 'block'; return; }
+  btn.disabled = true; btn.textContent = '확인 중...';
+  err.style.display = 'none';
+  try {
+    var res = await fetch(GAS + '?action=listAll&key=' + encodeURIComponent(pw));
+    var j = await res.json();
+    if (j.result === 'success') {
+      LGD = true; ADMIN_KEY = pw;
+      AD = j.data || [];
+      goV('admin');
+      renderAdminStats(); ADMIN_PAGE = 1; renderTbl();
+    } else {
+      err.textContent = '비밀번호가 올바르지 않습니다.';
+      err.style.display = 'block';
+      document.getElementById('pw').value = '';
+    }
+  } catch (e) {
+    err.textContent = '서버에 연결할 수 없습니다. 잠시 후 다시 시도해 주세요.';
+    err.style.display = 'block';
   }
+  btn.disabled = false; btn.textContent = '로그인';
 }
 
 function fmtPhone(v) {
@@ -410,18 +510,6 @@ function onPhone(el) {
   el.value = fmtPhone(el.value);
   var d = el.value.length - p;
   el.setSelectionRange(c + d, c + d);
-}
-function genId(t) {
-  var p = {v:'V', p:'P', a:'A'};
-  var d = new Date();
-  var dateStr = String(d.getFullYear()).slice(2) +
-    String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
-  var prefix = (p[t]||'X') + dateStr + '-';
-  // 오늘 날짜 기준 순번 (로컬스토리지)
-  var key = 'seq_' + dateStr;
-  var seq = parseInt(localStorage.getItem(key) || '0') + 1;
-  localStorage.setItem(key, String(seq));
-  return prefix + String(seq).padStart(3,'0');
 }
 function fmtDT(iso) {
   if (!iso) return '-';
@@ -441,20 +529,15 @@ function fmtDate(val) {
 function fmtTime(val) {
   if (!val) return '-';
   var s = String(val);
-  // HH:MM:SS 형식이면 HH:MM만
   if (/^\d{2}:\d{2}/.test(s)) return s.slice(0, 5);
-  // ISO 형식이면 시간 추출
-  if (s.indexOf('T') > -1) {
-    var t = s.split('T')[1] || '';
-    return t.slice(0, 5);
-  }
+  if (s.indexOf('T') > -1) { var t = s.split('T')[1] || ''; return t.slice(0, 5); }
   return s;
 }
 function showToast(msg, tp) {
   var t = document.getElementById('toast');
   t.textContent = msg; t.className = 'toast' + (tp ? ' ' + tp : '');
   setTimeout(function() { t.classList.add('on'); }, 10);
-  setTimeout(function() { t.classList.remove('on'); }, 3000);
+  setTimeout(function() { t.classList.remove('on'); }, 3200);
 }
 
 // ===== 폼 빌더 헬퍼 =====
@@ -467,22 +550,21 @@ function FG(lbl, req, hint, inp) {
 }
 function FI(nm, ph, req) { return '<input class="fi" name="' + nm + '" placeholder="' + (ph||'') + '"' + (req ? ' required' : '') + ' autocomplete="off">'; }
 function FD(nm, req) {
-  var today = new Date();
-  var min = today.getFullYear() + '-' +
-    String(today.getMonth()+1).padStart(2,'0') + '-' +
-    String(today.getDate()).padStart(2,'0');
+  var t = new Date();
+  var min = t.getFullYear() + '-' + String(t.getMonth()+1).padStart(2,'0') + '-' + String(t.getDate()).padStart(2,'0');
   return '<input class="fi" name="' + nm + '" type="date" min="' + min + '"' + (req ? ' required' : '') + '>';
 }
 function FT(nm, req) { return '<input class="fi" name="' + nm + '" type="time"' + (req ? ' required' : '') + '>'; }
 function FTA(nm, ph, req) { return '<textarea class="fta" name="' + nm + '" placeholder="' + (ph||'') + '"' + (req ? ' required' : '') + '></textarea>'; }
-function RDO(nm, opts) {
-  return '<div class="opts">' + opts.map(function(o) {
-    return '<label class="opt"><input type="radio" name="' + nm + '" value="' + o + '"><span>' + o + '</span></label>';
+// req=true 이면 그룹에 data-req/data-name 부여 → 제출 시 최소 1개 선택 검증
+function RDO(nm, opts, req) {
+  return '<div class="opts"' + (req ? ' data-req="1" data-name="' + nm + '"' : '') + '>' + opts.map(function(o) {
+    return '<label class="opt"><input type="radio" name="' + nm + '" value="' + esc(o) + '"><span>' + esc(o) + '</span></label>';
   }).join('') + '</div>';
 }
-function CHK(nm, opts) {
-  return '<div class="opts">' + opts.map(function(o) {
-    return '<label class="opt"><input type="checkbox" name="' + nm + '" value="' + o + '"><span>' + o + '</span></label>';
+function CHK(nm, opts, req) {
+  return '<div class="opts"' + (req ? ' data-req="1" data-name="' + nm + '"' : '') + '>' + opts.map(function(o) {
+    return '<label class="opt"><input type="checkbox" name="' + nm + '" value="' + esc(o) + '"><span>' + esc(o) + '</span></label>';
   }).join('') + '</div>';
 }
 function SEC(t) { return '<div class="stitle">' + t + '</div>'; }
@@ -490,6 +572,7 @@ function SEC(t) { return '<div class="stitle">' + t + '</div>'; }
 // ===== 폼 이동 =====
 function goF(t) {
   CT = t;
+  ATTACH = [];
   var titles = {
     v: '🎥 사역 영상 제작 의뢰(신청)서',
     p: '📸 사역(행사) 사진 촬영 지원 요청 의뢰(신청)서',
@@ -501,31 +584,89 @@ function goF(t) {
     a: '충현교회 미디어 센터에 영상 광고 상영을 신청하는 서류입니다.'
   };
   document.getElementById('ftitle').textContent = titles[t];
-  document.getElementById('fsub').innerHTML = subs[t] + ' <span style="color:var(--er)">* 필수항목</span>';
+  document.getElementById('fsub').innerHTML = esc(subs[t]) + ' <span style="color:var(--er)">* 필수항목</span>';
   var body = document.getElementById('fbody');
   body.innerHTML = (t === 'v') ? buildVideo() : (t === 'p') ? buildPhoto() : buildAd();
-  var btnWrap = document.createElement('div');
-  btnWrap.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px;';
 
+  // 파일 첨부 영역
+  body.insertAdjacentHTML('beforeend',
+    '<div class="stitle">📎 첨부파일 <span class="ht">PDF·HWP·HWPX·Word · 최대 ' + MAX_FILES + '개 · 각 10MB (선택)</span></div>' +
+    '<label class="filezone" id="filezone" for="fileInput">📁 파일을 선택하거나 여기로 끌어다 놓으세요</label>' +
+    '<input type="file" id="fileInput" accept=".pdf,.hwp,.hwpx,.doc,.docx" multiple style="display:none">' +
+    '<div class="filelist" id="fileList"></div>');
+
+  // 제출/인쇄 버튼
+  var row = document.createElement('div');
+  row.className = 'btnrow';
   var btn = document.createElement('button');
   btn.className = 'sbtn ' + t;
-  btn.style.margin = '0';
   btn.textContent = '✉️ 신청서 제출하기';
   btn.onclick = subForm;
-
   var printBtn = document.createElement('button');
   printBtn.className = 'sbtn-print';
   printBtn.textContent = '🖨️ 내 신청 내용 인쇄';
   printBtn.onclick = printMyForm;
+  row.appendChild(btn);
+  row.appendChild(printBtn);
+  body.appendChild(row);
 
-  btnWrap.appendChild(btn);
-  btnWrap.appendChild(printBtn);
-  body.appendChild(btnWrap);
+  // 전화번호 자동 포맷
   body.querySelectorAll('[data-ph]').forEach(function(el) {
     el.oninput = function() { onPhone(this); };
   });
+  // 파일 첨부 이벤트
+  wireFileZone();
+
   goV('form');
   window.scrollTo(0, 0);
+}
+
+// ===== 파일 첨부 =====
+function wireFileZone() {
+  var input = document.getElementById('fileInput');
+  var zone = document.getElementById('filezone');
+  input.onchange = function() { addFiles(input.files); input.value = ''; };
+  zone.addEventListener('dragover', function(e) { e.preventDefault(); zone.classList.add('drag'); });
+  zone.addEventListener('dragleave', function() { zone.classList.remove('drag'); });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault(); zone.classList.remove('drag');
+    addFiles(e.dataTransfer.files);
+  });
+}
+function addFiles(fileList) {
+  Array.prototype.forEach.call(fileList, function(f) {
+    if (ATTACH.length >= MAX_FILES) { showToast('첨부파일은 최대 ' + MAX_FILES + '개까지 가능합니다.', 'er'); return; }
+    var ext = (f.name.split('.').pop() || '').toLowerCase();
+    if (ALLOWED.indexOf(ext) < 0) { showToast('허용되지 않는 형식입니다: ' + esc(f.name), 'er'); return; }
+    if (f.size > MAX_SIZE) { showToast('10MB를 초과했습니다: ' + esc(f.name), 'er'); return; }
+    ATTACH.push(f);
+  });
+  renderFileList();
+}
+function renderFileList() {
+  var el = document.getElementById('fileList');
+  if (!el) return;
+  el.innerHTML = ATTACH.map(function(f, i) {
+    return '<div class="fileitem"><span class="fi-ic">📄</span>' +
+      '<span class="fi-nm">' + esc(f.name) + '</span>' +
+      '<span class="fi-sz">' + (f.size/1024/1024).toFixed(2) + 'MB</span>' +
+      '<button class="fi-rm" data-i="' + i + '" title="삭제">✕</button></div>';
+  }).join('');
+  el.querySelectorAll('.fi-rm').forEach(function(b) {
+    b.onclick = function() { ATTACH.splice(parseInt(this.dataset.i), 1); renderFileList(); };
+  });
+}
+function fileToObj(f) {
+  return new Promise(function(resolve, reject) {
+    var r = new FileReader();
+    r.onload = function() {
+      var s = String(r.result);
+      var base64 = s.indexOf(',') > -1 ? s.split(',')[1] : s;
+      resolve({ name: f.name, mimeType: f.type || 'application/octet-stream', data: base64 });
+    };
+    r.onerror = reject;
+    r.readAsDataURL(f);
+  });
 }
 
 // ===== 영상제작 폼 =====
@@ -535,25 +676,25 @@ function buildVideo() {
       FG('2. 연락처', true, '담당자 이름 및 휴대폰 번호', '<input class="fi" name="phone" placeholder="010-0000-0000" data-ph="1" maxlength="13" required autocomplete="off">')) +
     SEC('영상 정보') +
     R(FG('3. 영상의 종류', true, '해당 항목 모두 선택',
-      CHK('videoType', ['사역 보고 영상', '행사 홍보 영상', '교육 자료 영상', '간증 영상', '기타 (직접 입력)', '제작 방식 미정 (상담 필요)']))) +
+      CHK('videoType', ['사역 보고 영상', '행사 홍보 영상', '교육 자료 영상', '간증 영상', '기타 (직접 입력)', '제작 방식 미정 (상담 필요)'], true))) +
     R(FG('4. 영상의 주요 주제/제목', true, '', FI('videoTitle', '영상의 주제나 제목을 입력해 주세요', true))) +
     R(FG('5. 영상의 목적', true, '제작하려는 이유', FTA('videoPurpose', '이 영상을 왜 만들려고 하시는지 설명해 주세요.', true))) +
     R(FG('6. 영상의 타겟 시청자', true, '',
-      RDO('videoTarget', ['전교인', '특정 위원회로 보는 부서', '새신자', '지역 사회 주민 (비신자 포함)', '온라인/SNS 구독자', '기타']))) +
+      RDO('videoTarget', ['전교인', '특정 위원회로 보는 부서', '새신자', '지역 사회 주민 (비신자 포함)', '온라인/SNS 구독자', '기타'], true))) +
     R(FG('7. 원하는 최종 영상 길이', true, '',
-      RDO('videoDuration', ['1분 이내 (숏폼)', '1분 ~ 3분', '3분 ~ 5분', '5분 이상 (상담 필요)']))) +
+      RDO('videoDuration', ['1분 이내 (숏폼)', '1분 ~ 3분', '3분 ~ 5분', '5분 이상 (상담 필요)'], true))) +
     R(FG('8. 영상 시청 희망 마감일', true, '최종 납품일', FD('videoDeadline', true)),
       FG('9. 영상 제작에 필요한 예산이 있습니까?', true, '',
-      CHK('videoBudget', ['위원회/부서/행사 예산이 있습니다.', '예산이 없습니다.']))) +
+      CHK('videoBudget', ['위원회/부서/행사 예산이 있습니다.', '예산이 없습니다.'], true))) +
     R(FG('10. 영상에 포함되어야 할 주요 내용', true, '핵심 메시지, 중요 장면, 인터뷰 대상 등',
       FTA('videoContent', '영상에 꼭 들어가야 할 내용을 적어주세요.', true))) +
     R(FG('11. 사역 또는 행사 일시', false, '촬영이 필요한 경우', FD('eventDate', false)),
       FG('12. 사용 가능한 기존 자료', true, '사진, 영상, 음악 등이 있습니까?',
-      RDO('videoAssets', ['예, 충분한 준비가 되어 있습니다.', '일부 자료가 있습니다.', '아니오, 없습니다.', '자료를 업로드할 필요가 없습니다.']))) +
+      RDO('videoAssets', ['예, 충분한 준비가 되어 있습니다.', '일부 자료가 있습니다.', '아니오, 없습니다.', '자료를 업로드할 필요가 없습니다.'], true))) +
     R(FG('13. 필요한 영상의 제작 방식', true, '',
-      RDO('videoStyle', ['기존 자료 편집 (컷편집, 자막, 배경음악)', '새로운 현장 촬영 (인터뷰, 행사 스케치 등)', '모션 그래픽/애니메이션', '제작 방식 미정 (상담 필요)']))) +
+      RDO('videoStyle', ['기존 자료 편집 (컷편집, 자막, 배경음악)', '새로운 현장 촬영 (인터뷰, 행사 스케치 등)', '모션 그래픽/애니메이션', '제작 방식 미정 (상담 필요)'], true))) +
     R(FG('14. 영상에 사용하고 싶은 분위기/톤', true, '',
-      CHK('videoMood', ['평온하고 차분한 분위기', '밝고 활기찬 분위기', '진실하고 신뢰감 있는 분위기', '다이나믹하고 재미있는 분위기']))) +
+      CHK('videoMood', ['평온하고 차분한 분위기', '밝고 활기찬 분위기', '진실하고 신뢰감 있는 분위기', '다이나믹하고 재미있는 분위기'], true))) +
     R(FG('15. 영상 제작 관련 참고 사항 또는 추가 요청 사항', true, '',
       FTA('videoNote', '기타 참고하거나 추가로 요청하실 사항을 적어주세요.', true)));
 }
@@ -567,7 +708,7 @@ function buildPhoto() {
     SEC('촬영 정보') +
     R(FG('4. 촬영이 필요한 사역 또는 행사명', true, '', FI('eventName', '행사명을 입력해 주세요', true))) +
     R(FG('5. 촬영 요청 유형', true, '',
-      RDO('photoType', ['행사 현장 스케치 (자연스러운 기록)', '공식 기념 촬영 (참석자 단체 사진 등)', '특정 대상 집중 촬영 (강사, 주요 봉사자 등)', '기타 (아래 요청 상세 내용에 기재)']))) +
+      RDO('photoType', ['행사 현장 스케치 (자연스러운 기록)', '공식 기념 촬영 (참석자 단체 사진 등)', '특정 대상 집중 촬영 (강사, 주요 봉사자 등)', '기타 (아래 요청 상세 내용에 기재)'], true))) +
     R(FG('6. 촬영 일자', true, '', FD('eventDate', true)),
       FG('7. 촬영 시작 시간', true, '', FT('eventTime', true))) +
     R(FG('8. 촬영 예상 소요 시간 (최대)', true, '', FI('duration', '예) 2시간 30분', true)),
@@ -576,20 +717,28 @@ function buildPhoto() {
       FTA('photoDetail', '촬영 요청 내용을 상세히 작성해 주세요.', true))) +
     R(FG('11. 촬영 결과물 필요 마감일', true, '', FD('deadline', true))) +
     R(FG('12. 촬영 결과물 전달 방식 선호도', true, '',
-      RDO('delivery', ['이메일 첨부/링크 (교회일 원본 파일)', '교회 내부 서버/클라우드 공유', 'USB 메모리 등 오프라인 전달']))) +
+      RDO('delivery', ['이메일 첨부/링크 (원본 파일)', '교회 내부 서버/클라우드 공유', 'USB 메모리 등 오프라인 전달'], true))) +
     R(FG('13. 기타 특별 요청 사항이 있으면 말씀해주세요.', false, '',
       FTA('photoNote', '기타 요청 사항을 적어주세요.', false)));
 }
 
 // ===== 영상광고 폼 =====
 function buildAd() {
-  var mx = '<div class="mwrap"><table class="mtbl">' +
-    '<thead><tr><th>시간대</th><th>가장 선호</th><th>선호</th><th>보통</th><th>비선호</th></tr></thead><tbody>' +
-    '<tr><td>주일 오전(1,3부) 예배 전</td><td><input type="radio" name="t_sun_am" value="가장선호"></td><td><input type="radio" name="t_sun_am" value="선호"></td><td><input type="radio" name="t_sun_am" value="보통"></td><td><input type="radio" name="t_sun_am" value="비선호"></td></tr>' +
-    '<tr><td>주일 오후 전앙 예배 전</td><td><input type="radio" name="t_sun_pm" value="가장선호"></td><td><input type="radio" name="t_sun_pm" value="선호"></td><td><input type="radio" name="t_sun_pm" value="보통"></td><td><input type="radio" name="t_sun_pm" value="비선호"></td></tr>' +
-    '<tr><td>수요(1,2부) 예배 전후</td><td><input type="radio" name="t_wed" value="가장선호"></td><td><input type="radio" name="t_wed" value="선호"></td><td><input type="radio" name="t_wed" value="보통"></td><td><input type="radio" name="t_wed" value="비선호"></td></tr>' +
-    '<tr><td>금요집회 전후</td><td><input type="radio" name="t_fri" value="가장선호"></td><td><input type="radio" name="t_fri" value="선호"></td><td><input type="radio" name="t_fri" value="보통"></td><td><input type="radio" name="t_fri" value="비선호"></td></tr>' +
-    '</tbody></table></div>';
+  var rows = [
+    ['t_sun_am', '주일 오전(1,3부) 예배 전'],
+    ['t_sun_pm', '주일 오후 찬양 예배 전'],
+    ['t_wed', '수요(1,2부) 예배 전후'],
+    ['t_fri', '금요집회 전후']
+  ];
+  var lv = ['가장선호', '선호', '보통', '비선호'];
+  var body = rows.map(function(r) {
+    return '<tr><td>' + r[1] + '</td>' + lv.map(function(v) {
+      return '<td><input type="radio" name="' + r[0] + '" value="' + v + '"></td>';
+    }).join('') + '</tr>';
+  }).join('');
+  var mx = '<div class="mwrap" data-req-any="t_sun_am,t_sun_pm,t_wed,t_fri"><table class="mtbl">' +
+    '<thead><tr><th>시간대</th><th>가장 선호</th><th>선호</th><th>보통</th><th>비선호</th></tr></thead>' +
+    '<tbody>' + body + '</tbody></table></div>';
 
   return SEC('신청자 정보') +
     R(FG('1. 신청자(위원회/부서) 정보', true, '', FI('dept', '예) 사무국, 청년부', true)),
@@ -598,159 +747,191 @@ function buildAd() {
     R(FG('3. 광고 제목/행사명', true, '영상 콘텐츠의 주된 내용', FI('adTitle', '광고 제목 또는 행사명을 입력해 주세요', true))) +
     R(FG('4. 광고 내용 요약', true, '30자 이내', '<input class="fi" name="adSummary" placeholder="광고 내용을 30자 이내로 요약해 주세요" maxlength="30" required autocomplete="off">')) +
     R(FG('5. 광고 목적', true, '',
-      RDO('adPurpose', ['교회 주요 행사 홍보 (전교인 대상의 사역)', '위원회 사역 (한정적 대상이지만 행사 전 교회 알림 광고 필요)', '위원회 사역 (행사 후 사역 보고 공유)', '기타 (직접 기재)']))) +
+      RDO('adPurpose', ['교회 주요 행사 홍보 (전교인 대상의 사역)', '위원회 사역 (한정적 대상이지만 행사 전 교회 알림 광고 필요)', '위원회 사역 (행사 후 사역 보고 공유)', '기타 (직접 기재)'], true))) +
     R(FG('6. 희망 상영 시작일', true, '', FD('startDate', true)),
       FG('7. 희망 상영 종료일', true, '', FD('endDate', true))) +
     R(FG('8. 총 상영 길이', true, '광고 영상의 전체 길이', FI('adDuration', '예) 30초, 1분 30초', true))) +
-    R(FG('9. 상영 횟수 및 시간대 선호도', true, '', mx)) +
+    R(FG('9. 상영 횟수 및 시간대 선호도', true, '해당하는 칸에 표시해 주세요', mx)) +
     R(FG('10. 영상 해상도 및 파일 형식은 미디어 센터 기준에 부합합니까?', true, '정보 기입 필요',
-      CHK('adFileOk', ['네 그렇습니다.']))) +
+      CHK('adFileOk', ['네 그렇습니다.'], true))) +
     R(FG('11. 본 광고에 대한 승인 여부', true, '위원장 및 부서장/책임자 확인',
-      RDO('adApproval', ['승인 완료', '승인 예정']))) +
+      RDO('adApproval', ['승인 완료', '승인 예정'], true))) +
     R(FG('12. 기타 전달 사항 또는 요청 사항', true, '',
       FTA('adNote', '기타 전달하실 사항을 적어주세요.', true))) +
     R(FG('13. 동의 여부', true, '',
-      '<p style="font-size:13px;color:var(--tx2);margin-bottom:10px;line-height:1.7;">본 신청서의 내용이 사실임을 확인하고, 교회 영상 광고 지침을 준수할 것에 동의하십니까?</p>' +
-      RDO('adConsent', ['예, 동의합니다.'])));
+      '<p style="font-size:13.5px;color:var(--tx2);margin-bottom:10px;line-height:1.7;">본 신청서의 내용이 사실임을 확인하고, 교회 영상 광고 지침을 준수할 것에 동의하십니까?</p>' +
+      RDO('adConsent', ['예, 동의합니다.'], true)));
 }
 
 // ===== 제출 =====
 async function subForm(e) {
   e.preventDefault();
   var btn = e.target;
-  var valid = true;
+  var valid = true, firstErr = null;
+
+  // 텍스트/날짜/시간/textarea 필수 검증
   document.querySelectorAll('#fbody [required]').forEach(function(el) {
+    el.classList.remove('err');
     if (!el.value.trim()) {
-      el.classList.add('err');
-      valid = false;
+      el.classList.add('err'); valid = false;
+      if (!firstErr) firstErr = el;
       setTimeout(function() { el.classList.remove('err'); }, 2500);
     }
   });
-  if (!valid) { showToast('필수 항목을 모두 입력해 주세요.', 'er'); return; }
+  // 라디오/체크박스 그룹 필수 검증
+  document.querySelectorAll('#fbody .opts[data-req]').forEach(function(g) {
+    g.classList.remove('grp-err');
+    var nm = g.getAttribute('data-name');
+    if (!document.querySelector('#fbody [name="' + nm + '"]:checked')) {
+      g.classList.add('grp-err'); valid = false;
+      if (!firstErr) firstErr = g;
+      setTimeout(function() { g.classList.remove('grp-err'); }, 2500);
+    }
+  });
+  // 시간대 매트릭스: 최소 1개 선택
+  var mtx = document.querySelector('#fbody [data-req-any]');
+  if (mtx) {
+    mtx.classList.remove('grp-err');
+    var names = mtx.getAttribute('data-req-any').split(',');
+    var any = names.some(function(n) { return document.querySelector('#fbody [name="' + n + '"]:checked'); });
+    if (!any) {
+      mtx.classList.add('grp-err'); valid = false;
+      if (!firstErr) firstErr = mtx;
+      setTimeout(function() { mtx.classList.remove('grp-err'); }, 2500);
+    }
+  }
+
+  if (!valid) {
+    showToast('필수 항목을 모두 입력해 주세요.', 'er');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
   btn.disabled = true;
   btn.textContent = '⏳ 제출 중...';
 
+  // 폼 데이터 수집
   var fd = {};
   document.querySelectorAll('#fbody input, #fbody textarea').forEach(function(el) {
-    if (!el.name) return;
+    if (!el.name || el.type === 'file') return;
     if (el.type === 'radio') { if (el.checked) fd[el.name] = el.value; }
     else if (el.type === 'checkbox') {
       if (el.checked) fd[el.name] = fd[el.name] ? fd[el.name] + ', ' + el.value : el.value;
     } else { fd[el.name] = el.value; }
   });
 
-  var typeMap = {v: '영상제작', p: '사진촬영', a: '영상광고'};
-  var rec = Object.assign({id: genId(CT), createdAt: new Date().toISOString(), type: typeMap[CT]}, fd);
+  var typeMap = { v: '영상제작', p: '사진촬영', a: '영상광고' };
+  try {
+    var files = await Promise.all(ATTACH.map(fileToObj));
+    var payload = Object.assign({
+      action: 'add',
+      type: typeMap[CT],
+      createdAt: new Date().toISOString(),
+      files: files
+    }, fd);
 
-  if (GAS) {
-    try {
-      var params = new URLSearchParams(Object.assign({action: 'add'}, rec));
-      // redirect:follow 시 2번 호출되는 문제 방지
-      var res = await fetch(GAS + '?' + params.toString(), {redirect: 'follow'});
-      try { await res.json(); } catch(e) {}
-    } catch(err) { console.warn('전송 오류:', err); }
+    var res = await fetch(GAS, { method: 'POST', body: JSON.stringify(payload) });
+    var j = await res.json();
+    if (!j || j.result !== 'success') throw new Error(j && j.message ? j.message : 'server');
+
+    document.getElementById('refnum').textContent = j.id || '접수됨';
+    goV('success');
+    loadHome();
+    showToast('신청이 완료되었습니다! 🎉', 'ok');
+  } catch (err) {
+    console.warn('전송 오류:', err);
+    showToast('전송에 실패했습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.', 'er');
+    btn.disabled = false;
+    btn.textContent = '✉️ 신청서 제출하기';
   }
-  document.getElementById('refnum').textContent = rec.id;
-  goV('success');
-  loadHome(); // 홈 현황 갱신
-  showToast('신청이 완료되었습니다! 🎉', 'ok');
 }
 
-// ===== 관리자 데이터 =====
-var HOME_PAGE = 1;
-var HOME_DATA = [];
-
+// ===== 홈 신청 현황 (공개, 최소 필드) =====
+var HOME_PAGE = 1, HOME_DATA = [];
 async function loadHome() {
   var tbody = document.getElementById('home-tbody');
   if (!tbody) return;
   tbody.innerHTML = '<div class="home-empty">⏳ 불러오는 중...</div>';
-  if (!GAS) { tbody.innerHTML = '<div class="home-empty">연동 설정이 필요합니다.</div>'; return; }
   try {
     var res = await fetch(GAS + '?action=list');
     var j = await res.json();
-    HOME_DATA = (j.result === 'success') ? j.data || [] : [];
+    HOME_DATA = (j.result === 'success') ? (j.data || []) : [];
     HOME_PAGE = 1;
     renderHomeTbl();
-  } catch(e) {
+  } catch (e) {
     tbody.innerHTML = '<div class="home-empty">데이터를 불러올 수 없습니다.</div>';
   }
 }
-
 function renderHomeTbl() {
   var tbody = document.getElementById('home-tbody');
   if (!tbody) return;
-  var data = HOME_DATA; // 이미 최신순 정렬됨
+  var data = HOME_DATA;
   if (!data.length) {
     tbody.innerHTML = '<div class="home-empty">📭 신청 내역이 없습니다.</div>';
     return;
   }
-  var perPage = 5;
-  var total = data.length;
+  var perPage = 5, total = data.length;
   var totalPages = Math.ceil(total / perPage);
   var start = (HOME_PAGE - 1) * perPage;
   var pageData = data.slice(start, start + perPage);
-  var TC = {'영상제작':'v','사진촬영':'p','영상광고':'a'};
+  var TC = { '영상제작':'v', '사진촬영':'p', '영상광고':'a' };
   var html = '';
   pageData.forEach(function(d) {
     var tc = TC[d['유형']] || 'v';
     var st = d['상태'] || '신규접수';
     var sc = st === '신규접수' ? 'new' : st === '검토중' ? 'reviewing' : 'done';
     var si = st === '신규접수' ? '🟡' : st === '검토중' ? '🔵' : '🟢';
-        html += '<div class="home-tbl-row">' +
-        '<span style="font-size:12px;color:var(--tx);font-weight:700;font-family:monospace">' + (d['접수번호']||'-') + '</span>' +
-        '<span style="font-size:11px;color:var(--tx2)">' + fmtDT(d['접수일시']) + '</span>' +
-        '<span><span class="bdg ' + tc + '">' + (d['유형']||'-') + '</span></span>' +
-        '<span style="font-size:12px;color:var(--tx2)">' + (d.dept||'-') + '</span>' +
-        '<span style="font-size:12px;color:var(--tx2)">' + fmtDate(d['eventDate']) + '</span>' +
-        '<span><span class="st-pill ' + sc + '">' + si + ' ' + st + '</span></span>' +
-        '</div>';
+    html += '<div class="home-tbl-row">' +
+      '<span class="mono" style="font-size:12px;color:var(--tx)">' + esc(d['접수번호']||'-') + '</span>' +
+      '<span style="font-size:12px;color:var(--tx2)">' + esc(fmtDT(d['접수일시'])) + '</span>' +
+      '<span><span class="bdg ' + tc + '">' + esc(d['유형']||'-') + '</span></span>' +
+      '<span style="font-size:12.5px;color:var(--tx2)">' + esc(d.dept||'-') + '</span>' +
+      '<span style="font-size:12.5px;color:var(--tx2)">' + esc(fmtDate(d['eventDate'])) + '</span>' +
+      '<span><span class="st-pill ' + sc + '">' + si + ' ' + esc(st) + '</span></span>' +
+      '</div>';
   });
-  // 페이지 네이션
   if (totalPages > 1) {
-    var btnStyle = 'padding:5px 12px;border-radius:7px;border:1.5px solid #d8d3c8;background:#fff;cursor:pointer;font-size:12px;';
-    html += '<div style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-top:1px solid #d8d3c8;">' +
-      '<button class="pg-btn" data-dir="-1" style="' + btnStyle + '"' + (HOME_PAGE<=1?' disabled':'') + '>◀ 이전</button>' +
-      '<span style="font-size:12px;color:#6b6257">' + HOME_PAGE + ' / ' + totalPages + '</span>' +
-      '<button class="pg-btn" data-dir="1" style="' + btnStyle + '"' + (HOME_PAGE>=totalPages?' disabled':'') + '>다음 ▶</button>' +
+    var bs = 'padding:6px 13px;border-radius:8px;border:1.5px solid var(--bdr2);background:#fff;cursor:pointer;font-size:12.5px;font-family:inherit;';
+    html += '<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 16px;border-top:1px solid var(--bdr);">' +
+      '<button class="pg-btn" data-dir="-1" style="' + bs + '"' + (HOME_PAGE<=1?' disabled':'') + '>◀ 이전</button>' +
+      '<span style="font-size:12.5px;color:var(--tx2)">' + HOME_PAGE + ' / ' + totalPages + '</span>' +
+      '<button class="pg-btn" data-dir="1" style="' + bs + '"' + (HOME_PAGE>=totalPages?' disabled':'') + '>다음 ▶</button>' +
       '</div>';
   }
   tbody.innerHTML = html;
-
-  // 페이지 버튼 이벤트
-  document.querySelectorAll('.pg-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      HOME_PAGE += parseInt(this.dataset.dir);
-      renderHomeTbl();
-    });
+  document.querySelectorAll('.pg-btn').forEach(function(b) {
+    b.addEventListener('click', function() { HOME_PAGE += parseInt(this.dataset.dir); renderHomeTbl(); });
   });
 }
 
-async function loadAdmin() {
-  document.getElementById('tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#9c9388;">⏳ 불러오는 중...</td></tr>';
-  if (GAS) {
-    try {
-      var res = await fetch(GAS + '?action=list');
-      var j = await res.json();
-      if (j.result === 'success') AD = j.data || [];
-    } catch(e) { AD = []; }
-  }
+// ===== 관리자 데이터 (전체, key 필요) =====
+function renderAdminStats() {
   document.getElementById('s0').textContent = AD.length;
   document.getElementById('s1').textContent = AD.filter(function(d) { return d['유형'] === '영상제작'; }).length;
   document.getElementById('s2').textContent = AD.filter(function(d) { return d['유형'] === '사진촬영'; }).length;
   document.getElementById('s3').textContent = AD.filter(function(d) { return d['유형'] === '영상광고'; }).length;
+}
+async function loadAdmin() {
+  if (!LGD) { clickAdmin(); return; }
+  document.getElementById('tbody').innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--tx3);">⏳ 불러오는 중...</td></tr>';
+  try {
+    var res = await fetch(GAS + '?action=listAll&key=' + encodeURIComponent(ADMIN_KEY));
+    var j = await res.json();
+    if (j.result === 'success') { AD = j.data || []; }
+    else { showToast('세션이 만료되었습니다. 다시 로그인해 주세요.', 'er'); LGD = false; ADMIN_KEY = ''; goV('login'); return; }
+  } catch (e) {
+    showToast('데이터를 불러올 수 없습니다.', 'er');
+  }
+  renderAdminStats();
   ADMIN_PAGE = 1;
   renderTbl();
 }
 
-var ADMIN_PAGE = 1;
-var ADMIN_FILTERED = [];
-
+var ADMIN_PAGE = 1, ADMIN_FILTERED = [];
 function renderTbl() {
   var ft = document.getElementById('flt-t').value;
   var fs = document.getElementById('flt-s').value;
   var fq = (document.getElementById('srch').value || '').toLowerCase();
-  var TC = {'영상제작': 'v', '사진촬영': 'p', '영상광고': 'a'};
-
   ADMIN_FILTERED = AD.filter(function(d) {
     if (ft && d['유형'] !== ft) return false;
     if (fs && d['상태'] !== fs) return false;
@@ -760,25 +941,22 @@ function renderTbl() {
     }
     return true;
   });
-
   ADMIN_PAGE = 1;
   renderAdminPage();
 }
-
 function renderAdminPage() {
   var rows = ADMIN_FILTERED;
   var tb = document.getElementById('tbody');
   if (!rows.length) {
-    tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:#9c9388;">📭 신청 내역이 없습니다.</td></tr>';
+    tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--tx3);">📭 신청 내역이 없습니다.</td></tr>';
     document.getElementById('admin-paging').innerHTML = '';
     return;
   }
-
   var perPage = 5;
   var totalPages = Math.ceil(rows.length / perPage);
   var start = (ADMIN_PAGE - 1) * perPage;
   var pageRows = rows.slice(start, start + perPage);
-  var TC = {'영상제작': 'v', '사진촬영': 'p', '영상광고': 'a'};
+  var TC = { '영상제작':'v', '사진촬영':'p', '영상광고':'a' };
 
   var html = '';
   pageRows.forEach(function(d) {
@@ -787,19 +965,20 @@ function renderAdminPage() {
     var st = d['상태'] || '신규접수';
     var sc = st === '신규접수' ? 'new' : st === '검토중' ? 'reviewing' : 'done';
     var si = st === '신규접수' ? '🟡' : st === '검토중' ? '🔵' : '🟢';
-    html += '<tr data-id="' + id + '" class="trow">' +
-      '<td><code style="font-size:13px;color:var(--tx);font-weight:700">' + id + '</code></td>' +
-      '<td style="white-space:nowrap;font-size:12px">' + fmtDT(d['접수일시']) + '</td>' +
-      '<td><span class="bdg ' + tc + '">' + (d['유형'] || '-') + '</span></td>' +
-      '<td><strong>' + (d.dept || '-') + '</strong></td>' +
-      '<td style="white-space:nowrap">' + (d.phone || '-') + '</td>' +
-      '<td style="white-space:nowrap">' + fmtDate(d.eventDate) + '</td>' +
+    var hasAtt = d['_detail'] && d['_detail'].attachments;
+    html += '<tr data-id="' + esc(id) + '" class="trow">' +
+      '<td><span class="mono" style="font-size:13px;color:var(--tx)">' + esc(id) + '</span>' + (hasAtt ? '<span class="att-ic" title="첨부파일 있음">📎</span>' : '') + '</td>' +
+      '<td style="white-space:nowrap;font-size:12.5px">' + esc(fmtDT(d['접수일시'])) + '</td>' +
+      '<td><span class="bdg ' + tc + '">' + esc(d['유형'] || '-') + '</span></td>' +
+      '<td><strong>' + esc(d.dept || '-') + '</strong></td>' +
+      '<td style="white-space:nowrap">' + esc(d.phone || '-') + '</td>' +
+      '<td style="white-space:nowrap">' + esc(fmtDate(d.eventDate)) + '</td>' +
       '<td><div class="std">' +
-        '<button class="stb ' + sc + '" data-id="' + id + '">' + si + ' ' + st + ' ▾</button>' +
+        '<button class="stb ' + sc + '" data-id="' + esc(id) + '">' + si + ' ' + esc(st) + ' ▾</button>' +
         '<div class="stm">' +
-          '<div class="stmi" data-id="' + id + '" data-st="신규접수">🟡 신규접수</div>' +
-          '<div class="stmi" data-id="' + id + '" data-st="검토중">🔵 검토중</div>' +
-          '<div class="stmi" data-id="' + id + '" data-st="완료">🟢 완료</div>' +
+          '<div class="stmi" data-id="' + esc(id) + '" data-st="신규접수">🟡 신규접수</div>' +
+          '<div class="stmi" data-id="' + esc(id) + '" data-st="검토중">🔵 검토중</div>' +
+          '<div class="stmi" data-id="' + esc(id) + '" data-st="완료">🟢 완료</div>' +
         '</div>' +
       '</div></td>' +
     '</tr>';
@@ -813,46 +992,34 @@ function renderAdminPage() {
     });
   });
 
-  // 페이지 네이션 렌더
   var paging = document.getElementById('admin-paging');
   if (totalPages > 1) {
-    var btnStyle = 'padding:6px 14px;border-radius:8px;border:1.5px solid #d8d3c8;background:#fff;cursor:pointer;font-size:13px;font-family:Noto Sans KR,sans-serif;';
-    paging.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 0;">' +
-      '<button class="adm-pg-btn" data-dir="-1" style="' + btnStyle + '"' + (ADMIN_PAGE<=1?' disabled':'') + '>◀ 이전</button>' +
-      '<span style="font-size:13px;color:#6b6257">' + ADMIN_PAGE + ' / ' + totalPages + ' 페이지 (전체 ' + rows.length + '건)</span>' +
-      '<button class="adm-pg-btn" data-dir="1" style="' + btnStyle + '"' + (ADMIN_PAGE>=totalPages?' disabled':'') + '>다음 ▶</button>' +
+    var bs = 'padding:8px 15px;border-radius:9px;border:1.5px solid var(--bdr2);background:#fff;cursor:pointer;font-size:13.5px;font-family:inherit;';
+    paging.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 0;">' +
+      '<button class="adm-pg-btn" data-dir="-1" style="' + bs + '"' + (ADMIN_PAGE<=1?' disabled':'') + '>◀ 이전</button>' +
+      '<span style="font-size:13.5px;color:var(--tx2)">' + ADMIN_PAGE + ' / ' + totalPages + ' 페이지 (전체 ' + rows.length + '건)</span>' +
+      '<button class="adm-pg-btn" data-dir="1" style="' + bs + '"' + (ADMIN_PAGE>=totalPages?' disabled':'') + '>다음 ▶</button>' +
       '</div>';
-    document.querySelectorAll('.adm-pg-btn').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        ADMIN_PAGE += parseInt(this.dataset.dir);
-        renderAdminPage();
-      });
+    document.querySelectorAll('.adm-pg-btn').forEach(function(b) {
+      b.addEventListener('click', function() { ADMIN_PAGE += parseInt(this.dataset.dir); renderAdminPage(); });
     });
   } else {
-    paging.innerHTML = rows.length ? '<div style="text-align:center;padding:10px 0;font-size:12px;color:#9c9388;">전체 ' + rows.length + '건</div>' : '';
+    paging.innerHTML = '<div class="admin-note">전체 ' + rows.length + '건</div>';
   }
 
   document.querySelectorAll('.stb').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); });
       var menu = this.nextElementSibling;
       var isOn = menu.classList.contains('on');
       document.querySelectorAll('.stm').forEach(function(m) { m.classList.remove('on'); });
       if (!isOn) {
-        var btnRect = this.getBoundingClientRect();
+        var r = this.getBoundingClientRect();
         menu.classList.add('on');
-        // 버튼 위치 기준으로 fixed 배치
-        var menuH = menu.offsetHeight || 120;
-        var spaceBelow = window.innerHeight - btnRect.bottom;
-        if (spaceBelow < menuH + 10) {
-          // 위로 펼치기
-          menu.style.top = (btnRect.top - menuH - 4) + 'px';
-        } else {
-          // 아래로 펼치기
-          menu.style.top = (btnRect.bottom + 4) + 'px';
-        }
-        menu.style.left = (btnRect.right - 120) + 'px';
+        var menuH = menu.offsetHeight || 130;
+        var spaceBelow = window.innerHeight - r.bottom;
+        menu.style.top = (spaceBelow < menuH + 10 ? r.top - menuH - 4 : r.bottom + 4) + 'px';
+        menu.style.left = (r.right - 130) + 'px';
       }
     });
   });
@@ -866,29 +1033,29 @@ function renderAdminPage() {
 }
 
 async function updSt(id, st) {
-  if (GAS) {
-    try { await fetch(GAS + '?action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(st)); }
-    catch(e) {}
-  }
+  try {
+    await fetch(GAS + '?action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(st) + '&key=' + encodeURIComponent(ADMIN_KEY));
+  } catch (e) {}
   var item = AD.find(function(d) { return String(d['접수번호']) === id; });
   if (item) { item['상태'] = st; renderAdminPage(); }
   showToast('상태가 업데이트되었습니다.', 'ok');
 }
 
 // ===== 상세 팝업 =====
-function DI(k, v, full) {
+function DI(k, v, full, raw) {
+  var val = raw ? (v || '-') : esc(v || '-');
   return '<div class="di' + (full ? ' full' : '') + '">' +
-    '<div class="dk">' + k + '</div>' +
-    '<div class="dv' + (full ? ' long' : '') + '">' + (v || '-') + '</div>' +
+    '<div class="dk">' + esc(k) + '</div>' +
+    '<div class="dv' + (full ? ' long' : '') + '">' + val + '</div>' +
     '</div>';
 }
-function DS(t) { return '<div class="ds"><div class="dst">' + t + '</div><div class="dg">'; }
+function DS(t) { return '<div class="ds"><div class="dst">' + esc(t) + '</div><div class="dg">'; }
 function DE() { return '</div></div>'; }
 
 function showDet(id) {
   var d = AD.find(function(r) { return String(r['접수번호']) === id; });
   if (!d) return;
-  var TC = {'영상제작': 'v', '사진촬영': 'p', '영상광고': 'a'};
+  var TC = { '영상제작':'v', '사진촬영':'p', '영상광고':'a' };
   var tc = TC[d['유형']] || 'v';
   var det = d['_detail'] || {};
   var type = d['유형'] || '';
@@ -896,9 +1063,9 @@ function showDet(id) {
   document.getElementById('mtitle').textContent = '[' + type + '] ' + (d.dept || '') + ' 신청 상세';
 
   var html = DS('기본 정보') +
-    DI('접수번호', '<span style="font-size:14px;font-weight:700;color:var(--tx)">' + (d['접수번호'] || '-') + '</span>') +
+    DI('접수번호', d['접수번호'] || '-') +
     DI('접수일시', fmtDT(d['접수일시'])) +
-    DI('유형', '<span class="bdg ' + tc + '">' + type + '</span>') +
+    DI('유형', '<span class="bdg ' + tc + '">' + esc(type) + '</span>', false, true) +
     DI('상태', d['상태'] || '-') +
     DI('부서/위원회', det.dept || d.dept || '-') +
     DI('연락처', det.phone || d.phone || '-') +
@@ -948,22 +1115,33 @@ function showDet(id) {
       DE() +
       DS('시간대 선호도') +
       DI('주일 오전(1,3부) 예배 전', det.t_sun_am || '-') +
-      DI('주일 오후 전앙 예배 전', det.t_sun_pm || '-') +
+      DI('주일 오후 찬양 예배 전', det.t_sun_pm || '-') +
       DI('수요(1,2부) 예배 전후', det.t_wed || '-') +
       DI('금요집회 전후', det.t_fri || '-') +
       DI('기타 전달사항', det.adNote || '-', true) +
       DE();
   }
 
+  // 첨부파일
+  var atts = det.attachments;
+  if (atts) {
+    var links = String(atts).split(/\s*[|,]\s*/).filter(function(u) { return u; });
+    if (links.length) {
+      html += '<div class="ds"><div class="dst">첨부파일</div><div class="dg">';
+      links.forEach(function(u, i) {
+        html += '<div class="di full"><div class="dv"><a href="' + esc(u) + '" target="_blank" rel="noopener">📎 첨부파일 ' + (i+1) + ' 열기</a></div></div>';
+      });
+      html += '</div></div>';
+    }
+  }
+
   document.getElementById('mbody').innerHTML = html;
 
-  // 인쇄 영역
   var phtml = '<div class="print-header">' +
     '<div class="print-org">충현교회 미디어센터 MEDIA CENTER REQUEST SYSTEM</div>' +
-    '<div class="print-title">[' + type + '] 신청서</div>' +
-    '<div class="print-meta">접수번호: ' + (d['접수번호'] || '-') + '&nbsp;&nbsp;&nbsp;접수일시: ' + fmtDT(d['접수일시']) + '</div>' +
+    '<div class="print-title">[' + esc(type) + '] 신청서</div>' +
+    '<div class="print-meta">접수번호: ' + esc(d['접수번호'] || '-') + '&nbsp;&nbsp;&nbsp;접수일시: ' + esc(fmtDT(d['접수일시'])) + '</div>' +
     '</div>' + html;
-  // 인쇄 영역에서 기본정보 접수일시 포맷 정리
   document.getElementById('print-area').innerHTML = phtml;
 
   document.getElementById('modal-bg').classList.add('on');
@@ -973,21 +1151,20 @@ function closeModal() {
   document.getElementById('modal-bg').classList.remove('on');
 }
 
+// ===== 내 신청 내용 인쇄 =====
 function printMyForm() {
-  // 폼 데이터 수집
   var fd = {};
   document.querySelectorAll('#fbody input, #fbody textarea').forEach(function(el) {
-    if (!el.name) return;
+    if (!el.name || el.type === 'file') return;
     if (el.type === 'radio') { if (el.checked) fd[el.name] = el.value; }
     else if (el.type === 'checkbox') {
       if (el.checked) fd[el.name] = fd[el.name] ? fd[el.name] + ', ' + el.value : el.value;
     } else if (el.value) { fd[el.name] = el.value; }
   });
 
-  var typeNames = {v:'영상 제작 의뢰', p:'사진 촬영 의뢰', a:'영상광고 상영 의뢰'};
+  var typeNames = { v:'영상 제작 의뢰', p:'사진 촬영 의뢰', a:'영상광고 상영 의뢰' };
   var typeName = typeNames[CT] || '';
 
-  // 라벨 매핑
   var labels = {
     dept:'부서/위원회', phone:'연락처', email:'이메일',
     videoType:'영상 종류', videoTitle:'주제/제목', videoPurpose:'제작 목적',
@@ -999,7 +1176,7 @@ function printMyForm() {
     deadline:'마감일', delivery:'전달 방식', photoNote:'기타 요청',
     adTitle:'광고 제목', adSummary:'광고 요약', adPurpose:'광고 목적',
     startDate:'상영 시작일', endDate:'상영 종료일', adDuration:'총 상영 길이',
-    t_sun_am:'주일 오전 예배 전', t_sun_pm:'주일 오후 예배 전',
+    t_sun_am:'주일 오전 예배 전', t_sun_pm:'주일 오후 찬양 예배 전',
     t_wed:'수요 예배 전후', t_fri:'금요집회 전후',
     adFileOk:'파일 기준 적합', adApproval:'승인 여부',
     adNote:'기타 전달사항', adConsent:'동의 여부'
@@ -1007,20 +1184,24 @@ function printMyForm() {
   var longFields = ['videoPurpose','videoContent','videoNote','photoDetail','photoNote','adNote'];
 
   var rows = '';
-  Object.entries(fd).forEach(function(entry) {
-    var k = entry[0], v = entry[1];
+  Object.keys(fd).forEach(function(k) {
+    var v = fd[k];
     if (!v || !labels[k]) return;
     var isLong = longFields.indexOf(k) > -1;
     rows += '<div class="di' + (isLong?' full':'') + '">' +
-      '<div class="dk">' + (labels[k]||k) + '</div>' +
-      '<div class="dv' + (isLong?' long':'') + '">' + v + '</div>' +
+      '<div class="dk">' + esc(labels[k]) + '</div>' +
+      '<div class="dv' + (isLong?' long':'') + '">' + esc(v) + '</div>' +
       '</div>';
   });
+  if (ATTACH.length) {
+    rows += '<div class="di full"><div class="dk">첨부파일</div><div class="dv">' +
+      ATTACH.map(function(f) { return esc(f.name); }).join(', ') + '</div></div>';
+  }
 
   var phtml = '<div class="print-header">' +
     '<div class="print-org">충현교회 미디어센터 MEDIA CENTER REQUEST SYSTEM</div>' +
-    '<div class="print-title">[' + typeName + '] 신청서</div>' +
-    '<div class="print-meta">작성일시: ' + fmtDT(new Date().toISOString()) + '</div>' +
+    '<div class="print-title">[' + esc(typeName) + '] 신청서</div>' +
+    '<div class="print-meta">작성일시: ' + esc(fmtDT(new Date().toISOString())) + '</div>' +
     '</div>' +
     '<div class="ds"><div class="dst">신청 내용</div><div class="dg">' + rows + '</div></div>';
 
