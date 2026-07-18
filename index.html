@@ -213,6 +213,8 @@ td{padding:13px 15px;font-size:13.5px;vertical-align:middle;}
 .mhdr-btns{display:flex;gap:8px;align-items:center;flex-shrink:0;}
 .print-btn{padding:8px 15px;border-radius:9px;border:1.5px solid var(--ac);background:#fff;color:var(--ac);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
 .print-btn:hover{background:var(--ac);color:#fff;}
+.del-btn{padding:8px 15px;border-radius:9px;border:1.5px solid var(--er);background:#fff;color:var(--er);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;transition:.2s;}
+.del-btn:hover{background:var(--er);color:#fff;}
 .mcls{width:34px;height:34px;border:none;background:var(--sur2);border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;}
 .mcls:hover{background:var(--bdr);}
 .mbdy{padding:24px;}
@@ -389,6 +391,7 @@ td{padding:13px 15px;font-size:13.5px;vertical-align:middle;}
     <div class="mhdr">
       <h3 id="mtitle">신청 상세</h3>
       <div class="mhdr-btns">
+        <button class="del-btn" id="del-btn">🗑 삭제</button>
         <button class="print-btn" id="print-btn">🖨️ 인쇄</button>
         <button class="mcls" id="mcls-btn">✕</button>
       </div>
@@ -412,6 +415,7 @@ var AD = [];        // 관리자 전체 데이터
 var LGD = false;    // 관리자 로그인 여부
 var ADMIN_KEY = ''; // 로그인 시 입력한 비밀번호(서버 검증용). 소스에 하드코딩하지 않음
 var ATTACH = [];    // 현재 폼에 첨부된 파일 목록
+var CUR_DET_ID = ''; // 현재 상세 모달에 열린 접수번호
 
 // HTML 이스케이프 (XSS 방어)
 function esc(v) {
@@ -439,6 +443,7 @@ function esc(v) {
   document.getElementById('srch').oninput = renderTbl;
   document.getElementById('mcls-btn').onclick = closeModal;
   document.getElementById('print-btn').onclick = function() { window.print(); };
+  document.getElementById('del-btn').onclick = delRecord;
   document.getElementById('modal-bg').onclick = function(e) { if (e.target === this) closeModal(); };
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.std')) {
@@ -1055,6 +1060,7 @@ function DE() { return '</div></div>'; }
 function showDet(id) {
   var d = AD.find(function(r) { return String(r['접수번호']) === id; });
   if (!d) return;
+  CUR_DET_ID = id;
   var TC = { '영상제작':'v', '사진촬영':'p', '영상광고':'a' };
   var tc = TC[d['유형']] || 'v';
   var det = d['_detail'] || {};
@@ -1149,6 +1155,30 @@ function showDet(id) {
 
 function closeModal() {
   document.getElementById('modal-bg').classList.remove('on');
+}
+
+// 신청 삭제 (관리자) — 확인 후 서버에서 행 삭제 + 첨부파일 휴지통 이동
+async function delRecord() {
+  var id = CUR_DET_ID;
+  if (!id) return;
+  var d = AD.find(function(r) { return String(r['접수번호']) === id; });
+  var label = d ? (d['유형'] + ' · ' + (d.dept || '') + ' (' + id + ')') : id;
+  if (!window.confirm('정말 이 신청을 삭제하시겠습니까?\n\n' + label + '\n\n첨부파일도 함께 삭제되며, 되돌릴 수 없습니다.')) return;
+  var btn = document.getElementById('del-btn');
+  btn.disabled = true; btn.textContent = '삭제 중...';
+  try {
+    var res = await fetch(GAS + '?action=delete&id=' + encodeURIComponent(id) + '&key=' + encodeURIComponent(ADMIN_KEY));
+    var j = await res.json();
+    if (!j || j.result !== 'success') throw new Error(j && j.message ? j.message : 'fail');
+    AD = AD.filter(function(r) { return String(r['접수번호']) !== id; });
+    renderAdminStats();
+    renderTbl();
+    closeModal();
+    showToast('신청이 삭제되었습니다.', 'ok');
+  } catch (e) {
+    showToast('삭제에 실패했습니다. 다시 시도해 주세요.', 'er');
+  }
+  btn.disabled = false; btn.textContent = '🗑 삭제';
 }
 
 // ===== 내 신청 내용 인쇄 =====
